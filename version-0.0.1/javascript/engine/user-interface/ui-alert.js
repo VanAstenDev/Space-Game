@@ -9,7 +9,7 @@ class UIAlert {
     }
 
     display() {
-        this.alpha = map(this.lifespan, 0, this.maxLifespan, 50, 255);
+        this.alpha = map(this.lifespan, 0, this.maxLifespan, 200, 255);
 
         push();
         translate(-cam.x + 100, (-cam.y + height) - 300);
