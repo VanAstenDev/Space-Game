@@ -16,6 +16,10 @@ function setup() {
 
     let alert = new UIAlert("Test", "This is a test message.");
     ui.addElement(alert);
+
+    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.1", 0, 0);
+    ui.addElement(alphaNotification);
+
 }
 
 function windowResized() {

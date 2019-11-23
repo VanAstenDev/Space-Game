@@ -14,11 +14,14 @@ class UIHandler {
 
     display() {
         for (let i = (this.elements.length-1); i > 0; i--) {
-            this.elements[i].lifespan--;
-            if (this.elements[i].lifespan < 0) {
-                this.elements.splice(i, 1);
-                return;
-            } 
+            if (this.elements[i].lifespan != undefined) {
+                this.elements[i].lifespan--;
+                if (this.elements[i].lifespan < 0) {
+                    this.elements.splice(i, 1);
+                    return;
+                } 
+            }
+            
 
             this.elements[i].display();
         }
