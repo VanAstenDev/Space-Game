@@ -4,8 +4,6 @@ let core;
 let player;
 let vessel;
 
-
-
 function setup() {
     createCanvas(innerWidth, innerHeight);
     player = new Player(width/2, height/2);
@@ -22,7 +20,7 @@ function windowResized() {
 function draw() {
     cam.update();
     translate(cam.x, cam.y);
-    background(0);
+    background(50);
     core.drawBackground();
 
     player.loop();

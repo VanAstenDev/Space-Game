@@ -14,6 +14,12 @@ class Core {
     }
 
     drawBackground() {
+        push();
+        translate(0, 0);
+        fill(0);
+        noStroke();
+        rect(0, 0, width, height);
+        pop();
         this.dStarSize = this.starSize * cam.zoom;
         for (let i = 0; i < this.stars.length; i++) {
             push();
