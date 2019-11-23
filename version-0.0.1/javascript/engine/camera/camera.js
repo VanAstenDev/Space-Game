@@ -17,6 +17,9 @@ class Cam {
         }
         if (!player.isVessel) {
             this.dZoom = 1;
+
+            this.x = (-player.pos.x) + width/2;
+            this.y = (-player.pos.y) + height/2;
         }
 
         if (this.zoom < this.dZoom) {

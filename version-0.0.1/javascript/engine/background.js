@@ -1,4 +1,4 @@
-class Core {
+class Background {
     constructor() {
         this.stars = [];
         this.starSize = 1;
