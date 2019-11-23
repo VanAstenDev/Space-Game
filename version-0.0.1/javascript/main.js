@@ -1,5 +1,6 @@
 const cam = new Cam(0, 0, 1);
 const ui = new UIHandler();
+let cl;
 
 let bg;
 
@@ -10,6 +11,10 @@ function setup() {
     createCanvas(innerWidth, innerHeight);
     player = new Player(width/2, height/2);
     vessel = new Vessel(player.pos.x, player.pos.y);
+
+    cl = new ChunkLoader(400, 400, 50, 50);
+    cl.generate();
+    cl.findNeighbors();
 
     bg = new Background();
     bg.generateBackground(200);
@@ -34,9 +39,11 @@ function windowResized() {
 
 function draw() {
     cam.update();
+    // scale(cam.zoom);
     translate(cam.x, cam.y);
     background(50);
-    bg.drawBackground();
+    cl.loop();
+    // bg.drawBackground();
 
     player.loop();
     vessel.loop();

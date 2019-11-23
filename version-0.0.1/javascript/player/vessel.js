@@ -32,8 +32,8 @@ class Vessel {
     update() {
 
         //camera zoom
-        this.dw = this.w * cam.zoom;
-        this.dh = this.h * cam.zoom;
+        // this.dw = this.w * cam.zoom;
+        // this.dh = this.h * cam.zoom;
 
         //movement
         if (player.isVessel) {
@@ -63,8 +63,8 @@ class Vessel {
         this.vel.mult(this.friction);
 
         //constrain to borders
-        this.pos.x = constrain(this.pos.x, 0, width);
-        this.pos.y = constrain(this.pos.y, 0, height);
+        // this.pos.x = constrain(this.pos.x, 0, width);
+        // this.pos.y = constrain(this.pos.y, 0, height);
     }
 
     display() {
