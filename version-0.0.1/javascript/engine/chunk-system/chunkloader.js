@@ -6,6 +6,12 @@ class ChunkLoader {
         this.chunkWidth = chunkWidth;
         this.chunkHeight = chunkHeight;
 
+        this.x = 0;
+        this.y = 0;
+
+        this.totalWidth = this.rows * this.chunkWidth;
+        this.totalHeight = this.columns * this.chunkHeight;
+
         this.chunks = [];
     }
 
@@ -18,6 +24,9 @@ class ChunkLoader {
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.columns; c++) {
                 let chunk = new Chunk(r, c, this.chunkWidth, this.chunkHeight);
+                let randomPoint = chunk.getRandomPoint();
+                planet = new Planet(randomPoint.x, randomPoint.y);
+                chunk.planets.push(planet);
                 this.chunks.push(chunk);
             }
         }
@@ -34,7 +43,7 @@ class ChunkLoader {
             total++;
         }
 
-        return count+"/"+total;
+        return count + "/" + total;
     }
 
     findNeighbors() {
@@ -65,6 +74,7 @@ class ChunkLoader {
             if (player.pos.x > this.chunks[i].r * this.chunkWidth && player.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
                 if (player.pos.y > this.chunks[i].c * this.chunkHeight && player.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
                     this.chunks[i].active = true;
+                    player.chunk = i;
                     //set neighbors active
                     this.chunks[i].setNeighbors();
                 }
@@ -73,6 +83,7 @@ class ChunkLoader {
             if (vessel.pos.x > this.chunks[i].r * this.chunkWidth && vessel.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
                 if (vessel.pos.y > this.chunks[i].c * this.chunkHeight && vessel.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
                     this.chunks[i].active = true;
+                    vessel.chunk = i;
                     //set neighbors active
                     this.chunks[i].setNeighbors();
                 }
@@ -87,13 +98,15 @@ class ChunkLoader {
             }
         }
 
-        //render outline
-        push();
-        translate(0, 0);
-        noFill();
-        stroke(255, 0, 0);
-        strokeWeight(3);
-        rect(0, 0, this.rows * this.chunkWidth, this.columns * this.chunkHeight);
-        pop();
+        if (core.options['debug'] == true) {
+            //render outline
+            push();
+            translate(0, 0);
+            noFill();
+            stroke(255, 0, 0);
+            strokeWeight(3);
+            rect(0, 0, this.rows * this.chunkWidth, this.columns * this.chunkHeight);
+            pop();
+        }
     }
 }

@@ -1,11 +1,24 @@
 class UIHandler {
     constructor() {
         this.elements = [];
+
+        this.buttons = [];
+
+        this.maxElements = 10;
+    }
+
+    updateButtons(x, y) {
+        for (let i = 0; i < this.buttons.length; i++) {
+            if (this.buttons[i].check(x, y)) {
+                let a = new UIAlert("Button Clicked", "You clicked the button!");
+                ui.addElement(a);
+            }
+        }
     }
 
     addElement(uiElement) {
 
-        if (this.elements.length > 5) {
+        if (this.elements.length > this.maxElements) {
             this.elements.splice(this.elements.length-1, 1);
         }
 
@@ -21,9 +34,12 @@ class UIHandler {
                     return;
                 } 
             }
-            
+        }
 
+        for (let i = 0; i < this.elements.length; i++) {
             this.elements[i].display();
         }
+
+        
     }
 }

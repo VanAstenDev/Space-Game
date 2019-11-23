@@ -1,6 +1,7 @@
 class Player {
     constructor(x, y) {
         this.isVessel = false;
+        this.chunk = 0;
 
         this.pos = createVector(x, y);
         this.acc = createVector(0, 0);
@@ -11,6 +12,7 @@ class Player {
         this.turnSpeed = 0.01;
 
         this.maxSpeed = 2;
+        this.autoPilotSpeed = 0;
         this.friction = 0.95;
 
         this.w = 25;
@@ -54,6 +56,12 @@ class Player {
             if (keyIsDown(68)) {
                 this.angle += this.turnSpeed;
             }
+        } else {
+            //autopilot
+            let dir = createVector(vessel.pos.x - this.pos.x, vessel.pos.y - this.pos.y);
+            dir.mult(5);
+            dir.limit(this.autoPilotSpeed);
+            this.applyForce(dir);
         }
         
 
@@ -67,6 +75,8 @@ class Player {
         //constrain to borders
         // this.pos.x = constrain(this.pos.x, 0, width);
         // this.pos.y = constrain(this.pos.y, 0, height);
+        this.pos.x = constrain(this.pos.x, cl.x, cl.totalWidth);
+        this.pos.y = constrain(this.pos.y, cl.y, cl.totalHeight);
     }
 
     display() {

@@ -4,6 +4,8 @@ class Vessel {
         this.acc = createVector(0, 0);
         this.vel = createVector(0, 0);
 
+        this.chunk = 0;
+
         this.angle = 0;
         this.turnSpeed = 0.05;
 
@@ -65,6 +67,8 @@ class Vessel {
         //constrain to borders
         // this.pos.x = constrain(this.pos.x, 0, width);
         // this.pos.y = constrain(this.pos.y, 0, height);
+        this.pos.x = constrain(this.pos.x, cl.x, cl.totalWidth);
+        this.pos.y = constrain(this.pos.y, cl.y, cl.totalHeight);
     }
 
     display() {
