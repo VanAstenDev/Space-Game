@@ -86,6 +86,7 @@ class Player {
         endShape(CLOSE);
 
         if (this.isVessel) {
+            noStroke();
             fill(0,255,0,100);
             ellipse(0,0,this.pickUpDistance*2);
         }

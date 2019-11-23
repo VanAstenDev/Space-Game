@@ -20,6 +20,12 @@ function setup() {
     let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.1", 0, 0);
     ui.addElement(alphaNotification);
 
+    let fpscounter = new FPSCounter();
+    ui.addElement(fpscounter);
+
+    let dashboard = new Dashboard();
+    ui.addElement(dashboard);
+
 }
 
 function windowResized() {

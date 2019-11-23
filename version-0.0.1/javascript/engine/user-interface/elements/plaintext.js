@@ -8,10 +8,15 @@ class PText {
     display() {
         push();
         translate(-cam.x + this.x, -cam.y - this.y);
-        textSize(14);
-        fill(150);
+
+        fill(255);
         noStroke();
-        text(this.message, 0, 0, 400, 50);
+        rect(0, 0, 400, 20);
+
+        textSize(20);
+        fill(50);
+        noStroke();
+        text(this.message, 0, 0, 400, 100);
         pop();
     }
 }
