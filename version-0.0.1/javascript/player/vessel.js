@@ -12,13 +12,15 @@ class Vessel {
         this.maxSpeed = 4;
         this.friction = 0.95;
 
-        this.w = 10;
-        this.h = 20;
+        this.w = 20;
+        this.h = 40;
 
         this.dw = this.w;
         this.dh = this.h;
 
         this.mass = 5;
+
+        this.texture = textureHandler.getVessel();
     }
 
     loop() {
@@ -75,17 +77,19 @@ class Vessel {
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.angle);
+        imageMode(CENTER);
+        image(this.texture, 0, 0, (this.w * (2)), (this.h * (1)));
+        // image(this.texture, 0, 0);
+        // noStroke();
+        // fill(255, 150);
 
-        noStroke();
-        fill(255, 150);
+        // beginShape();
 
-        beginShape();
+        // vertex(-this.dh/2, -this.dw/2);
+        // vertex(-this.dh/2, this.dw/2);
+        // vertex(this.dh/2, 0);
 
-        vertex(-this.dh/2, -this.dw/2);
-        vertex(-this.dh/2, this.dw/2);
-        vertex(this.dh/2, 0);
-
-        endShape(CLOSE);
+        // endShape(CLOSE);
 
         pop();
     }

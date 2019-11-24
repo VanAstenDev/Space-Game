@@ -7,7 +7,7 @@ class Dashboard {
         push();
         noStroke();
         
-        translate(-cam.x + (width - 300), -cam.y);
+        translate(-cam.x + (width - 320), -cam.y-40);
 
         //TITLE part
         fill(50);
@@ -35,12 +35,13 @@ class Dashboard {
         fill(150);
         rect(50, 160, 200, 60);
 
+        textAlign(CENTER);
         textSize(20);
         fill(20);
         let motherShipCoords = "[" + chunkLoader.chunks[player.chunk].r + ":" + chunkLoader.chunks[player.chunk].c + "]"
         let vesselCoords = "[" + chunkLoader.chunks[vessel.chunk].r + ":" + chunkLoader.chunks[vessel.chunk].c + "]";
-        text("Mothership " + motherShipCoords, 50, 160, 250, 200);
-        text("Vessel " + vesselCoords, 50, 185, 250, 200);
+        text("Mothership " + motherShipCoords, 50, 160, 250, 220);
+        text("Vessel " + vesselCoords, 50, 185, 250, 220);
 
         //quest log
         fill(50);

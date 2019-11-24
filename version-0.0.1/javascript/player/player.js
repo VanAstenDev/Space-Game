@@ -9,14 +9,14 @@ class Player {
 
         this.angle = 0;
 
-        this.turnSpeed = 0.02;
+        this.turnSpeed = 0.02; 
 
         this.maxSpeed = core.playerOptions['maxSpeed'];
         this.autoPilotSpeed = 0;
         this.friction = 0.95;
 
-        this.w = 25;
-        this.h = 50;
+        this.w = 65;
+        this.h = 100;
 
         this.dw = this.w;
         this.dh = this.h;
@@ -92,6 +92,8 @@ class Player {
         beginShape();
 
         vertex(-this.dh/2, -this.dw/2);
+        vertex(-this.dh, 0);
+        
         vertex(-this.dh/2, this.dw/2);
         vertex(this.dh/2, 0);
 

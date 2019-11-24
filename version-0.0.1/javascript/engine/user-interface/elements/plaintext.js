@@ -11,12 +11,13 @@ class PText {
 
         fill(255);
         noStroke();
-        rect(0, 0, 480, 20);
+        rect(0, 0, 500, 20);
 
         textSize(20);
+        textAlign(CENTER);
         fill(50);
         noStroke();
-        text(this.message, 0, 0, 480, 100);
+        text(this.message, 0, 0, 500, 100);
         pop();
     }
 }

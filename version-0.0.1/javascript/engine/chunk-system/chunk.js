@@ -46,6 +46,17 @@ class Chunk {
     }
 
     generateBackground(n) {
+        //test plekkie
+        for (let i = 0; i < this.neighbors.length; i++) {
+            for (let j = 0; j < this.planets.length; j++) {
+                for (let k = 0; k < this.neighbors[i].planets.length; k++) {
+                    if (this.neighbors[i].planets[k].texture == this.planets[j].texture) {
+                        this.neighbors[i].planets[k].texture = textureHandler.getPlanetTexture();
+                    }
+                }
+            }
+        }
+
         if (core.chunkOptions['stars']) {
             for (let i = 0; i < n; i++) {
                 let randomPoint = this.getRandomPoint();

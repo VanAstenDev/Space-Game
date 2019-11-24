@@ -16,4 +16,8 @@ class TextureHandler {
     getPlanetTexture() {
         return this.planetTextures[Math.floor((Math.random()*this.planetTextures.length))];
     }
+
+    getVessel() {
+        return this.textures[0];
+    }
 }

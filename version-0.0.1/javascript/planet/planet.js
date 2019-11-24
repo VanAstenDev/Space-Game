@@ -3,9 +3,10 @@ class Planet {
         this.pos = createVector(x, y);
 
         // this.r = random() * 250;
-        this.r = map(random(), 0, 1, 150, 300);
+        // this.r = map(random(), 0, 1, 150, 300);
+        this.r = 190;
 
-        this.buffer = this.r / 3;
+        this.buffer = this.r / 6;
 
         this.triggerCD = 200;
         this.cd = 0;
@@ -21,7 +22,7 @@ class Planet {
     update() {
         this.cd--;
         //check vessel
-        if (vessel.pos.dist(this.pos) < this.r / 1.2 - this.buffer) {
+        if (vessel.pos.dist(this.pos) < this.r - this.buffer) {
             //PLANET UI POPS UP HERE!
             // let a = new UIAlert("Planet", "You entered a planet.");
             // ui.addElement(a);
@@ -37,17 +38,25 @@ class Planet {
     render() {
         push();
         translate(this.pos.x, this.pos.y);
-        // fill(255, 100);
-        // noStroke();
-        // ellipse(0, 0, this.r);
 
-        imageMode(CENTER);
-        image(this.texture, 0, 0, Math.floor(this.r*5), Math.floor(this.r*5));
+
+        if (core.options['debug']) {
+            fill(255, 100);
+            noStroke();
+            ellipse(0, 0, this.r);
+        } else {
+            imageMode(CENTER);
+            image(this.texture, 0, 0);
+        }
+
+
 
         //emissive ring
         if (core.options['debug']) {
-            fill(0, 0, 255, 100);
-            noStroke();
+            // fill(255, 255, 255, 100);
+            // noStroke();
+            noFill();
+            stroke(0, 0, 255, 255);
             ellipse(0, 0, this.r + this.buffer);
         }
         pop();
