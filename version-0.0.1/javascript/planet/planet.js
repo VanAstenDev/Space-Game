@@ -9,6 +9,8 @@ class Planet {
 
         this.triggerCD = 200;
         this.cd = 0;
+
+        this.texture = textureHandler.getPlanetTexture();
     }
 
     loop() {
@@ -35,9 +37,12 @@ class Planet {
     render() {
         push();
         translate(this.pos.x, this.pos.y);
-        fill(255, 100);
-        noStroke();
-        ellipse(0, 0, this.r);
+        // fill(255, 100);
+        // noStroke();
+        // ellipse(0, 0, this.r);
+
+        imageMode(CENTER);
+        image(this.texture, 0, 0, Math.floor(this.r*5), Math.floor(this.r*5));
 
         //emissive ring
         if (core.options['debug']) {

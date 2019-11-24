@@ -26,9 +26,11 @@ class ChunkLoader {
                 let chunk = new Chunk(r, c, this.chunkWidth, this.chunkHeight);
                 let hasPlanet = Math.round(random());
                 if (hasPlanet) {
-                    let randomPoint = chunk.getRandomPoint();
-                    planet = new Planet(randomPoint.x, randomPoint.y);
-                    chunk.planets.push(planet);
+                    for (let i = 0; i < chunk.maxPlanets; i++) {
+                        let randomPoint = chunk.getRandomPoint();
+                        planet = new Planet(randomPoint.x, randomPoint.y);
+                        chunk.planets.push(planet);
+                    }
                 }
                 chunk.generateBackground(core.chunkOptions['amount']);
                 this.chunks.push(chunk);

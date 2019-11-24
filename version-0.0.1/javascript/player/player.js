@@ -11,7 +11,7 @@ class Player {
 
         this.turnSpeed = 0.02;
 
-        this.maxSpeed = 10;
+        this.maxSpeed = core.playerOptions['maxSpeed'];
         this.autoPilotSpeed = 0;
         this.friction = 0.95;
 

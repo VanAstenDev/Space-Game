@@ -6,6 +6,9 @@ let chunkLoader; //chunk loader
 
 let bg; //background
 
+let planetTexture;
+let planetTexture2;
+
 let player; //player
 let vessel; //exploration vessel
 
@@ -13,12 +16,24 @@ let planet; //test planet
 
 let questHandler; //quest loader
 
+let textureHandler;
+
 let soundtrack;
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
 
+    textureHandler = new TextureHandler();
+
     soundtrack = new SoundObject("test.wav");
+
+    planetTexture = loadImage("planet.png");
+    planetTexture2 = loadImage("planet2.png");
+
+
+    textureHandler.addTexture(planetTexture, "planet");
+    textureHandler.addTexture(planetTexture2, "planet");
+
 
     chunkLoader = new ChunkLoader(1300, 1300, 20, 20);
     chunkLoader.generate();
@@ -46,7 +61,7 @@ function setup() {
     // let alert = new UIAlert("Test", "This is a test message.");
     // ui.addElement(alert);
 
-    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.5 (Sound)", 0, 0);
+    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.6 (Texture)", 0, 0);
     ui.addElement(alphaNotification);
 
     if (core.options['debug'] == true) {
@@ -93,7 +108,7 @@ function mousePressed() {
 }
 
 function keyPressed() {
-    if (keyCode == ENTER) {
+    if (keyCode == "32") {
         if (!player.isVessel) {
             //player is mothership
             player.isVessel = true;

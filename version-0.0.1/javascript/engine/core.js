@@ -8,6 +8,10 @@ class Core {
             "stars": true,
             "amount": 8
         }
+
+        this.playerOptions = {
+            "maxSpeed": 10
+        }
     }
 
     

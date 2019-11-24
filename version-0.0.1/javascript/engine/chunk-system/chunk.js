@@ -5,6 +5,8 @@ class Chunk {
         this.width = w;
         this.height = h;
 
+        this.maxPlanets = 3;
+
         this.active = false;
 
         this.neighbors = [];
