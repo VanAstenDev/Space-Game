@@ -13,10 +13,14 @@ let planet; //test planet
 
 let questHandler; //quest loader
 
+let soundtrack;
+
 function setup() {
     createCanvas(innerWidth, innerHeight);
 
-    chunkLoader = new ChunkLoader(1300, 1300, 100, 100);
+    soundtrack = new SoundObject("test.wav");
+
+    chunkLoader = new ChunkLoader(1300, 1300, 20, 20);
     chunkLoader.generate();
     chunkLoader.findNeighbors();
 
@@ -42,7 +46,7 @@ function setup() {
     // let alert = new UIAlert("Test", "This is a test message.");
     // ui.addElement(alert);
 
-    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.4 (Quests)", 0, 0);
+    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.5 (Sound)", 0, 0);
     ui.addElement(alphaNotification);
 
     if (core.options['debug'] == true) {
@@ -70,6 +74,7 @@ function windowResized() {
 
 function draw() {
     cam.update();
+    soundtrack.check();
     translate(cam.x, cam.y);
     background(10);
     chunkLoader.loop();
@@ -83,6 +88,7 @@ function draw() {
 }
 
 function mousePressed() {
+    soundtrack.allowed = true;
     ui.updateButtons(mouseX, mouseY);
 }
 

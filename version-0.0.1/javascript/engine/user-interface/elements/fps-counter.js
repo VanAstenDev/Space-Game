@@ -20,7 +20,7 @@ class FPSCounter {
         noStroke();
         text(this.message+" frames (Avg: "+avgfps+")", -150, 0, 400, 200);
 
-        let ac = cl.getActive();
+        let ac = chunkLoader.getActive();
         textSize(24);
         text("Active Chunks: "+ac, -150, 35, 300, 300);
         pop();
