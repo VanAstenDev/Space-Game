@@ -5,7 +5,7 @@ class Chunk {
         this.width = w;
         this.height = h;
 
-        this.maxPlanets = 3;
+        this.maxPlanets = 1;
 
         this.active = false;
 

@@ -1,7 +1,7 @@
 class Core {
     constructor() {
         this.options = {
-            "debug": false
+            "debug": true
         }
 
         this.chunkOptions = {
