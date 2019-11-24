@@ -88,6 +88,7 @@ function windowResized() {
 }
 
 function draw() {
+    frameRate(70);
     cam.update();
     soundtrack.check();
     translate(cam.x, cam.y);
