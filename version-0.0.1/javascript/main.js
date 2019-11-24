@@ -15,6 +15,7 @@ let planetTexture_5;
 let planetTexture_6;
 
 let vesselTexture;
+let motherTexture;
 
 let player; //player
 let vessel; //exploration vessel
@@ -27,6 +28,9 @@ let textureHandler;
 
 let soundtrack;
 
+let radar;
+
+
 function setup() {
     createCanvas(innerWidth, innerHeight);
 
@@ -37,32 +41,39 @@ function setup() {
     planetTexture_1 = loadImage("javascript/assets/textures/Planet1.png");
     planetTexture_2 = loadImage("javascript/assets/textures/Planet2.png");
     planetTexture_3 = loadImage("javascript/assets/textures/Planet3.png");
-    planetTexture_4 = loadImage("javascript/assets/textures/Planet4.png");
+    // planetTexture_4 = loadImage("javascript/assets/textures/Planet4.png");
     planetTexture_5 = loadImage("javascript/assets/textures/Planet5.png");
     planetTexture_6 = loadImage("javascript/assets/textures/Planet6.png");
 
-    vesselTexture = loadImage("javascript/assets/ship_textures/vessel.png");
+    vesselTexture = loadImage("javascript/assets/ship_textures/vessel2.png");
+    motherTexture = loadImage("javascript/assets/ship_textures/vessel.png");
 
     textureHandler.addTexture(planetTexture_1, "planet");
     textureHandler.addTexture(planetTexture_2, "planet");
     textureHandler.addTexture(planetTexture_3, "planet");
-    textureHandler.addTexture(planetTexture_4, "planet");
+    // textureHandler.addTexture(planetTexture_4, "planet");
     textureHandler.addTexture(planetTexture_5, "planet");
     textureHandler.addTexture(planetTexture_6, "planet");
 
     textureHandler.addTexture(vesselTexture, "other");
+    textureHandler.addTexture(motherTexture, "other");
 
-
-    chunkLoader = new ChunkLoader(1300, 1300, 60, 60);
+    let chunks = core.options['chunks'];
+    chunkLoader = new ChunkLoader(core.options['chunkWidth'], core.options['chunkHeight'], chunks, chunks);
     chunkLoader.generate();
     chunkLoader.findNeighbors();
 
     questHandler = new QuestHandler();
 
-    //visit 3 planets quest
-    let ob = new Objective(3, "Visit three planets.");
-    let quest = new SimpleQuest("Explorer", ob);
-    questHandler.addQuest(quest);
+    //visit 0,0 quest
+    // let ob = new Objective(1, "Visit the origin point.");
+    // let quest = new LocationQuest("Traveler", ob, createVector(0, 0));
+    // questHandler.addQuest(quest);
+
+    //test quest
+    // let ob = new Objective(1, "Trigger this in console.");
+    // let quest = new TriggerQuest("Console", ob);
+    // questHandler.addQuest(quest);
 
     bg = new Background();
     bg.generateBackground(200);
@@ -71,6 +82,8 @@ function setup() {
 
     player = new Player(randomPoint.x, randomPoint.y);
     vessel = new Vessel(player.pos.x, player.pos.y);
+
+    radar = new Radar(0.1);
 
     // randomPoint = chunkLoader.chunks[Math.floor(Math.random()*chunkLoader.chunks.length)].getRandomPoint();
 
@@ -90,6 +103,9 @@ function setup() {
     let dashboard = new Dashboard();
     ui.addElement(dashboard);
 
+    let inventory = new Inventory();
+    ui.addElement(inventory);
+
     //BANNER
     // let banner = new Banner("Test Banner!");
     // ui.addElement(banner);
@@ -105,6 +121,8 @@ function windowResized() {
     resizeCanvas(innerWidth, innerHeight);
 }
 
+let bullets = [];
+
 function draw() {
     frameRate(70);
     cam.update();
@@ -118,7 +136,22 @@ function draw() {
     player.loop();
     vessel.loop();
 
+    // console.log(bullets.length);
+
+    for (let i = bullets.length - 1; i > 0; i--) {
+        bullets[i].lifespan--;
+        bullets[i].update();
+        bullets[i].display();
+
+        if (bullets[i].lifespan < 0) {
+            bullets.splice(i, 1);
+        }
+    }
+
     ui.display();
+
+    radar.generate();
+    radar.display();
 }
 
 function mousePressed() {
@@ -150,6 +183,20 @@ function keyPressed() {
             for (let i = 0; i < chunkLoader.chunks[vessel.chunk].planets.length; i++) {
                 chunkLoader.chunks[vessel.chunk].planets[i].update();
             }
+        }
+    }
+
+    if (core.playerOptions['shootingAllowed']) {
+        if (keyCode == ENTER) {
+            vessel.shoot();
+        }
+    }
+    
+    if (keyCode == "73") {
+        if (ui.getInventory().active == true) {
+            ui.getInventory().active = false;
+        } else {
+            ui.getInventory().active = true;
         }
     }
 }

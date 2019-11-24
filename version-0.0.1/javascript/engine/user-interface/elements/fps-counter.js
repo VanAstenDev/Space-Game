@@ -2,6 +2,8 @@ class FPSCounter {
     constructor() {
         this.message = Math.floor(frameRate());
 
+        this.type = "fpscounter";
+
         this.tfps = frameRate();
         this.tfreq = 1;
     }

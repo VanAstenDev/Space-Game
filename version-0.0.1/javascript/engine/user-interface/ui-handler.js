@@ -25,6 +25,14 @@ class UIHandler {
         this.elements.push(uiElement);
     }
 
+    getInventory() {
+        for (let i = 0; i < this.elements.length; i++) {
+            if (this.elements[i].type == "inventory") {
+                return this.elements[i];
+            }
+        }
+    }
+
     display() {
         for (let i = (this.elements.length-1); i > 0; i--) {
             if (this.elements[i].lifespan != undefined) {

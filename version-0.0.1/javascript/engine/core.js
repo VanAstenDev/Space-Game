@@ -1,7 +1,10 @@
 class Core {
     constructor() {
         this.options = {
-            "debug": false
+            "debug": true,
+            "chunks": 25,
+            "chunkWidth": 1000,
+            "chunkHeight": 1000
         }
 
         this.chunkOptions = {
@@ -10,7 +13,8 @@ class Core {
         }
 
         this.playerOptions = {
-            "maxSpeed": 10
+            "maxSpeed": 10,
+            "shootingAllowed": false
         }
     }
 

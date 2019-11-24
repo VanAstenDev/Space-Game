@@ -1,6 +1,6 @@
 class Dashboard {
     constructor() {
-
+        this.type = "dashboard";
     }
 
     display() {

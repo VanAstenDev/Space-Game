@@ -3,6 +3,8 @@ class Banner {
         this.text = text;
         this.width = 1000;
 
+        this.type = "banner";
+
         this.lifespan = 100;
     }
 

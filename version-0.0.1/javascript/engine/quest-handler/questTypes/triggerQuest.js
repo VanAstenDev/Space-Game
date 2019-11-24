@@ -1,14 +1,8 @@
-class SimpleQuest {
-    constructor(name, objective, reward) {
+class TriggerQuest {
+    constructor(name, objective) {
         this.name = name;
         this.objective = objective;
-        this.complete = false;
-
         this.active = true;
-
-        this.dupeDist = 200;
-
-        this.triggerPos = [];
     }
 
     update() {
@@ -28,22 +22,11 @@ class SimpleQuest {
                 return true;
             }
         }
-
     }
 
     trigger() {
         if (this.active) {
-            //check if far enough away from last triggerpos
-            for (let i = 0; i < this.triggerPos.length; i++) {
-                if (vessel.pos.dist(this.triggerPos[i]) < this.dupeDist) {
-                    return false;
-                }
-            }
-            
-
             this.objective.trigger();
-            //create triggerpos
-            this.triggerPos.push(createVector(vessel.pos.x, vessel.pos.y));
             //create alert
             let str = this.name+"\nCount: "+this.objective.current+"/"+this.objective.count;
             let a = new UIAlert("Quest Progress", str);

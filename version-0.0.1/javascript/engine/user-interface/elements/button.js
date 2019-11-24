@@ -5,6 +5,8 @@ class Button {
         this.text = text;
         this.identifier = identifier;
 
+        this.type = "button";
+
         this.width = 120;
         this.height = 30;
 

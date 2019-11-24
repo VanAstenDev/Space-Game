@@ -25,7 +25,9 @@ class Player {
 
         this.pickUpDistance = 100;
 
-        this.quest;
+        this.texture = textureHandler.getMother();
+
+        this.quest = new PlaceHolderQuest("No quest", new Objective(1, "No quest available."), "No quest available.");
     }
 
     loop() {
@@ -85,19 +87,21 @@ class Player {
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.angle);
+        imageMode(CENTER);
+        image(this.texture, 0, 0, (this.w * (2)), (this.h * (1)));
 
-        noStroke();
-        fill(255, 150);
+        // noStroke();
+        // fill(255, 150);
 
-        beginShape();
+        // beginShape();
 
-        vertex(-this.dh/2, -this.dw/2);
-        vertex(-this.dh, 0);
+        // vertex(-this.dh/2, -this.dw/2);
+        // vertex(-this.dh, 0);
         
-        vertex(-this.dh/2, this.dw/2);
-        vertex(this.dh/2, 0);
+        // vertex(-this.dh/2, this.dw/2);
+        // vertex(this.dh/2, 0);
 
-        endShape(CLOSE);
+        // endShape(CLOSE);
 
         if (this.isVessel) {
             noStroke();

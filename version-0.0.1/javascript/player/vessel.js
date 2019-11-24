@@ -73,6 +73,11 @@ class Vessel {
         this.pos.y = constrain(this.pos.y, chunkLoader.y, chunkLoader.totalHeight);
     }
 
+    shoot() {
+        let b = new Bullet(this.pos.x, this.pos.y, this.angle);
+        bullets.push(b);
+    }
+
     display() {
         push();
         translate(this.pos.x, this.pos.y);

@@ -20,4 +20,8 @@ class TextureHandler {
     getVessel() {
         return this.textures[0];
     }
+
+    getMother() {
+        return this.textures[1];
+    }
 }

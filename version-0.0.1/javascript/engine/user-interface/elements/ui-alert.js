@@ -3,6 +3,8 @@ class UIAlert {
         this.title = title;
         this.message = message;
 
+        this.type = "uialert";
+
         this.maxLifespan = 50;
         this.lifespan = this.maxLifespan;
         this.alpha = 255;
