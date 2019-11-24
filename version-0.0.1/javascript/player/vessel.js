@@ -67,8 +67,8 @@ class Vessel {
         //constrain to borders
         // this.pos.x = constrain(this.pos.x, 0, width);
         // this.pos.y = constrain(this.pos.y, 0, height);
-        this.pos.x = constrain(this.pos.x, cl.x, cl.totalWidth);
-        this.pos.y = constrain(this.pos.y, cl.y, cl.totalHeight);
+        this.pos.x = constrain(this.pos.x, chunkLoader.x, chunkLoader.totalWidth);
+        this.pos.y = constrain(this.pos.y, chunkLoader.y, chunkLoader.totalHeight);
     }
 
     display() {

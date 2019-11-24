@@ -2,7 +2,7 @@ const cam = new Cam(0, 0, 1);
 const ui = new UIHandler();
 const core = new Core();
 
-let cl; //chunk loader
+let chunkLoader; //chunk loader
 
 let bg; //background
 
@@ -11,31 +11,31 @@ let vessel; //exploration vessel
 
 let planet; //test planet
 
-let qh; //quest loader
+let questHandler; //quest loader
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
 
-    cl = new ChunkLoader(1000, 1000, 20, 20);
-    cl.generate();
-    cl.findNeighbors();
+    chunkLoader = new ChunkLoader(1300, 1300, 100, 100);
+    chunkLoader.generate();
+    chunkLoader.findNeighbors();
 
-    qh = new QuestHandler();
+    questHandler = new QuestHandler();
 
     //visit 3 planets quest
     let ob = new Objective(3, "Visit three planets.");
     let quest = new SimpleQuest("Explorer", ob);
-    qh.addQuest(quest);
+    questHandler.addQuest(quest);
 
     bg = new Background();
     bg.generateBackground(200);
 
-    let randomPoint = cl.chunks[Math.floor(Math.random() * cl.chunks.length)].getRandomPoint();
+    let randomPoint = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
 
     player = new Player(randomPoint.x, randomPoint.y);
     vessel = new Vessel(player.pos.x, player.pos.y);
 
-    // randomPoint = cl.chunks[Math.floor(Math.random()*cl.chunks.length)].getRandomPoint();
+    // randomPoint = chunkLoader.chunks[Math.floor(Math.random()*chunkLoader.chunks.length)].getRandomPoint();
 
 
 
@@ -72,8 +72,8 @@ function draw() {
     cam.update();
     translate(cam.x, cam.y);
     background(10);
-    cl.loop();
-    qh.loop();
+    chunkLoader.loop();
+    questHandler.loop();
     // bg.drawBackground();
 
     player.loop();
@@ -101,8 +101,8 @@ function keyPressed() {
                 ui.addElement(a);
             }
 
-            for (let i = 0; i < cl.chunks[vessel.chunk].planets.length; i++) {
-                cl.chunks[vessel.chunk].planets[i].update();
+            for (let i = 0; i < chunkLoader.chunks[vessel.chunk].planets.length; i++) {
+                chunkLoader.chunks[vessel.chunk].planets[i].update();
             }
         }
     }

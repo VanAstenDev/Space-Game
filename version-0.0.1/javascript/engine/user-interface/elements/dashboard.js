@@ -37,8 +37,8 @@ class Dashboard {
 
         textSize(20);
         fill(20);
-        let motherShipCoords = "[" + cl.chunks[player.chunk].r + ":" + cl.chunks[player.chunk].c + "]"
-        let vesselCoords = "[" + cl.chunks[vessel.chunk].r + ":" + cl.chunks[vessel.chunk].c + "]";
+        let motherShipCoords = "[" + chunkLoader.chunks[player.chunk].r + ":" + chunkLoader.chunks[player.chunk].c + "]"
+        let vesselCoords = "[" + chunkLoader.chunks[vessel.chunk].r + ":" + chunkLoader.chunks[vessel.chunk].c + "]";
         text("Mothership " + motherShipCoords, 50, 160, 250, 200);
         text("Vessel " + vesselCoords, 50, 185, 250, 200);
 

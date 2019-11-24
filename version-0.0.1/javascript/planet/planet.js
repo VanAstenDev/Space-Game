@@ -26,7 +26,7 @@ class Planet {
 
             //update "Explorer" quest
             if (this.cd <= 0) {
-                qh.trigger("Explorer");
+                questHandler.trigger("Explorer");
                 this.cd = this.triggerCD;
             }
         }

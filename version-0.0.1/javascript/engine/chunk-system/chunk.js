@@ -37,8 +37,8 @@ class Chunk {
 
     setNeighbors() {
         for (let i = 0; i < this.neighbors.length; i++) {
-            if (this.neighbors[i] >= 0 && this.neighbors[i] < (cl.chunks.length - 1)) {
-                cl.chunks[this.neighbors[i]].active = true;
+            if (this.neighbors[i] >= 0 && this.neighbors[i] < (chunkLoader.chunks.length - 1)) {
+                chunkLoader.chunks[this.neighbors[i]].active = true;
             }
         }
     }
