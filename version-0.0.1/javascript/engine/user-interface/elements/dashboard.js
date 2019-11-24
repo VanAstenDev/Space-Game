@@ -5,8 +5,10 @@ class Dashboard {
 
     display() {
         push();
-        translate(-cam.x + (width - 300), -cam.y);
+        noStroke();
         
+        translate(-cam.x + (width - 300), -cam.y);
+
         //TITLE part
         fill(50);
         rect(50, 50, 200, 50);
@@ -14,7 +16,7 @@ class Dashboard {
         textSize(40);
         fill(255);
         text("Dashboard", 50, 50, 200, 50);
-        
+
         //MAIN information
         fill(200);
         rect(50, 100, 200, 60);
@@ -31,14 +33,26 @@ class Dashboard {
 
         //coords
         fill(150);
-        rect(50,160,200,200);
+        rect(50, 160, 200, 60);
 
         textSize(20);
         fill(20);
-        let motherShipCoords = "["+cl.chunks[player.chunk].r+":"+cl.chunks[player.chunk].c+"]"
-        let vesselCoords = "["+cl.chunks[vessel.chunk].r+":"+cl.chunks[vessel.chunk].c+"]";
-        text("Mothership "+motherShipCoords, 50, 160, 250, 200);
-        text("Vessel "+vesselCoords, 50, 185, 250, 200);
+        let motherShipCoords = "[" + cl.chunks[player.chunk].r + ":" + cl.chunks[player.chunk].c + "]"
+        let vesselCoords = "[" + cl.chunks[vessel.chunk].r + ":" + cl.chunks[vessel.chunk].c + "]";
+        text("Mothership " + motherShipCoords, 50, 160, 250, 200);
+        text("Vessel " + vesselCoords, 50, 185, 250, 200);
+
+        //quest log
+        fill(50);
+        rect(50, 220, 200, 100);
+
+        textSize(20);
+        fill(150);
+        let questName = player.quest.name;
+        let questObjective = player.quest.objective.task+" ("+player.quest.objective.current+")";
+        textAlign(CENTER);
+        text("Quest: "+questName, 50, 220, 200, 40);
+        text("Objective: "+questObjective, 50, 250, 200, 80);
 
         pop();
     }

@@ -37,17 +37,19 @@ class Chunk {
 
     setNeighbors() {
         for (let i = 0; i < this.neighbors.length; i++) {
-            if (this.neighbors[i] >= 0 && this.neighbors[i] < (cl.chunks.length-1)) {
+            if (this.neighbors[i] >= 0 && this.neighbors[i] < (cl.chunks.length - 1)) {
                 cl.chunks[this.neighbors[i]].active = true;
             }
         }
     }
 
     generateBackground(n) {
-        for (let i = 0; i < n; i++) {
-            let randomPoint = this.getRandomPoint();
-            let star = createVector(randomPoint.x, randomPoint.y);
-            this.stars.push(star);
+        if (core.chunkOptions['stars']) {
+            for (let i = 0; i < n; i++) {
+                let randomPoint = this.getRandomPoint();
+                let star = createVector(randomPoint.x, randomPoint.y);
+                this.stars.push(star);
+            }
         }
     }
 
@@ -57,7 +59,7 @@ class Chunk {
             translate(this.stars[i].x, this.stars[i].y);
             fill(255);
             noStroke();
-            ellipse(0, 0, 10);
+            ellipse(0, 0, 2);
             pop();
         }
     }
@@ -67,12 +69,12 @@ class Chunk {
         if (core.options['debug'] == true) {
             push();
             translate(this.r * this.width, this.c * this.height);
-    
+
             //background
             fill(0, 100);
             noStroke();
             rect(0, 0, this.width, this.height);
-    
+
             noFill();
             stroke(255);
             strokeWeight(3);

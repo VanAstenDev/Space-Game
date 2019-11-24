@@ -1,6 +1,7 @@
 class Objective {
-    constructor(count) {
+    constructor(count, task) {
         this.count = count;
+        this.task = task;
 
         this.current = 0;
         this.complete = false;

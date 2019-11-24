@@ -77,7 +77,7 @@ class Vessel {
         rotate(this.angle);
 
         noStroke();
-        fill(255);
+        fill(255, 150);
 
         beginShape();
 

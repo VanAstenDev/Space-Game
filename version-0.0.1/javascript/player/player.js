@@ -24,6 +24,8 @@ class Player {
         this.mass = 50;
 
         this.pickUpDistance = 100;
+
+        this.quest;
     }
 
     loop() {
@@ -85,7 +87,7 @@ class Player {
         rotate(this.angle);
 
         noStroke();
-        fill(255);
+        fill(255, 150);
 
         beginShape();
 

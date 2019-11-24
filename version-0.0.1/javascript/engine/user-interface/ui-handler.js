@@ -4,7 +4,7 @@ class UIHandler {
 
         this.buttons = [];
 
-        this.maxElements = 10;
+        this.maxElements = 20;
     }
 
     updateButtons(x, y) {
@@ -31,7 +31,7 @@ class UIHandler {
                 this.elements[i].lifespan--;
                 if (this.elements[i].lifespan < 0) {
                     this.elements.splice(i, 1);
-                    return;
+                    // return;
                 } 
             }
         }

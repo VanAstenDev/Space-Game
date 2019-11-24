@@ -16,14 +16,14 @@ let qh; //quest loader
 function setup() {
     createCanvas(innerWidth, innerHeight);
 
-    cl = new ChunkLoader(1000, 1000, 100, 100);
+    cl = new ChunkLoader(1000, 1000, 20, 20);
     cl.generate();
     cl.findNeighbors();
 
     qh = new QuestHandler();
 
-    //visit 5 planets quest
-    let ob = new Objective(3);
+    //visit 3 planets quest
+    let ob = new Objective(3, "Visit three planets.");
     let quest = new SimpleQuest("Explorer", ob);
     qh.addQuest(quest);
 
@@ -53,6 +53,10 @@ function setup() {
     let dashboard = new Dashboard();
     ui.addElement(dashboard);
 
+    //BANNER
+    // let banner = new Banner("Test Banner!");
+    // ui.addElement(banner);
+
     //ADDING A BUTTON
     // let button = new Button(width/2, height/2, "Click Me!", "1");
     // ui.addElement(button);
@@ -67,9 +71,9 @@ function windowResized() {
 function draw() {
     cam.update();
     translate(cam.x, cam.y);
-    background(50);
+    background(10);
     cl.loop();
-    qh.update();
+    qh.loop();
     // bg.drawBackground();
 
     player.loop();

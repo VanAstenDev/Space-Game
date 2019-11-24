@@ -24,10 +24,13 @@ class ChunkLoader {
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.columns; c++) {
                 let chunk = new Chunk(r, c, this.chunkWidth, this.chunkHeight);
-                let randomPoint = chunk.getRandomPoint();
-                planet = new Planet(randomPoint.x, randomPoint.y);
-                chunk.planets.push(planet);
-                chunk.generateBackground();
+                let hasPlanet = Math.round(random());
+                if (hasPlanet) {
+                    let randomPoint = chunk.getRandomPoint();
+                    planet = new Planet(randomPoint.x, randomPoint.y);
+                    chunk.planets.push(planet);
+                }
+                chunk.generateBackground(core.chunkOptions['amount']);
                 this.chunks.push(chunk);
             }
         }
