@@ -39,7 +39,7 @@ class Dashboard {
         let vesselCoords = "["+cl.chunks[vessel.chunk].r+":"+cl.chunks[vessel.chunk].c+"]";
         text("Mothership "+motherShipCoords, 50, 160, 250, 200);
         text("Vessel "+vesselCoords, 50, 185, 250, 200);
-        
+
         pop();
     }
 }

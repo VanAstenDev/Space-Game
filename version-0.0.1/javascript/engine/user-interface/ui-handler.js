@@ -18,7 +18,7 @@ class UIHandler {
 
     addElement(uiElement) {
 
-        if (this.elements.length > this.maxElements) {
+        if (this.elements.length > this.maxElements) { 
             this.elements.splice(this.elements.length-1, 1);
         }
 

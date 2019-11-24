@@ -52,7 +52,14 @@ class Chunk {
     }
 
     drawBackground() {
-
+        for (let i = 0; i < this.stars.length; i++) {
+            push();
+            translate(this.stars[i].x, this.stars[i].y);
+            fill(255);
+            noStroke();
+            ellipse(0, 0, 10);
+            pop();
+        }
     }
 
     display() {

@@ -27,6 +27,7 @@ class ChunkLoader {
                 let randomPoint = chunk.getRandomPoint();
                 planet = new Planet(randomPoint.x, randomPoint.y);
                 chunk.planets.push(planet);
+                chunk.generateBackground();
                 this.chunks.push(chunk);
             }
         }

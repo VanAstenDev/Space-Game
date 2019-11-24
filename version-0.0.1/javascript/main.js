@@ -2,22 +2,30 @@ const cam = new Cam(0, 0, 1);
 const ui = new UIHandler();
 const core = new Core();
 
-let cl;
+let cl; //chunk loader
 
-let bg;
+let bg; //background
 
-let player;
-let vessel;
+let player; //player
+let vessel; //exploration vessel
 
-let planet;
+let planet; //test planet
+
+let qh; //quest loader
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
 
-
     cl = new ChunkLoader(1000, 1000, 100, 100);
     cl.generate();
     cl.findNeighbors();
+
+    qh = new QuestHandler();
+
+    //visit 5 planets quest
+    let ob = new Objective(3);
+    let quest = new SimpleQuest("Explorer", ob);
+    qh.addQuest(quest);
 
     bg = new Background();
     bg.generateBackground(200);
@@ -58,10 +66,10 @@ function windowResized() {
 
 function draw() {
     cam.update();
-    // scale(cam.zoom);
     translate(cam.x, cam.y);
     background(50);
     cl.loop();
+    qh.update();
     // bg.drawBackground();
 
     player.loop();

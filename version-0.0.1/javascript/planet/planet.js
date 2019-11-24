@@ -5,6 +5,9 @@ class Planet {
         this.r = random() * 250;
 
         this.buffer = this.r/5;
+
+        this.triggerCD = 200;
+        this.cd = 0;
     }
 
     loop() {
@@ -13,11 +16,18 @@ class Planet {
     }
 
     update() {
+        this.cd--;
         //check vessel
         if (vessel.pos.dist(this.pos) < this.r - this.buffer) {
             //PLANET UI POPS UP HERE!
-            let a = new UIAlert("Planet", "You entered a planet.");
-            ui.addElement(a);
+            // let a = new UIAlert("Planet", "You entered a planet.");
+            // ui.addElement(a);
+
+            //update "Explorer" quest
+            if (this.cd <= 0) {
+                qh.trigger("Explorer");
+                this.cd = this.triggerCD;
+            }
         }
     }
 

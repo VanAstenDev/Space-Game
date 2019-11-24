@@ -9,9 +9,9 @@ class Player {
 
         this.angle = 0;
 
-        this.turnSpeed = 0.01;
+        this.turnSpeed = 0.02;
 
-        this.maxSpeed = 2;
+        this.maxSpeed = 10;
         this.autoPilotSpeed = 0;
         this.friction = 0.95;
 
