@@ -6,7 +6,7 @@ class Core {
 
         this.chunkOptions = {
             "stars": true,
-            "amount": 8
+            "amount": 7
         }
 
         this.playerOptions = {
