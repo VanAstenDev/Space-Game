@@ -59,10 +59,4 @@ class LocationQuest {
             ui.addElement(a);
         }
     }
-
-    display() {
-        push();
-        let rPos = radar.getVector(this.location);
-
-    }
 }

@@ -7,7 +7,7 @@ class Player {
         this.acc = createVector(0, 0);
         this.vel = createVector(0, 0);
 
-        this.angle = 0;
+        this.angle = Math.random() * TWO_PI;
 
         this.turnSpeed = core.playerOptions['turnSpeed']; 
 

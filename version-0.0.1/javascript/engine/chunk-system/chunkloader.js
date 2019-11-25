@@ -20,6 +20,10 @@ class ChunkLoader {
         this.render();
     }
 
+    getChunk(index) {
+        return this.chunks[index].active;
+    }
+
     generate() {
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.columns; c++) {
@@ -74,15 +78,21 @@ class ChunkLoader {
         //get current chunk (vessel AND player)
         for (let i = 0; i < this.chunks.length; i++) {
             this.chunks[i].active = false;
-        }
 
-        for (let i = 0; i < this.chunks.length; i++) {
             if (player.pos.x > this.chunks[i].r * this.chunkWidth && player.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
                 if (player.pos.y > this.chunks[i].c * this.chunkHeight && player.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
                     this.chunks[i].active = true;
                     player.chunk = i;
                     //set neighbors active
                     this.chunks[i].setNeighbors();
+                }
+            }
+
+            for (let j = 0; j < enemies.length; j++) {
+                if (enemies[j].pos.x > this.chunks[i].r * this.chunkWidth && enemies[j].pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
+                    if (enemies[j].pos.y > this.chunks[i].c * this.chunkHeight && enemies[j].pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
+                        enemies[j].chunk = i;
+                    }
                 }
             }
 

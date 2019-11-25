@@ -32,6 +32,14 @@ class Radar {
         pop();
     }
 
+    drawEnemy(vector) {
+        push();
+        translate(-cam.x, (-cam.y+height)-this.height);
+        fill(255, 0, 0, 200);
+        ellipse(vector.x, vector.y, 10);
+        pop();
+    }
+
     display() {
         push();
         translate(-cam.x,(-cam.y+height)-this.height);

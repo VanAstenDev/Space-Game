@@ -6,6 +6,12 @@ class Bullet {
 
         this.angle = angle;
 
+        this.dmg = Math.floor(Math.random() * 50);
+
+        this.w = 1;
+        this.h = 1;
+        this.size = 5;
+
         this.maxSpeed = 15;
         this.lifespan = 500;
     }
@@ -28,9 +34,11 @@ class Bullet {
     display() {
         push();
         translate(this.pos.x, this.pos.y);
+        rotate(this.angle - PI/2);
         fill(255);
         noStroke();
-        ellipse(0, 0, 10);
+        rectMode(CENTER);
+        rect(0, 0, this.size*this.w, this.size*this.h);
         pop();
     }
 }

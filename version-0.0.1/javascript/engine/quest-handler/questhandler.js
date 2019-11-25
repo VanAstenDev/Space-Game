@@ -43,6 +43,11 @@ class QuestHandler {
 
             if (this.quests[i].type == "location" && this.quests[i].active) {
                 radar.drawPoint(radar.getVector(this.quests[i].location));
+                push();
+                translate(this.quests[i].location.x, this.quests[i].location.y);
+                fill(255, 255, 0);
+                ellipse(0, 0, 50);
+                pop();
             }
         }
     }

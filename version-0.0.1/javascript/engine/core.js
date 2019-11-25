@@ -8,8 +8,8 @@ class Core {
         }
 
         this.buildOptions = {
-            "version": "0.1.3",
-            "important": "TextureHandler Improvements",
+            "version": "0.1.5",
+            "important": "Enemies, Hitboxes, killquests",
             "gameName": "Space Exploration Game"
         }
 
@@ -20,8 +20,8 @@ class Core {
 
         this.playerOptions = {
             "maxSpeed": 15,
-            "turnSpeed": 0.05, 
-            "shootingAllowed": false
+            "turnSpeed": 0.035, 
+            "shootingAllowed": true
         }
 
         this.vesselOptions = {
@@ -34,6 +34,7 @@ class Core {
         this.planets = ["Planet1", "Planet2", "Planet3", "Planet4", "Planet5", "Planet6", "Planet7", "Planet8", "Planet9", "Planet10", "Planet11", "Planet12"];
         this.mothers = ["mothership", "mothership2", "mothership3"];
         this.vessels = ["vessel", "vessel2", "vessel3", "vessel4", "vessel5"];
+        this.enemyVessels = ["vessel4"];
     }
 
     getPlanetName() {

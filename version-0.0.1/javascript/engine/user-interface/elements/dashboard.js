@@ -25,9 +25,9 @@ class Dashboard {
         fill(50);
         let v = "";
         if (player.isVessel) {
-            v = "Exploration Vessel";
+            v = "Exploration Vessel (HP: "+vessel.health+")";
         } else {
-            v = "The Mothership";
+            v = "The Mothership (HP: "+vessel.health+")";
         }
         text(v, 50, 100, 200, 200);
 

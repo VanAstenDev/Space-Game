@@ -12,8 +12,15 @@ class Vessel {
         this.maxSpeed = core.vesselOptions["maxSpeed"];
         this.friction = 0.95;
 
+        this.shootingCooldown = 5;
+        this.shootingTimer = this.shootingCooldown;
+
         this.w = 20;
         this.h = 40;
+
+        this.hitbox = 25;
+
+        this.health = 500;
 
         this.dw = this.w;
         this.dh = this.h;
@@ -33,11 +40,25 @@ class Vessel {
         this.acc.add(f);
     }
 
-    update() {
+    takeDamage(dmg) {
+        this.health -= dmg;
+        if (this.health <= 0) {
+            this.dead = true;
+        }
+    }
 
+    update() {
+        this.shootingTimer++;
         //camera zoom
         // this.dw = this.w * cam.zoom;
         // this.dh = this.h * cam.zoom;
+
+        //check if bullet hit
+        for (let i = 0; i < bullets.length; i++) {
+            if (bullets[i].pos.dist(this.pos) < this.hitbox) {
+                this.takeDamage(bullets[i].dmg);
+            }
+        }
 
         //movement
         if (player.isVessel) {
@@ -74,8 +95,15 @@ class Vessel {
     }
 
     shoot() {
-        let b = new Bullet(this.pos.x, this.pos.y, this.angle);
-        bullets.push(b);
+        if (this.shootingTimer > this.shootingCooldown) {
+            let curPos = createVector(this.pos.x, this.pos.y);
+            let dir = p5.Vector.fromAngle(this.angle);
+            dir.mult(30);
+            curPos.add(dir);
+            let b = new Bullet(curPos.x, curPos.y, this.angle);
+            bullets.push(b);
+            this.shootingTimer = 0;
+        }
     }
 
     display() {
@@ -95,6 +123,11 @@ class Vessel {
         // vertex(this.dh/2, 0);
 
         // endShape(CLOSE);
+
+        if (core.options['debug']) {
+            fill(255, 0, 0, 50);
+            ellipse(0, 0, this.hitbox*2);
+        }
 
         pop();
     }

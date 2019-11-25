@@ -14,6 +14,8 @@ let motherTexture;
 let player; //player
 let vessel; //exploration vessel
 
+let enemies = []; //enemies
+
 let planet; //test planet
 
 let questHandler; //quest loader
@@ -35,6 +37,11 @@ function setup() {
     //load vessel textures
     for (let i = 0; i < core.vessels.length; i++) {
         textureHandler.addTexture(loadImage("javascript/assets/ship_textures/" + core.vessels[i] + ".png"), "vessel");
+    }
+
+    //load enemy textures
+    for (let i = 0; i < core.enemyVessels.length; i++) {
+        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/"+core.enemyVessels[i] + ".png"), "enemy");
     }
 
     //load mother textures
@@ -64,7 +71,12 @@ function setup() {
     bg = new Background();
     bg.generateBackground(200);
 
-    let randomPoint = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
+    let randomChunk = Math.floor(Math.random() * chunkLoader.chunks.length);
+    let randomPoint = chunkLoader.chunks[randomChunk].getRandomPoint();
+
+    for (let i = 0; i < 10; i++) {
+        enemies.push(new Enemy(chunkLoader.chunks[randomChunk].getRandomPoint().x, chunkLoader.chunks[randomChunk].getRandomPoint().y));
+    }
 
     player = new Player(randomPoint.x, randomPoint.y);
     vessel = new Vessel(player.pos.x, player.pos.y);
@@ -91,9 +103,13 @@ function setup() {
     ui.addElement(controls);
 
     //add random location quest
-    let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
-    let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
-    let quest = new LocationQuest("Pathfinder", ob, randomPos);
+    // let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
+    // let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
+    // let quest = new LocationQuest("Pathfinder", ob, randomPos);
+    // questHandler.addQuest(quest);
+
+    //kill 5 enemies quest
+    let quest = new TriggerQuest("Genocide", new Objective(5, "Kill 5 enemies."));
     questHandler.addQuest(quest);
 
     //BANNER
@@ -121,14 +137,35 @@ function draw() {
     background(10);
     chunkLoader.loop();
 
-    // bg.drawBackground();
-    if (player.isVessel) {
-        player.loop();
-        vessel.loop();
+    radar.generate();
+    radar.display();
+
+    if (vessel.dead) {
+        let b = new Banner("YOU DIED!");
+        ui.addElement(b);
     } else {
-        vessel.loop();
-        player.loop();
+        if (player.isVessel) {
+            player.loop();
+            vessel.loop();
+        } else {
+            vessel.loop();
+            player.loop();
+        }
     }
+
+    // bg.drawBackground();
+    
+
+    
+
+    for (let i = enemies.length - 1; i > 0; i--) {
+        enemies[i].loop();
+        if (enemies[i].dead) {
+            enemies.splice(i, 1);
+            questHandler.trigger("Genocide");
+        }
+    }
+
     // console.log(bullets.length);
 
     for (let i = bullets.length - 1; i > 0; i--) {
@@ -143,8 +180,7 @@ function draw() {
 
     ui.display();
 
-    radar.generate();
-    radar.display();
+    
 
     questHandler.loop();
 }
@@ -155,7 +191,7 @@ function mousePressed() {
 }
 
 function keyPressed() {
-    if (keyCode == "69") {
+    if (keyCode == "69") { // E
         if (!player.isVessel) {
             //player is mothership
             player.isVessel = true;
@@ -181,7 +217,7 @@ function keyPressed() {
         }
     }
 
-    if (core.playerOptions['shootingAllowed']) {
+    if (core.playerOptions['shootingAllowed'] && player.isVessel) {
         if (keyCode == ENTER) {
             vessel.shoot();
         }

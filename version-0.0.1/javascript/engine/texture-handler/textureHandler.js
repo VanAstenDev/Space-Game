@@ -4,6 +4,7 @@ class TextureHandler {
         this.vesselTextures = [];
         this.motherTextures = [];
         this.planetTextures = [];
+        this.enemyTextures = [];
 
         this.motherIndex = -1;
         this.vesselIndex = -1;
@@ -21,6 +22,9 @@ class TextureHandler {
         }
         if (type == "vessel") {
             this.vesselTextures.push(texture);
+        }
+        if (type == "enemy") {
+            this.enemyTextures.push(texture);
         }
     }
 
@@ -45,6 +49,10 @@ class TextureHandler {
             this.vesselIndex = 0;
         }
         return this.vesselTextures[this.vesselIndex];
+    }
+
+    getEnemy() {
+        return this.enemyTextures[Math.floor(Math.random()*this.enemyTextures.length)];
     }
 
     getMother() {
