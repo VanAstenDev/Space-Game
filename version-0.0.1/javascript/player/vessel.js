@@ -7,9 +7,9 @@ class Vessel {
         this.chunk = 0;
 
         this.angle = 0;
-        this.turnSpeed = 0.05;
+        this.turnSpeed = core.vesselOptions["turnSpeed"];
 
-        this.maxSpeed = 4;
+        this.maxSpeed = core.vesselOptions["maxSpeed"];
         this.friction = 0.95;
 
         this.w = 20;
