@@ -30,7 +30,7 @@ function setup() {
 
     textureHandler = new TextureHandler();
 
-    soundtrack = new SoundObject("javascript/assets/sounds/maintheme.mp3");
+    soundtrack = new SoundObject("javascript/assets/sounds/maintheme.ogg");
 
     //load vessel textures
     for (let i = 0; i < core.vessels.length; i++) {
