@@ -1,6 +1,7 @@
 class Planet {
     constructor(x, y) {
         this.pos = createVector(x, y);
+        this.name = core.getPlanetName();
 
         // this.r = random() * 250;
         // this.r = map(random(), 0, 1, 150, 300);

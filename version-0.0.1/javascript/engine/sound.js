@@ -5,7 +5,7 @@ class SoundObject {
         this.sound.setAttribute("preload", "auto");
         this.sound.setAttribute("controls", "none");
         this.sound.setAttribute("onended", "this.play()");
-        this.sound.volume = 0.5;
+        this.sound.volume = 0.2;
         this.sound.style.display = "none";
         document.body.appendChild(this.sound);
 
