@@ -4,6 +4,8 @@ class LocationQuest {
         this.objective = objective;
         this.complete = false;
 
+        this.type = "location";
+
         this.location = location;
         this.radius = 200;
 
@@ -23,6 +25,7 @@ class LocationQuest {
             //check if quest is complete
             if (this.objective.check()) {
                 this.complete = true;
+                this.active = false;
                 //add reward to player
                 //show debug ui
                 // let a = new UIAlert("Quest Done", this.name);
@@ -55,5 +58,11 @@ class LocationQuest {
             let a = new UIAlert("Quest Progress", str);
             ui.addElement(a);
         }
+    }
+
+    display() {
+        push();
+        let rPos = radar.getVector(this.location);
+
     }
 }

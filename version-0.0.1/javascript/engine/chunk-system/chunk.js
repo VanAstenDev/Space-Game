@@ -84,12 +84,12 @@ class Chunk {
             translate(this.r * this.width, this.c * this.height);
 
             //background
-            fill(0, 100);
+            noFill();
             noStroke();
             rect(0, 0, this.width, this.height);
 
             noFill();
-            stroke(255);
+            stroke(255, 100);
             strokeWeight(3);
             rect(0, 0, this.width, this.height);
             pop();

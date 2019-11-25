@@ -9,7 +9,7 @@ class Player {
 
         this.angle = 0;
 
-        this.turnSpeed = 0.02; 
+        this.turnSpeed = core.playerOptions['turnSpeed']; 
 
         this.maxSpeed = core.playerOptions['maxSpeed'];
         this.autoPilotSpeed = 0;

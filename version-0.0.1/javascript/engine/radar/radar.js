@@ -20,6 +20,18 @@ class Radar {
         }
     }
 
+    getVector(vector) {
+        return createVector(map(vector.x, 0, chunkLoader.totalWidth, 0, this.width), map(vector.y, 0, chunkLoader.totalHeight, 0, this.height));
+    }
+
+    drawPoint(vector) {
+        push();
+        translate(-cam.x, (-cam.y+height)-this.height);
+        fill(255);
+        ellipse(vector.x, vector.y, 10);
+        pop();
+    }
+
     display() {
         push();
         translate(-cam.x,(-cam.y+height)-this.height);

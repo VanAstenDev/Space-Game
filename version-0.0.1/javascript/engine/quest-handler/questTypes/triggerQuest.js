@@ -3,6 +3,8 @@ class TriggerQuest {
         this.name = name;
         this.objective = objective;
         this.active = true;
+
+        this.type = "trigger";
     }
 
     update() {

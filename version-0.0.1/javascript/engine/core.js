@@ -7,13 +7,20 @@ class Core {
             "chunkHeight": 1000
         }
 
+        this.buildOptions = {
+            "version": "0.1.3",
+            "important": "TextureHandler Improvements",
+            "gameName": "Space Exploration Game"
+        }
+
         this.chunkOptions = {
             "stars": true,
             "amount": 7
         }
 
         this.playerOptions = {
-            "maxSpeed": 10,
+            "maxSpeed": 15,
+            "turnSpeed": 0.05, 
             "shootingAllowed": false
         }
 

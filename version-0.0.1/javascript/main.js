@@ -34,12 +34,12 @@ function setup() {
 
     //load vessel textures
     for (let i = 0; i < core.vessels.length; i++) {
-        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/"+core.vessels[i]+".png"), "vessel");
+        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/" + core.vessels[i] + ".png"), "vessel");
     }
 
     //load mother textures
     for (let i = 0; i < core.mothers.length; i++) {
-        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/"+core.mothers[i]+".png"), "mother");
+        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/" + core.mothers[i] + ".png"), "mother");
     }
 
     textureHandler.getPlanetTextures();
@@ -78,7 +78,7 @@ function setup() {
     // let alert = new UIAlert("Test", "This is a test message.");
     // ui.addElement(alert);
 
-    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.1.0 (TextureHandler) Controls: i", 0, 0);
+    let alphaNotification = new PText(core.buildOptions['gameName']+" | Build "+core.buildOptions['version']+" ("+core.buildOptions['important']+") Controls: i", 0, 0);
     ui.addElement(alphaNotification);
 
     let fpscounter = new FPSCounter();
@@ -89,6 +89,12 @@ function setup() {
 
     let controls = new ControlsUI();
     ui.addElement(controls);
+
+    //add random location quest
+    let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
+    let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
+    let quest = new LocationQuest("Pathfinder", ob, randomPos);
+    questHandler.addQuest(quest);
 
     //BANNER
     // let banner = new Banner("Test Banner!");
@@ -114,12 +120,15 @@ function draw() {
     translate(cam.x, cam.y);
     background(10);
     chunkLoader.loop();
-    questHandler.loop();
+
     // bg.drawBackground();
-
-    player.loop();
-    vessel.loop();
-
+    if (player.isVessel) {
+        player.loop();
+        vessel.loop();
+    } else {
+        vessel.loop();
+        player.loop();
+    }
     // console.log(bullets.length);
 
     for (let i = bullets.length - 1; i > 0; i--) {
@@ -136,6 +145,8 @@ function draw() {
 
     radar.generate();
     radar.display();
+
+    questHandler.loop();
 }
 
 function mousePressed() {

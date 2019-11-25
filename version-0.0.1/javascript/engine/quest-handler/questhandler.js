@@ -40,6 +40,10 @@ class QuestHandler {
                 player.quest = nq;
                 this.quests[i].active = false;
             }
+
+            if (this.quests[i].type == "location" && this.quests[i].active) {
+                radar.drawPoint(radar.getVector(this.quests[i].location));
+            }
         }
     }
 
