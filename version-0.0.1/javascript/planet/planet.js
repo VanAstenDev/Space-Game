@@ -33,7 +33,7 @@ class Planet {
             fill(255, 100);
             noStroke();
             ellipse(0, 0, this.r);
-        } else {
+        } else if (this.texture != undefined) {
             imageMode(CENTER);
             image(this.texture, 0, 0);
         }

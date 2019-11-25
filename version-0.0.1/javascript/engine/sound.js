@@ -12,6 +12,11 @@ class SoundObject {
 
         this.allowed = false;
         this.count = 0;
+
+        // this.sound.addEventListener("onended", function(){
+            // this.sound.currentTime = 0;
+            // console.log("ended");
+        // });
     }
 
     play() {
@@ -20,6 +25,11 @@ class SoundObject {
 
     stop() {
         this.sound.pause();
+    }
+
+    reset() {
+        this.count = 0;
+        this.play();
     }
 
     check() {

@@ -7,12 +7,6 @@ let chunkLoader; //chunk loader
 let bg; //background
 
 //Import textures
-let planetTexture_1;
-let planetTexture_2;
-let planetTexture_3;
-let planetTexture_4;
-let planetTexture_5;
-let planetTexture_6;
 
 let vesselTexture;
 let motherTexture;
@@ -36,27 +30,19 @@ function setup() {
 
     textureHandler = new TextureHandler();
 
-    soundtrack = new SoundObject("test.wav");
+    soundtrack = new SoundObject("javascript/assets/sounds/maintheme.mp3");
 
-    planetTexture_1 = loadImage("javascript/assets/textures/Planet1.png");
-    planetTexture_2 = loadImage("javascript/assets/textures/Planet2.png");
-    planetTexture_3 = loadImage("javascript/assets/textures/Planet3.png");
-    // planetTexture_4 = loadImage("javascript/assets/textures/Planet4.png");
-    planetTexture_5 = loadImage("javascript/assets/textures/Planet5.png");
-    planetTexture_6 = loadImage("javascript/assets/textures/Planet6.png");
+    //load vessel textures
+    for (let i = 0; i < core.vessels.length; i++) {
+        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/"+core.vessels[i]+".png"), "vessel");
+    }
 
-    vesselTexture = loadImage("javascript/assets/ship_textures/vessel2.png");
-    motherTexture = loadImage("javascript/assets/ship_textures/vessel.png");
+    //load mother textures
+    for (let i = 0; i < core.mothers.length; i++) {
+        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/"+core.mothers[i]+".png"), "mother");
+    }
 
-    textureHandler.addTexture(planetTexture_1, "planet");
-    textureHandler.addTexture(planetTexture_2, "planet");
-    textureHandler.addTexture(planetTexture_3, "planet");
-    // textureHandler.addTexture(planetTexture_4, "planet");
-    textureHandler.addTexture(planetTexture_5, "planet");
-    textureHandler.addTexture(planetTexture_6, "planet");
-
-    textureHandler.addTexture(vesselTexture, "other");
-    textureHandler.addTexture(motherTexture, "other");
+    textureHandler.getPlanetTextures();
 
     let chunks = core.options['chunks'];
     chunkLoader = new ChunkLoader(core.options['chunkWidth'], core.options['chunkHeight'], chunks, chunks);
@@ -92,7 +78,7 @@ function setup() {
     // let alert = new UIAlert("Test", "This is a test message.");
     // ui.addElement(alert);
 
-    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.7 (Textures)\nControls: i", 0, 0);
+    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.1.0 (TextureHandler) Controls: i", 0, 0);
     ui.addElement(alphaNotification);
 
     let fpscounter = new FPSCounter();
@@ -197,6 +183,13 @@ function keyPressed() {
             core.options['debug'] = true;
         }
 
+    }
+
+    if (keyCode == "86") {
+        vessel.texture = textureHandler.getVessel();
+    }
+    if (keyCode == "77") {
+        player.texture = textureHandler.getMother();
     }
 
     if (keyCode == "73") {
