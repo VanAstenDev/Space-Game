@@ -92,19 +92,17 @@ function setup() {
     // let alert = new UIAlert("Test", "This is a test message.");
     // ui.addElement(alert);
 
-    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.7 (Textures)", 0, 0);
+    let alphaNotification = new PText("Space Exploration Game | Alpha Build 0.0.7 (Textures)\nControls: i", 0, 0);
     ui.addElement(alphaNotification);
 
-    if (core.options['debug'] == true) {
-        let fpscounter = new FPSCounter();
-        ui.addElement(fpscounter);
-    }
+    let fpscounter = new FPSCounter();
+    ui.addElement(fpscounter);
 
     let dashboard = new Dashboard();
     ui.addElement(dashboard);
 
-    let inventory = new Inventory();
-    ui.addElement(inventory);
+    let controls = new ControlsUI();
+    ui.addElement(controls);
 
     //BANNER
     // let banner = new Banner("Test Banner!");
@@ -160,7 +158,7 @@ function mousePressed() {
 }
 
 function keyPressed() {
-    if (keyCode == "32") {
+    if (keyCode == "69") {
         if (!player.isVessel) {
             //player is mothership
             player.isVessel = true;
@@ -191,7 +189,16 @@ function keyPressed() {
             vessel.shoot();
         }
     }
-    
+
+    if (keyCode == "85") {
+        if (core.options['debug'] == true) {
+            core.options['debug'] = false;
+        } else {
+            core.options['debug'] = true;
+        }
+
+    }
+
     if (keyCode == "73") {
         if (ui.getInventory().active == true) {
             ui.getInventory().active = false;

@@ -13,7 +13,7 @@ class PText {
 
         fill(255);
         noStroke();
-        rect(0, 0, 500, 20);
+        rect(0, 0, 500, 50);
 
         textSize(20);
         textAlign(CENTER);

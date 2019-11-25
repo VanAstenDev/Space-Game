@@ -1,9 +1,9 @@
-class Inventory {
+class ControlsUI {
     constructor() {
         this.width = 500;
         this.height = 500;
 
-        this.type = "inventory";
+        this.type = "controls";
 
         this.active = false;
     }
@@ -18,14 +18,14 @@ class Inventory {
             textAlign(CENTER, CENTER);
             textSize(32);
             fill(255);
-            text("Inventory (i)", 0, 0, this.width, 50);
+            text("Controls (i)", 0, 0, this.width, 50);
 
             fill(255, 200);
             rect(0, 50, this.width, this.height - 50);
             textSize(26);
             fill(50);
             textAlign(CENTER, TOP);
-            text("Gold: 0\nRaw Metal: 0", 0, 50, this.width, this.height - 50);
+            text("Exit/Enter Mothership: E\nToggle Debug: U", 0, 50, this.width, this.height - 50);
             pop();
         }
     }

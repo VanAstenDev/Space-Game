@@ -27,7 +27,7 @@ class UIHandler {
 
     getInventory() {
         for (let i = 0; i < this.elements.length; i++) {
-            if (this.elements[i].type == "inventory") {
+            if (this.elements[i].type == "controls") {
                 return this.elements[i];
             }
         }
