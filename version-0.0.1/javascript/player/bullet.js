@@ -24,7 +24,6 @@ class Bullet {
         this.vel.add(this.acc);
         this.vel.limit(this.maxSpeed);
         this.pos.add(this.vel);
-
     }
 
     applyForce(vector) {
@@ -37,8 +36,7 @@ class Bullet {
         rotate(this.angle - PI/2);
         fill(255);
         noStroke();
-        rectMode(CENTER);
-        rect(0, 0, this.size*this.w, this.size*this.h);
+        ellipse(0, 0, 5);
         pop();
     }
 }

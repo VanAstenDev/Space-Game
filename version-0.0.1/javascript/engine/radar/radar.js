@@ -44,12 +44,12 @@ class Radar {
         push();
         translate(-cam.x,(-cam.y+height)-this.height);
         //draw grid
-        for (let r = 0; r < chunkLoader.rows; r++) {
-            for (let c = 0; c < chunkLoader.columns; c++) {
-                fill(255);
-                rect(r * this.gw, c * this.gh, this.gw, this.gh);
-            }
-        }
+        // for (let r = 0; r < chunkLoader.rows; r++) {
+        //     for (let c = 0; c < chunkLoader.columns; c++) {
+        //         fill(255);
+        //         rect(r * this.gw, c * this.gh, this.gw, this.gh);
+        //     }
+        // }
 
         //draw pos's
         fill(50);

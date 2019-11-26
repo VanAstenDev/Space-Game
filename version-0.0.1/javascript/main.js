@@ -41,7 +41,7 @@ function setup() {
 
     //load enemy textures
     for (let i = 0; i < core.enemyVessels.length; i++) {
-        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/"+core.enemyVessels[i] + ".png"), "enemy");
+        textureHandler.addTexture(loadImage("javascript/assets/ship_textures/" + core.enemyVessels[i] + ".png"), "enemy");
     }
 
     //load mother textures
@@ -74,10 +74,6 @@ function setup() {
     let randomChunk = Math.floor(Math.random() * chunkLoader.chunks.length);
     let randomPoint = chunkLoader.chunks[randomChunk].getRandomPoint();
 
-    for (let i = 0; i < 10; i++) {
-        enemies.push(new Enemy(chunkLoader.chunks[randomChunk].getRandomPoint().x, chunkLoader.chunks[randomChunk].getRandomPoint().y));
-    }
-
     player = new Player(randomPoint.x, randomPoint.y);
     vessel = new Vessel(player.pos.x, player.pos.y);
 
@@ -90,7 +86,7 @@ function setup() {
     // let alert = new UIAlert("Test", "This is a test message.");
     // ui.addElement(alert);
 
-    let alphaNotification = new PText(core.buildOptions['gameName']+" | Build "+core.buildOptions['version']+" ("+core.buildOptions['important']+") Controls: i", 0, 0);
+    let alphaNotification = new PText(core.buildOptions['gameName'] + " | Build " + core.buildOptions['version'] + " (" + core.buildOptions['important'] + ") Controls: i", 0, 0);
     ui.addElement(alphaNotification);
 
     let fpscounter = new FPSCounter();
@@ -103,14 +99,14 @@ function setup() {
     ui.addElement(controls);
 
     //add random location quest
-    // let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
-    // let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
-    // let quest = new LocationQuest("Pathfinder", ob, randomPos);
-    // questHandler.addQuest(quest);
+    let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
+    let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
+    let quest = new LocationQuest("Pathfinder", ob, randomPos);
+    questHandler.addQuest(quest);
 
     //kill 5 enemies quest
-    let quest = new TriggerQuest("Genocide", new Objective(5, "Kill 5 enemies."));
-    questHandler.addQuest(quest);
+    // let quest = new TriggerQuest("Genocide", new Objective(5, "Kill 5 enemies."));
+    // questHandler.addQuest(quest);
 
     //BANNER
     // let banner = new Banner("Test Banner!");
@@ -129,34 +125,21 @@ function windowResized() {
 
 let bullets = [];
 
+let cd = 0;
+let loopCooldown = 10;
+
 function draw() {
-    frameRate(70);
     cam.update();
-    soundtrack.check();
+
+    frameRate(35);
     translate(cam.x, cam.y);
     background(10);
     chunkLoader.loop();
 
-    radar.generate();
-    radar.display();
-
-    if (vessel.dead) {
-        let b = new Banner("YOU DIED!");
-        ui.addElement(b);
-    } else {
-        if (player.isVessel) {
-            player.loop();
-            vessel.loop();
-        } else {
-            vessel.loop();
-            player.loop();
-        }
-    }
-
     // bg.drawBackground();
-    
 
-    
+
+
 
     for (let i = enemies.length - 1; i > 0; i--) {
         enemies[i].loop();
@@ -178,11 +161,39 @@ function draw() {
         }
     }
 
+
+
+    if (vessel.dead) {
+        let b = new Banner("YOU DIED!");
+        ui.addElement(b);
+    } else {
+        if (player.isVessel) {
+            player.loop();
+            vessel.loop();
+        } else {
+            vessel.loop();
+            player.loop();
+        }
+    }
+
     ui.display();
 
-    
+    cd++;
+    if (cd > loopCooldown) {
+        secondaryLoop();
+        cd = 0;
+    }
+    radar.generate();
+
+    radar.display();
 
     questHandler.loop();
+
+}
+
+function secondaryLoop() {
+    soundtrack.check();
+    chunkLoader.tempUpdate();
 }
 
 function mousePressed() {

@@ -21,7 +21,7 @@ class Enemy {
         this.dmgCD = 5;
         this.timer = 0;
 
-        this.shootingCooldown = 20;
+        this.shootingCooldown = 40;
         this.shootingTimer = this.shootingCooldown;
 
         this.alpha = 255;
@@ -132,7 +132,7 @@ class Enemy {
         translate(this.pos.x, this.pos.y);
         rotate(this.angle);
         imageMode(CENTER);
-        tint(255, this.alpha);
+        // tint(255, this.alpha);
         image(this.texture, 0, 0, (this.w * (2)), (this.h * (1)));
 
         // noStroke();

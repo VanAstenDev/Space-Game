@@ -74,10 +74,16 @@ class ChunkLoader {
         }
     }
 
+    tempUpdate() {
+        for (let i = 0; i < this.chunks.length; i++) {
+            this.chunks[i].active = false;
+        }
+    }
+
     update() {
         //get current chunk (vessel AND player)
         for (let i = 0; i < this.chunks.length; i++) {
-            this.chunks[i].active = false;
+            if (!this.chunks[i].active)  {
 
             if (player.pos.x > this.chunks[i].r * this.chunkWidth && player.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
                 if (player.pos.y > this.chunks[i].c * this.chunkHeight && player.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
@@ -104,6 +110,8 @@ class ChunkLoader {
                     this.chunks[i].setNeighbors();
                 }
             }
+
+        }
         }
     }
 
