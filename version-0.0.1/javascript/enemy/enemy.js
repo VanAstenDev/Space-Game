@@ -1,12 +1,19 @@
 class Enemy {
-    constructor(x, y) {
+    constructor(x, y, type) {
         this.pos = createVector(x, y);
         this.acc = createVector(0, 0);
         this.vel = createVector(0, 0);
 
+        this.type = type;
+
         this.chunk = 0;
 
         this.angle = Math.random() * TWO_PI;
+        this.orderedAngle = this.angle;
+        this.angleStepSize = 0;
+        this.turnSteps = 50;
+        this.accuracy = 0.25;
+
         this.turnSpeed = 0.05;
         this.maxSpeed = 15;
         this.friction = 0.95;
@@ -64,16 +71,33 @@ class Enemy {
         }
     }
 
+    orderAngle(angle) {
+        this.orderedAngle = angle;
+        this.angleStepSize = (this.angle - this.orderedAngle) / this.turnSteps;
+    }
+
     update() {
         this.timer++;
         this.shootingTimer++;
+
+        if (this.angle > TWO_PI) {
+            this.angle = 0;
+        }
+        if (this.angle < 0) {
+            this.angle = TWO_PI;
+        }
 
         if (chunkLoader.getChunk(this.chunk)) {
 
             this.alpha = map(this.health, 0, 200, 150, 255);
 
             //angle to player
-            this.angle = Math.atan2(vessel.pos.y - this.pos.y, vessel.pos.x - this.pos.x);
+            // this.angle = Math.atan2(vessel.pos.y - this.pos.y, vessel.pos.x - this.pos.x);
+            this.angle += this.angleStepSize;
+
+            if (this.angle > this.orderedAngle - (this.orderedAngle*this.accuracy) && this.angle < this.orderedAngle + (this.orderedAngle * this.accuracy)) {
+                this.angleStepSize = 0;
+            }
 
             //movement
             if (this.pos.dist(vessel.pos) > 500) {
@@ -84,9 +108,9 @@ class Enemy {
             }
 
             //shoot
-            if (this.pos.dist(vessel.pos) < 600) {
-                this.shoot();
-            }
+            // if (this.pos.dist(vessel.pos) < 600) {
+            //     this.shoot();
+            // }
 
             //random movement
             // this.pnOffset += 0.01;

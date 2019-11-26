@@ -43,5 +43,7 @@ class Core {
         return this.planetNames[Math.floor(Math.random()*this.planetNames.length)];
     }
 
-
+    getAngleBetweenVectors(vector1, vector2) {
+        return Math.atan2(vector1.y - vector2.y, vector1.x - vector2.x);
+    }
 }

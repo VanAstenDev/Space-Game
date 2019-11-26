@@ -26,7 +26,6 @@ let soundtrack;
 
 let radar;
 
-
 function setup() {
     createCanvas(innerWidth, innerHeight);
 
@@ -120,7 +119,10 @@ function setup() {
     // let button = new Button(width/2, height/2, "Click Me!", "1");
     // ui.addElement(button);
     // ui.buttons.push(button);
+    // let rp = chunkLoader.chunks[vessel.chunk].getRandomPoint();
 
+    // patrol = new Patrol(vessel.pos.x, vessel.pos.y, 2, 5);
+    // patrol.generate();
 }
 
 function windowResized() {
@@ -141,12 +143,11 @@ function draw() {
     chunkLoader.loop();
 
     // bg.drawBackground();
-
-
-
+    for (let i = 0; i < enemies.length; i++) {
+        enemies[i].loop();
+    }
 
     for (let i = enemies.length - 1; i > 0; i--) {
-        enemies[i].loop();
         if (enemies[i].dead) {
             enemies.splice(i, 1);
             questHandler.trigger("Genocide");
