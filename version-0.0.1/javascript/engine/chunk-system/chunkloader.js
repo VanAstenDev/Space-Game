@@ -18,6 +18,7 @@ class ChunkLoader {
     loop() {
         this.update();
         this.render();
+
     }
 
     getChunk(index) {
@@ -36,7 +37,7 @@ class ChunkLoader {
                         chunk.planets.push(planet);
                     }
                 }
-                chunk.generateBackground(core.chunkOptions['amount']);
+                // chunk.generateBackground(core.chunkOptions['amount']);
                 this.chunks.push(chunk);
             }
         }
@@ -83,35 +84,38 @@ class ChunkLoader {
     update() {
         //get current chunk (vessel AND player)
         for (let i = 0; i < this.chunks.length; i++) {
-            if (!this.chunks[i].active)  {
+            if (!this.chunks[i].active) {
 
-            if (player.pos.x > this.chunks[i].r * this.chunkWidth && player.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
-                if (player.pos.y > this.chunks[i].c * this.chunkHeight && player.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
-                    this.chunks[i].active = true;
-                    player.chunk = i;
-                    //set neighbors active
-                    this.chunks[i].setNeighbors();
-                }
-            }
 
-            for (let j = 0; j < enemies.length; j++) {
-                if (enemies[j].pos.x > this.chunks[i].r * this.chunkWidth && enemies[j].pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
-                    if (enemies[j].pos.y > this.chunks[i].c * this.chunkHeight && enemies[j].pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
-                        enemies[j].chunk = i;
+                if (player.pos.x > this.chunks[i].r * this.chunkWidth && player.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
+                    if (player.pos.y > this.chunks[i].c * this.chunkHeight && player.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
+                        // this.chunks[i].active = true;
+                        player.chunk = i;
+                        //set neighbors active
+                        // this.chunks[i].setNeighbors();
                     }
                 }
-            }
 
-            if (vessel.pos.x > this.chunks[i].r * this.chunkWidth && vessel.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
-                if (vessel.pos.y > this.chunks[i].c * this.chunkHeight && vessel.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
-                    this.chunks[i].active = true;
-                    vessel.chunk = i;
-                    //set neighbors active
-                    this.chunks[i].setNeighbors();
+                for (let j = 0; j < enemies.length; j++) {
+                    if (enemies[j].pos.x > this.chunks[i].r * this.chunkWidth && enemies[j].pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
+                        if (enemies[j].pos.y > this.chunks[i].c * this.chunkHeight && enemies[j].pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
+                            enemies[j].chunk = i;
+                        }
+                    }
                 }
-            }
 
-        }
+                if (vessel.pos.x > this.chunks[i].r * this.chunkWidth && vessel.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
+                    if (vessel.pos.y > this.chunks[i].c * this.chunkHeight && vessel.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
+                        this.chunks[i].active = true;
+                        vessel.chunk = i;
+                        //set neighbors active
+                        this.chunks[i].setNeighbors();
+                    }
+                }
+
+            } else {
+
+            }
         }
     }
 
@@ -119,6 +123,8 @@ class ChunkLoader {
         for (let i = 0; i < this.chunks.length; i++) {
             if (this.chunks[i].active) {
                 this.chunks[i].loop();
+                this.chunks[i].display();
+
             }
         }
 
@@ -131,6 +137,15 @@ class ChunkLoader {
             strokeWeight(3);
             rect(0, 0, this.rows * this.chunkWidth, this.columns * this.chunkHeight);
             pop();
+        }
+        for (let i = 0; i < this.chunks.length; i++) {
+            if (this.chunks[i].active) {
+
+
+                for (let j = 0; j < this.chunks[i].planets.length; j++) {
+                    this.chunks[i].planets[j].render();
+                }
+            }
         }
     }
 }

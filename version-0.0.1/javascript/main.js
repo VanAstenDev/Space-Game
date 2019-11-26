@@ -50,6 +50,7 @@ function setup() {
     }
 
     textureHandler.getPlanetTextures();
+    textureHandler.getBackdropTextures();
 
     let chunks = core.options['chunks'];
     chunkLoader = new ChunkLoader(core.options['chunkWidth'], core.options['chunkHeight'], chunks, chunks);
@@ -97,6 +98,9 @@ function setup() {
 
     let controls = new ControlsUI();
     ui.addElement(controls);
+
+    let shipinfo = new ShipInformation();
+    ui.addElement(shipinfo);
 
     //add random location quest
     let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
@@ -257,4 +261,12 @@ function keyPressed() {
             ui.getInventory().active = true;
         }
     }
+
+    if (keyCode == "79") {
+        if (ui.getShipinfo().active == true) {
+            ui.getShipinfo().active = false;
+        } else {
+            ui.getShipinfo().active = true;
+        }
+    } 
 }

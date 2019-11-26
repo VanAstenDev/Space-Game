@@ -25,6 +25,10 @@ class FPSCounter {
         let ac = chunkLoader.getActive();
         textSize(24);
         text("Active Chunks: "+ac, -150, 35, 300, 300);
+
+        textSize(24);
+        text("Dimensions: "+chunkLoader.totalWidth+"x"+chunkLoader.totalHeight, -150, 65, 400, 300);
+
         pop();
     }
 }

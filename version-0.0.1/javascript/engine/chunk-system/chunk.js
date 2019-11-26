@@ -14,11 +14,13 @@ class Chunk {
         this.planets = [];
 
         this.stars = [];
+
+        this.texture = textureHandler.getBackdrop();
     }
 
     loop() {
         this.update();
-        this.display();
+        // this.display();
     }
 
     update() {
@@ -45,45 +47,44 @@ class Chunk {
         }
     }
 
-    generateBackground(n) {
-        //test plekkie
-        for (let i = 0; i < this.neighbors.length; i++) {
-            for (let j = 0; j < this.planets.length; j++) {
-                for (let k = 0; k < this.neighbors[i].planets.length; k++) {
-                    if (this.neighbors[i].planets[k].texture == this.planets[j].texture) {
-                        this.neighbors[i].planets[k].texture = textureHandler.getPlanetTexture();
-                    }
-                }
-            }
-        }
+    // generateBackground(n) {
+    //     //test plekkie
+    //     for (let i = 0; i < this.neighbors.length; i++) {
+    //         for (let j = 0; j < this.planets.length; j++) {
+    //             for (let k = 0; k < this.neighbors[i].planets.length; k++) {
+    //                 if (this.neighbors[i].planets[k].texture == this.planets[j].texture) {
+    //                     this.neighbors[i].planets[k].texture = textureHandler.getPlanetTexture();
+    //                 }
+    //             }
+    //         }
+    //     }
 
-        if (core.chunkOptions['stars']) {
-            for (let i = 0; i < n; i++) {
-                let randomPoint = this.getRandomPoint();
-                let star = createVector(randomPoint.x, randomPoint.y);
-                this.stars.push(star);
-            }
-        }
-    }
+    //     if (core.chunkOptions['stars']) {
+    //         for (let i = 0; i < n; i++) {
+    //             let randomPoint = this.getRandomPoint();
+    //             let star = createVector(randomPoint.x, randomPoint.y);
+    //             this.stars.push(star);
+    //         }
+    //     }
+    // }
 
-    drawBackground() {
-        for (let i = 0; i < this.stars.length; i++) {
-            push();
-            translate(this.stars[i].x, this.stars[i].y);
-            fill(255);
-            noStroke();
-            ellipse(0, 0, 2);
-            pop();
-        }
-    }
+    // drawBackground() {
+    //     for (let i = 0; i < this.stars.length; i++) {
+    //         push();
+    //         translate(this.stars[i].x, this.stars[i].y);
+    //         fill(255);
+    //         noStroke();
+    //         ellipse(0, 0, 2);
+    //         pop();
+    //     }
+    // }
 
     display() {
-        this.drawBackground();
+        // this.drawBackground();
+        push();
+        translate(this.r * this.width, this.c * this.height);
         if (core.options['debug'] == true) {
-            push();
-            translate(this.r * this.width, this.c * this.height);
-
-            //background
+            // background
             noFill();
             noStroke();
             rect(0, 0, this.width, this.height);
@@ -92,7 +93,11 @@ class Chunk {
             stroke(255, 100);
             strokeWeight(3);
             rect(0, 0, this.width, this.height);
-            pop();
+        } else {
+            image(this.texture, 0, 0, 1000, 1000);
         }
+        pop();
+
+
     }
 }

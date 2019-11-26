@@ -5,6 +5,7 @@ class TextureHandler {
         this.motherTextures = [];
         this.planetTextures = [];
         this.enemyTextures = [];
+        this.backdrops = [];
 
         this.motherIndex = -1;
         this.vesselIndex = -1;
@@ -26,6 +27,9 @@ class TextureHandler {
         if (type == "enemy") {
             this.enemyTextures.push(texture);
         }
+        if (type == "backdrop") {
+            this.backdrops.push(texture);
+        }
     }
 
     getPlanetTextures() {
@@ -33,6 +37,14 @@ class TextureHandler {
         for (let i = 0; i < ptexts.length; i++) {
             let ptext = loadImage("javascript/assets/textures/" + ptexts[i] + ".png");
             this.addTexture(ptext, "planet");
+        }
+    }
+
+    getBackdropTextures() {
+        let ptexts = core.backdrops;
+        for (let i = 0; i < ptexts.length; i++) {
+            let ptext = loadImage("javascript/assets/backdrops/" + ptexts[i] + ".png");
+            this.addTexture(ptext, "backdrop");
         }
     }
 
@@ -61,5 +73,9 @@ class TextureHandler {
             this.motherIndex = 0;
         }
         return this.motherTextures[this.motherIndex];
+    }
+
+    getBackdrop() {
+        return this.backdrops[Math.floor(Math.random()*this.backdrops.length)];
     }
 }
