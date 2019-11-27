@@ -16,6 +16,17 @@ class Chunk {
         this.stars = [];
 
         this.texture = textureHandler.getBackdrop();
+        
+        this.scaleX = 1;
+        this.scaleY = 1;
+
+        // let ra = Math.random();
+        // if (ra < 0.25) {
+        //     this.scaleX = -1;
+        // }
+        // if (ra < 0.5) {
+        //     this.scaleY = -1;
+        // }
     }
 
     loop() {
@@ -94,7 +105,10 @@ class Chunk {
             strokeWeight(3);
             rect(0, 0, this.width, this.height);
         } else {
+            push();
+            scale(this.scaleX, this.scaleY);
             image(this.texture, 0, 0, 1000, 1000);
+            pop();
         }
         pop();
 

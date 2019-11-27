@@ -38,7 +38,7 @@ class Core {
         this.alienCharacters = ["alien"];
         this.player = "player";
 
-        this.backdrops = ["backdrop4"];
+        this.backdrops = ["backdrop4", "backdrop5", "backdrop6", "backdrop7", "backdrop8", "backdrop9"];
     }
 
     getPlanetName() {

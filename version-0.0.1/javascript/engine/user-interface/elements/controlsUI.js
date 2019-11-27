@@ -5,7 +5,7 @@ class ControlsUI {
 
         this.type = "controls";
 
-        this.active = true;
+        this.active = false;
     }
 
     display() {
