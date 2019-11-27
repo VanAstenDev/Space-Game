@@ -35,10 +35,10 @@ class Core {
         this.mothers = ["mothership", "mothership2", "mothership3"];
         this.vessels = ["vessel", "vessel2", "vessel3", "vessel4", "vessel5", "vessel6", "vessel7", "vessel8", "vessel9", "vessel10"];
         this.enemyVessels = ["vessel4"];
-        this.alienCharacters = ["alien"];
+        this.alienCharacters = ["alien", "alien2", "alien3", "alien4", "alien5", "alien6"];
         this.player = "player";
 
-        this.backdrops = ["backdrop4", "backdrop5", "backdrop6", "backdrop7", "backdrop8", "backdrop10"];
+        this.backdrops = ["backdrop4", "backdrop5", "backdrop6", "backdrop7", "backdrop8", "backdrop9", "backdrop10"];
     }
 
     getPlanetName() {

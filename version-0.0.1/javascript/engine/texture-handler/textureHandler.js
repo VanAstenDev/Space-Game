@@ -91,6 +91,15 @@ class TextureHandler {
     }
 
     getBackdrop() {
-        return this.backdrops[Math.floor(Math.random()*this.backdrops.length)];
+        // return this.backdrops[Math.floor(Math.random()*this.backdrops.length)];
+        let normal = [this.backdrops[3], this.backdrops[4], this.backdrops[6]];
+        let nebula = [this.backdrops[0], this.backdrops[1], this.backdrops[2], this.backdrops[5]];
+
+        let r = Math.random();
+        if (r < 0.1) {
+            return nebula[Math.floor(Math.random() * nebula.length)];
+        } else {
+            return normal[Math.floor(Math.random() * normal.length)];
+        }
     }
 }
