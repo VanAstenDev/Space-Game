@@ -39,6 +39,11 @@ class QuestHandler {
                 let nq = new PlaceHolderQuest("No Quest", "You currently don't have a quest.");
                 player.quest = nq;
                 this.quests[i].active = false;
+
+                //check for specifics here
+                if (this.quests[i].name == "Pathfinder") {
+                    
+                }
             }
 
             if (this.quests[i].type == "location" && this.quests[i].active) {

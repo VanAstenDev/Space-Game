@@ -6,6 +6,7 @@ class TextureHandler {
         this.planetTextures = [];
         this.enemyTextures = [];
         this.backdrops = [];
+        this.characters = [];
 
         this.motherIndex = -1;
         this.vesselIndex = -1;
@@ -30,6 +31,16 @@ class TextureHandler {
         if (type == "backdrop") {
             this.backdrops.push(texture);
         }
+        if (type == "character") {
+            this.characters.push(texture);
+        }
+        if (type == "player") {
+            this.player = texture;
+        }
+    }
+
+    getPlayer() {
+        return this.player;
     }
 
     getPlanetTextures() {
@@ -46,6 +57,10 @@ class TextureHandler {
             let ptext = loadImage("javascript/assets/backdrops/" + ptexts[i] + ".png");
             this.addTexture(ptext, "backdrop");
         }
+    }
+
+    getAlien() {
+        return this.characters[Math.floor(Math.random()*this.characters.length)];
     }
 
     getPlanetTexture() {

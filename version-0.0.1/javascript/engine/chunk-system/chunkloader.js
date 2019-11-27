@@ -13,6 +13,9 @@ class ChunkLoader {
         this.totalHeight = this.columns * this.chunkHeight;
 
         this.chunks = [];
+
+        this.timer = 60;
+        this.cooldown = 0;
     }
 
     loop() {
@@ -81,12 +84,10 @@ class ChunkLoader {
         }
     }
 
-    update() {
+    assignChunks() {
         //get current chunk (vessel AND player)
         for (let i = 0; i < this.chunks.length; i++) {
             if (!this.chunks[i].active) {
-
-
                 if (player.pos.x > this.chunks[i].r * this.chunkWidth && player.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
                     if (player.pos.y > this.chunks[i].c * this.chunkHeight && player.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
                         // this.chunks[i].active = true;
@@ -116,6 +117,14 @@ class ChunkLoader {
             } else {
 
             }
+        }
+    }
+
+    update() {
+        this.timer++;
+        if (this.timer >= this.cooldown) {
+            this.assignChunks();
+            this.timer = 0;
         }
     }
 

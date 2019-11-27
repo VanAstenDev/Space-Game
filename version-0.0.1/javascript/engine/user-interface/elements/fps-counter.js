@@ -17,17 +17,17 @@ class FPSCounter {
         this.message = Math.floor(frameRate());
         push();
         translate(-cam.x + (width-200), -cam.y + (height - 100));
-        textSize(36);
+        textSize(30);
         fill(255, 0, 0);
         noStroke();
-        text(this.message+" frames (Avg: "+avgfps+")", -150, 0, 400, 200);
+        text(this.message+" frames (Avg: "+avgfps+")", -250, 0, 400, 200);
 
         let ac = chunkLoader.getActive();
-        textSize(24);
-        text("Active Chunks: "+ac, -150, 35, 300, 300);
+        textSize(30);
+        text("Active Chunks: "+ac, -250, 35, 400, 300);
 
-        textSize(24);
-        text("Dimensions: "+chunkLoader.totalWidth+"x"+chunkLoader.totalHeight, -150, 65, 400, 300);
+        textSize(30);
+        text("Dimensions: "+chunkLoader.totalWidth+"x"+chunkLoader.totalHeight, -250, 65, 400, 300);
 
         pop();
     }

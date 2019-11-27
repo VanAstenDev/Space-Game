@@ -18,7 +18,7 @@ class ShipInformation {
             textSize(24);
             textAlign(CENTER);
             fill(200, 0, 0);
-            text("Exact Position: "+Math.floor(vessel.pos.x)+", "+Math.floor(vessel.pos.y)+"\nDistance to mothership: "+Math.floor(vessel.pos.dist(player.pos))+" (Max: "+Math.floor(vessel.maxDistanceToMother)+")\nVel Mult: "+(vessel.velMult).toFixed(2), 0, 0, this.width, this.height);
+            text("Exact Position: "+Math.floor(vessel.pos.x)+", "+Math.floor(vessel.pos.y)+"\n\nDistance to mothership: "+Math.floor(vessel.pos.dist(player.pos))+" (Max: "+Math.floor(vessel.maxDistanceToMother)+")\nVel Mult: "+(vessel.velMult).toFixed(2), 0, 0, this.width, this.height);
 
             pop();
         }

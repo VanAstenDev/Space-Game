@@ -8,8 +8,8 @@ class Core {
         }
 
         this.buildOptions = {
-            "version": "0.1.5",
-            "important": "Enemies, Hitboxes, killquests",
+            "version": "0.1.8",
+            "important": "Dialogue, Quest Dialogue, Background",
             "gameName": "Space Exploration Game"
         }
 
@@ -35,8 +35,10 @@ class Core {
         this.mothers = ["mothership", "mothership2", "mothership3"];
         this.vessels = ["vessel", "vessel2", "vessel3", "vessel4", "vessel5"];
         this.enemyVessels = ["vessel4"];
+        this.alienCharacters = ["alien"];
+        this.player = "player";
 
-        this.backdrops = ["backdrop"];
+        this.backdrops = ["backdrop4"];
     }
 
     getPlanetName() {

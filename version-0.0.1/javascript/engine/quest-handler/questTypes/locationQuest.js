@@ -35,9 +35,18 @@ class LocationQuest {
                 let b = new Banner("Quest Complete!");
                 ui.addElement(b);
 
+                //play dialogue
+                if (this.dialogue != undefined) {
+                    ui.addElement(this.dialogue);
+                }
+
                 return true;
             }
         }
+    }
+
+    addDialogue(d) {
+        this.dialogue = d;
     }
 
     trigger() {

@@ -45,7 +45,7 @@ class UIHandler {
         for (let i = (this.elements.length-1); i > 0; i--) {
             if (this.elements[i].lifespan != undefined) {
                 this.elements[i].lifespan--;
-                if (this.elements[i].lifespan < 0) {
+                if (this.elements[i].lifespan < 0 || this.elements[i].die) {
                     this.elements.splice(i, 1);
                     // return;
                 } 
@@ -54,6 +54,10 @@ class UIHandler {
 
         for (let i = 0; i < this.elements.length; i++) {
             this.elements[i].display();
+
+            if (this.elements[i].type == "dialoguebox") {
+                this.elements[i].update();
+            }
         }
 
         

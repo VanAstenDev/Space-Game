@@ -13,7 +13,7 @@ class Dashboard {
         fill(50);
         rect(50, 50, 200, 50);
 
-        textSize(40);
+        textSize(30);
         fill(255);
         text("Dashboard", 50, 50, 200, 50);
 
@@ -21,7 +21,7 @@ class Dashboard {
         fill(200);
         rect(50, 100, 200, 60);
 
-        textSize(24);
+        textSize(26);
         fill(50);
         let v = "";
         if (player.isVessel) {
@@ -36,12 +36,12 @@ class Dashboard {
         rect(50, 160, 200, 60);
 
         textAlign(CENTER);
-        textSize(20);
+        textSize(26);
         fill(20);
         let motherShipCoords = "[" + chunkLoader.chunks[player.chunk].r + ":" + chunkLoader.chunks[player.chunk].c + "]"
         let vesselCoords = "[" + chunkLoader.chunks[vessel.chunk].r + ":" + chunkLoader.chunks[vessel.chunk].c + "]";
-        text("Mothership " + motherShipCoords, 50, 160, 250, 220);
-        text("Vessel " + vesselCoords, 50, 185, 250, 220);
+        text("Mothership " + motherShipCoords, 25, 160, 250, 220);
+        text("Vessel " + vesselCoords, 25, 185, 250, 220);
 
         //quest log
         fill(50);

@@ -2,6 +2,8 @@ const cam = new Cam(0, 0, 1);
 const ui = new UIHandler();
 const core = new Core();
 
+let scifiFont, bitFont, bitFont2;
+
 let chunkLoader; //chunk loader
 
 let bg; //background
@@ -26,8 +28,16 @@ let soundtrack;
 
 let radar;
 
+function preload() {
+    scifiFont = loadFont("javascript/assets/fonts/ethnofont.ttf");
+    bitFont = loadFont("javascript/assets/fonts/8bit.ttf");
+    bitFont2 = loadFont("javascript/assets/fonts/8bit2.ttf");
+}
+
 function setup() {
     createCanvas(innerWidth, innerHeight);
+
+    textFont(bitFont2);
 
     textureHandler = new TextureHandler();
 
@@ -47,6 +57,14 @@ function setup() {
     for (let i = 0; i < core.mothers.length; i++) {
         textureHandler.addTexture(loadImage("javascript/assets/ship_textures/" + core.mothers[i] + ".png"), "mother");
     }
+
+    //load character textures
+    for (let i = 0; i < core.alienCharacters.length; i++) {
+        textureHandler.addTexture(loadImage("javascript/assets/alienCharacters/"+core.alienCharacters[i]+".png"), "character");
+    }
+
+    //load player texture
+    textureHandler.addTexture(loadImage("javascript/assets/characters/"+core.player+".png"), "player");
 
     textureHandler.getPlanetTextures();
     textureHandler.getBackdropTextures();
@@ -89,6 +107,21 @@ function setup() {
     let alphaNotification = new PText(core.buildOptions['gameName'] + " | Build " + core.buildOptions['version'] + " (" + core.buildOptions['important'] + ") Controls: i", 0, 0);
     ui.addElement(alphaNotification);
 
+    // let dialogue = new DialogueBox("left", "right");
+    // dialogue.addLine(new VoiceLine("left", "Line 1 in dialogue", 50));
+    // dialogue.addLine(new VoiceLine("right", "Line 2 in dialogue", 50));
+    // dialogue.addLine(new VoiceLine("left", "Line 3 in dialogue", 50));
+    // dialogue.addLine(new VoiceLine("right", "Line 4 in dialogue", 50));
+    // dialogue.addLine(new VoiceLine("left", "Line 5 in dialogue", 50));
+    // ui.addElement(dialogue);
+
+    let dialogue = new DialogueBox("PLAYER", "ALIEN", textureHandler.getPlayer(), textureHandler.getAlien());
+    dialogue.addLine(new VoiceLine("right", "This is a test dialogue situation.", 80));
+    dialogue.addLine(new VoiceLine("left", "Oh is it?", 80));
+    dialogue.addLine(new VoiceLine("right", "Yep, now go fly around aimlessly!", 80));
+    dialogue.addLine(new VoiceLine("left", "Ok...", 80));
+    ui.addElement(dialogue);
+
     let fpscounter = new FPSCounter();
     ui.addElement(fpscounter);
 
@@ -101,10 +134,18 @@ function setup() {
     let shipinfo = new ShipInformation();
     ui.addElement(shipinfo);
 
-    //add random location quest
+    //add random location quest (with dialogue ending)
     let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
     let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
     let quest = new LocationQuest("Pathfinder", ob, randomPos);
+
+    let d = new DialogueBox("You", "Mister Man", textureHandler.getPlayer(), textureHandler.getAlien());
+    d.addLine(new VoiceLine("right", "Ah, I see you have reached the location.", 60));
+    d.addLine(new VoiceLine("right", "I am Mister Man, ruler of the WATERKWARTIER galaxy.", 60));
+    d.addLine(new VoiceLine("right", "Will you help me by murdering innocent children?", 60));
+    d.addLine(new VoiceLine("left", "Tuurlijk pik waar zijn ze?", 80));
+    quest.addDialogue(d);
+    
     questHandler.addQuest(quest);
 
     //kill 5 enemies quest

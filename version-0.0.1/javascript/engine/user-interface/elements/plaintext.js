@@ -15,7 +15,7 @@ class PText {
         noStroke();
         rect(0, 0, 500, 50);
 
-        textSize(20);
+        textSize(23);
         textAlign(CENTER);
         fill(50);
         noStroke();
