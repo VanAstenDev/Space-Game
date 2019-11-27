@@ -14,7 +14,7 @@ class DialogueBox {
         this.timer = 0;
 
         this.width = 1200;
-        this.height = 300;
+        this.height = 230;
 
         this.type = "dialoguebox";
 

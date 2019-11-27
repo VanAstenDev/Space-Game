@@ -180,7 +180,7 @@ function draw() {
 
     frameRate(35);
     translate(cam.x, cam.y);
-    background(10);
+    background(0);
     chunkLoader.loop();
 
     // bg.drawBackground();
