@@ -2,33 +2,23 @@ const cam = new Cam(0, 0, 1);
 const ui = new UIHandler();
 const core = new Core();
 
-let scifiFont, bitFont, bitFont2;
+let scifiFont, bitFont, bitFont2; // fonts
 
 let chunkLoader; //chunk loader
 
-let bg; //background
+let player; //player class
+let vessel; //exploration vessel class
 
-//Import textures
-
-let vesselTexture;
-let motherTexture;
-
-let player; //player
-let vessel; //exploration vessel
-
-let enemies = []; //enemies
-
-let planet; //test planet
+let enemies = []; //enemies 
 
 let questHandler; //quest loader
+let textureHandler; //texture handler
 
-let textureHandler;
+let soundtrack; //audio file
 
-let soundtrack;
+let radar; //radar class
 
-let radar;
-
-function preload() {
+function preload() { // load fonts
     scifiFont = loadFont("javascript/assets/fonts/ethnofont.ttf");
     bitFont = loadFont("javascript/assets/fonts/8bit.ttf");
     bitFont2 = loadFont("javascript/assets/fonts/8bit2.ttf");
@@ -36,12 +26,11 @@ function preload() {
 
 function setup() {
     createCanvas(innerWidth, innerHeight);
+    textFont(bitFont2); //set font to this font
 
-    textFont(bitFont2);
+    textureHandler = new TextureHandler(); //init class
 
-    textureHandler = new TextureHandler();
-
-    soundtrack = new SoundObject("javascript/assets/sounds/maintheme.ogg");
+    soundtrack = new SoundObject("javascript/assets/sounds/maintheme.ogg"); //init class
 
     //load vessel textures
     for (let i = 0; i < core.vessels.length; i++) {
@@ -63,57 +52,30 @@ function setup() {
         textureHandler.addTexture(loadImage("javascript/assets/alienCharacters/"+core.alienCharacters[i]+".png"), "character");
     }
 
-    //load player texture
+    //load player texture (CHARACTER ICON)
     textureHandler.addTexture(loadImage("javascript/assets/characters/"+core.player+".png"), "player");
 
     textureHandler.getPlanetTextures();
     textureHandler.getBackdropTextures();
 
     let chunks = core.options['chunks'];
-    chunkLoader = new ChunkLoader(core.options['chunkWidth'], core.options['chunkHeight'], chunks, chunks);
-    chunkLoader.generate();
-    chunkLoader.findNeighbors();
+    chunkLoader = new ChunkLoader(core.options['chunkWidth'], core.options['chunkHeight'], chunks, chunks); //init class
+    chunkLoader.generate(); //generate chunks
+    chunkLoader.findNeighbors(); //find which chunks are neighbors of each other
 
-    questHandler = new QuestHandler();
+    questHandler = new QuestHandler(); //init class
 
-    //visit 0,0 quest
-    // let ob = new Objective(1, "Visit the origin point.");
-    // let quest = new LocationQuest("Traveler", ob, createVector(0, 0));
-    // questHandler.addQuest(quest);
-
-    //test quest
-    // let ob = new Objective(1, "Trigger this in console.");
-    // let quest = new TriggerQuest("Console", ob);
-    // questHandler.addQuest(quest);
-
-    bg = new Background();
-    bg.generateBackground(200);
-
+    //initialize player at random location
     let randomChunk = Math.floor(Math.random() * chunkLoader.chunks.length);
     let randomPoint = chunkLoader.chunks[randomChunk].getRandomPoint();
 
     player = new Player(randomPoint.x, randomPoint.y);
     vessel = new Vessel(player.pos.x, player.pos.y);
 
-    radar = new Radar(0.1);
-
-    // randomPoint = chunkLoader.chunks[Math.floor(Math.random()*chunkLoader.chunks.length)].getRandomPoint();
-
-
-
-    // let alert = new UIAlert("Test", "This is a test message.");
-    // ui.addElement(alert);
+    radar = new Radar(0.1);//init class
 
     let alphaNotification = new PText(core.buildOptions['gameName'] + " | Build " + core.buildOptions['version'] + " (" + core.buildOptions['important'] + ") Controls: i", 0, 0);
     ui.addElement(alphaNotification);
-
-    // let dialogue = new DialogueBox("left", "right");
-    // dialogue.addLine(new VoiceLine("left", "Line 1 in dialogue", 50));
-    // dialogue.addLine(new VoiceLine("right", "Line 2 in dialogue", 50));
-    // dialogue.addLine(new VoiceLine("left", "Line 3 in dialogue", 50));
-    // dialogue.addLine(new VoiceLine("right", "Line 4 in dialogue", 50));
-    // dialogue.addLine(new VoiceLine("left", "Line 5 in dialogue", 50));
-    // ui.addElement(dialogue);
 
     let dialogue = new DialogueBox("PLAYER", "ALIEN", textureHandler.getPlayer(), textureHandler.getAlien());
     dialogue.addLine(new VoiceLine("right", "This is a test dialogue situation.", 80));
@@ -147,23 +109,6 @@ function setup() {
     quest.addDialogue(d);
     
     questHandler.addQuest(quest);
-
-    //kill 5 enemies quest
-    // let quest = new TriggerQuest("Genocide", new Objective(5, "Kill 5 enemies."));
-    // questHandler.addQuest(quest);
-
-    //BANNER
-    // let banner = new Banner("Test Banner!");
-    // ui.addElement(banner);
-
-    //ADDING A BUTTON
-    // let button = new Button(width/2, height/2, "Click Me!", "1");
-    // ui.addElement(button);
-    // ui.buttons.push(button);
-    // let rp = chunkLoader.chunks[vessel.chunk].getRandomPoint();
-
-    // patrol = new Patrol(vessel.pos.x, vessel.pos.y, 2, 5);
-    // patrol.generate();
 }
 
 function windowResized() {
@@ -172,13 +117,11 @@ function windowResized() {
 
 let bullets = [];
 
-let cd = 0;
-let loopCooldown = 10;
-
 function draw() {
     cam.update();
 
-    frameRate(35);
+    frameRate(35); //to limit speed
+    
     translate(cam.x, cam.y);
     background(0);
     chunkLoader.loop();
@@ -224,11 +167,6 @@ function draw() {
 
     ui.display();
 
-    cd++;
-    if (cd > loopCooldown) {
-        secondaryLoop();
-        cd = 0;
-    }
     radar.generate();
 
     radar.display();

@@ -36,7 +36,7 @@ class ChunkLoader {
                 if (hasPlanet) {
                     for (let i = 0; i < chunk.maxPlanets; i++) {
                         let randomPoint = chunk.getRandomPoint();
-                        planet = new Planet(randomPoint.x, randomPoint.y);
+                        let planet = new Planet(randomPoint.x, randomPoint.y);
                         chunk.planets.push(planet);
                     }
                 }
