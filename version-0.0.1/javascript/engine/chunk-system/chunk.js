@@ -16,7 +16,7 @@ class Chunk {
         this.stars = [];
 
         this.texture = textureHandler.getBackdrop();
-        
+
         this.scaleX = 1;
         this.scaleY = 1;
 
@@ -50,10 +50,11 @@ class Chunk {
         return createVector(x, y);
     }
 
-    setNeighbors() {
+    setNeighbors(bool) {
         for (let i = 0; i < this.neighbors.length; i++) {
             if (this.neighbors[i] >= 0 && this.neighbors[i] < (chunkLoader.chunks.length - 1)) {
-                chunkLoader.chunks[this.neighbors[i]].active = true;
+            // if (this.neighbors[i]) {
+                chunkLoader.chunks[this.neighbors[i]].active = bool;
             }
         }
     }

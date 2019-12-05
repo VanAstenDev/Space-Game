@@ -6,6 +6,8 @@ class Cam {
 
         this.dZoom = this.zoom;
         this.zoomSteps = 0.05;
+
+        this.timer = 0;
     }
     
     update() {

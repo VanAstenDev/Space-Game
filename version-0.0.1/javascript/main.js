@@ -6,6 +6,10 @@ let scifiFont, bitFont, bitFont2; // fonts
 
 let chunkLoader; //chunk loader
 
+let cursor;
+
+let itemContainer; //items are stored this.addItem, createItem, getItem
+
 let player; //player class
 let vessel; //exploration vessel class
 
@@ -28,9 +32,12 @@ function setup() {
     createCanvas(innerWidth, innerHeight);
     textFont(bitFont2); //set font to this font
 
-    textureHandler = new TextureHandler(); //init class
+    itemContainer = new ItemContainer();
 
-    soundtrack = new SoundObject("javascript/assets/sounds/maintheme.ogg"); //init class
+    cursor = new Cursor();
+
+    textureHandler = new TextureHandler(); //init class
+    soundtrack = new SoundObject("javascript/assets/sounds/maintheme.mp3"); //init class
 
     //load vessel textures
     for (let i = 0; i < core.vessels.length; i++) {
@@ -49,11 +56,11 @@ function setup() {
 
     //load character textures
     for (let i = 0; i < core.alienCharacters.length; i++) {
-        textureHandler.addTexture(loadImage("javascript/assets/alienCharacters/"+core.alienCharacters[i]+".png"), "character");
+        textureHandler.addTexture(loadImage("javascript/assets/alienCharacters/" + core.alienCharacters[i] + ".png"), "character");
     }
 
     //load player texture (CHARACTER ICON)
-    textureHandler.addTexture(loadImage("javascript/assets/characters/"+core.player+".png"), "player");
+    textureHandler.addTexture(loadImage("javascript/assets/characters/" + core.player + ".png"), "player");
 
     textureHandler.getPlanetTextures();
     textureHandler.getBackdropTextures();
@@ -72,9 +79,9 @@ function setup() {
     player = new Player(randomPoint.x, randomPoint.y);
     vessel = new Vessel(player.pos.x, player.pos.y);
 
-    radar = new Radar(0.1);//init class
+    radar = new Radar(0.1); //init class
 
-    let alphaNotification = new PText(core.buildOptions['gameName'] + " | Build " + core.buildOptions['version'] + " (" + core.buildOptions['important'] + ") Controls: i", 0, 0);
+    let alphaNotification = new PText(core.buildOptions['gameName'] + " | Build " + core.buildOptions['version'] + " (" + core.buildOptions['important'] + ") Controls: C", 0, 0);
     ui.addElement(alphaNotification);
 
     let dialogue = new DialogueBox("PLAYER", "ALIEN", textureHandler.getPlayer(), textureHandler.getAlien());
@@ -96,6 +103,9 @@ function setup() {
     let shipinfo = new ShipInformation();
     ui.addElement(shipinfo);
 
+    let inventoryui = new InventoryUI();
+    ui.addElement(inventoryui);
+
     //add random location quest (with dialogue ending)
     let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
     let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
@@ -107,8 +117,16 @@ function setup() {
     d.addLine(new VoiceLine("right", "Will you help me by murdering innocent children?", 60));
     d.addLine(new VoiceLine("left", "Tuurlijk pik waar zijn ze?", 80));
     quest.addDialogue(d);
-    
+
     questHandler.addQuest(quest);
+
+    //add items
+    itemContainer.createItem("special_home_teleport", "Mothership Warp Crystal");
+    itemContainer.getItem("special_home_teleport").addUse(()=>{
+        vessel.pos = player.pos.copy();
+    })
+    let itemStack = new ItemStack(itemContainer.getItem("special_home_teleport"), 10);
+    player.inventory.addItemStack(itemStack);
 }
 
 function windowResized() {
@@ -119,9 +137,19 @@ let bullets = [];
 
 function draw() {
     cam.update();
+    cam.timer++; 
+
+    if (cam.timer >= core.options['tempDelay']) {
+        chunkLoader.unloadAll();
+        cam.timer = 0;
+    }
+
+    soundtrack.check();
+
+    
 
     frameRate(35); //to limit speed
-    
+
     translate(cam.x, cam.y);
     background(0);
     chunkLoader.loop();
@@ -165,14 +193,24 @@ function draw() {
         }
     }
 
-    ui.display();
+    cursor.loop();
+
+    // fill(255);
+    // line(player.pos.x, player.pos.y, -cam.x+mouseX, -cam.y+mouseY);
+
+    
+
 
     radar.generate();
 
     radar.display();
 
+    ui.display();
+
+
     questHandler.loop();
 
+    
 }
 
 function secondaryLoop() {
@@ -234,8 +272,16 @@ function keyPressed() {
         player.texture = textureHandler.getMother();
     }
 
+    if (keyCode == "67") {
+        if (ui.getControls().active) {
+            ui.getControls().active = false;
+        } else {
+            ui.getControls().active = true;
+        }
+    }
+
     if (keyCode == "73") {
-        if (ui.getInventory().active == true) {
+        if (ui.getInventory().active) {
             ui.getInventory().active = false;
         } else {
             ui.getInventory().active = true;
@@ -248,5 +294,5 @@ function keyPressed() {
         } else {
             ui.getShipinfo().active = true;
         }
-    } 
+    }
 }

@@ -27,6 +27,8 @@ class Player {
 
         this.texture = textureHandler.getMother();
 
+        this.inventory = new Inventory();
+
         this.quest = new PlaceHolderQuest("No quest", new Objective(1, "No quest available."), "No quest available.");
     }
 
@@ -41,7 +43,6 @@ class Player {
     }
 
     update() {
-
         //camera zoom
         // this.dw = this.w * cam.zoom;
         // this.dh = this.h * cam.zoom;
@@ -56,9 +57,11 @@ class Player {
     
             if (keyIsDown(65)) {
                 this.angle -= this.turnSpeed;
+                this.vel.mult(0.95);
             }
             if (keyIsDown(68)) {
                 this.angle += this.turnSpeed;
+                this.vel.mult(0.95);
             }
         } else {
             //autopilot
@@ -81,6 +84,11 @@ class Player {
         // this.pos.y = constrain(this.pos.y, 0, height);
         this.pos.x = constrain(this.pos.x, chunkLoader.x, chunkLoader.totalWidth);
         this.pos.y = constrain(this.pos.y, chunkLoader.y, chunkLoader.totalHeight);
+
+        //update itemstacks
+        for (let i = 0; i < this.inventory.itemStacks.length; i++) {
+            this.inventory.itemStacks[i].update();
+        }
     }
 
     display() {

@@ -23,6 +23,12 @@ class Planet {
     update() {
         this.cd--;
         //check vessel
+
+        //check cursor
+        if (cursor.check(this.pos, this.r/2)) {
+            let b = new Banner("Planet: "+this.name, 10, true);
+            ui.addElement(b);
+        }
     }
 
     render() {

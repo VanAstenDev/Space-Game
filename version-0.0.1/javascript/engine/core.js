@@ -4,12 +4,13 @@ class Core {
             "debug": false,
             "chunks": 100,
             "chunkWidth": 1000,
-            "chunkHeight": 1000
+            "chunkHeight": 1000,
+            "tempDelay": 300
         }
 
         this.buildOptions = {
-            "version": "0.1.8",
-            "important": "Dialogue, Quest Dialogue, Background",
+            "version": "0.2.1",
+            "important": "Better radar, items, inventory (i)",
             "gameName": "Space Exploration Game"
         }
 
@@ -29,7 +30,7 @@ class Core {
             "turnSpeed": 0.1
         }
 
-        this.planetNames = [""];
+        this.planetNames = ["Unknown"];
 
         this.planets = ["Planet1", "Planet2", "Planet3", "Planet4", "Planet5", "Planet6", "Planet7", "Planet8", "Planet9", "Planet10", "Planet11", "Planet12", "Planet13"];
         this.mothers = ["mothership", "mothership2", "mothership3"];

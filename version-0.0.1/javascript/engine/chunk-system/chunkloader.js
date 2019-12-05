@@ -15,7 +15,7 @@ class ChunkLoader {
         this.chunks = [];
 
         this.timer = 60;
-        this.cooldown = 0;
+        this.cooldown = 30;
     }
 
     loop() {
@@ -84,7 +84,14 @@ class ChunkLoader {
         }
     }
 
+    unloadAll() {
+        for (let i = 0; i < this.chunks.length; i++) {
+            this.chunks[i].active = false;
+        }
+    }
+
     assignChunks() {
+        // this.findNeighbors();
         //get current chunk (vessel AND player)
         for (let i = 0; i < this.chunks.length; i++) {
             // if (!this.chunks[i].active) {
@@ -93,7 +100,7 @@ class ChunkLoader {
                         this.chunks[i].active = true;
                         player.chunk = i;
                         //set neighbors active
-                        this.chunks[i].setNeighbors();
+                        this.chunks[i].setNeighbors(true);
                     }
                 }
 
@@ -110,12 +117,20 @@ class ChunkLoader {
                         this.chunks[i].active = true;
                         vessel.chunk = i;
                         //set neighbors active
-                        this.chunks[i].setNeighbors();
+                        this.chunks[i].setNeighbors(true);
                     }
                 }
 
             // } 
+
+            // if (player.chunk != i && vessel.chunk != i) {
+            //     this.chunks[i].active = false;
+            // } else {
+            //     this.chunks[i].active = true;
+            // }
         }
+
+        
     }
 
     update() {
