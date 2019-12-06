@@ -6,7 +6,7 @@ let scifiFont, bitFont, bitFont2; // fonts
 
 let chunkLoader; //chunk loader
 
-let cursor;
+let cursor; //cursor
 
 let itemContainer; //items are stored this.addItem, createItem, getItem
 
@@ -73,7 +73,8 @@ function setup() {
     questHandler = new QuestHandler(); //init class
 
     //initialize player at random location
-    let randomChunk = Math.floor(Math.random() * chunkLoader.chunks.length);
+    // let randomChunk = Math.floor(Math.random() * chunkLoader.chunks.length);
+    let randomChunk = chunkLoader.getChunk(chunks / 2, chunks / 2);
     let randomPoint = chunkLoader.chunks[randomChunk].getRandomPoint();
 
     player = new Player(randomPoint.x, randomPoint.y);
@@ -84,12 +85,12 @@ function setup() {
     let alphaNotification = new PText(core.buildOptions['gameName'] + " | Build " + core.buildOptions['version'] + " (" + core.buildOptions['important'] + ") Controls: C", 0, 0);
     ui.addElement(alphaNotification);
 
-    let dialogue = new DialogueBox("PLAYER", "ALIEN", textureHandler.getPlayer(), textureHandler.getAlien());
-    dialogue.addLine(new VoiceLine("right", "This is a test dialogue situation.", 80));
-    dialogue.addLine(new VoiceLine("left", "Oh is it?", 80));
-    dialogue.addLine(new VoiceLine("right", "Yep, now go fly around aimlessly!", 80));
-    dialogue.addLine(new VoiceLine("left", "Ok...", 80));
-    ui.addElement(dialogue);
+    // let dialogue = new DialogueBox("PLAYER", "ALIEN", textureHandler.getPlayer(), textureHandler.getAlien());
+    // dialogue.addLine(new VoiceLine("right", "This is a test dialogue situation.", 80));
+    // dialogue.addLine(new VoiceLine("left", "Oh is it?", 80));
+    // dialogue.addLine(new VoiceLine("right", "Yep, now go fly around aimlessly!", 80));
+    // dialogue.addLine(new VoiceLine("left", "Ok...", 80));
+    // ui.addElement(dialogue);
 
     let fpscounter = new FPSCounter();
     ui.addElement(fpscounter);
@@ -106,27 +107,50 @@ function setup() {
     let inventoryui = new InventoryUI();
     ui.addElement(inventoryui);
 
-    //add random location quest (with dialogue ending)
-    let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
-    let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
-    let quest = new LocationQuest("Pathfinder", ob, randomPos);
 
-    let d = new DialogueBox("You", "Mister Man", textureHandler.getPlayer(), textureHandler.getAlien());
-    d.addLine(new VoiceLine("right", "Ah, I see you have reached the location.", 60));
-    d.addLine(new VoiceLine("right", "I am Mister Man, ruler of the WATERKWARTIER galaxy.", 60));
-    d.addLine(new VoiceLine("right", "Will you help me by murdering innocent children?", 60));
-    d.addLine(new VoiceLine("left", "Tuurlijk pik waar zijn ze?", 80));
-    quest.addDialogue(d);
+
+    //tutorial quest
+    let ob = new Objective(1, "Listen to W-001");
+    let quest = new TriggerQuest("Introduction", ob);
+
+    let w = textureHandler.getAlien();
+
+    let d = new DialogueBox("You", "W-001", textureHandler.getPlayer(), w);
+    d.addLine(new VoiceLine("right", "Welcome to the galaxy, captain!", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "Time to explore the whole galaxy, ", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "plunder, help, kill, everything is possible!", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "Let's start by completing our first quest (on the dashboard)", 100));
+    quest.addDialoge(d);
+    quest.addOnFinished(() => {
+        //add random location quest (with dialogue ending)
+        let randomPos = chunkLoader.chunks[Math.floor(Math.random() * chunkLoader.chunks.length)].getRandomPoint();
+        let ob = new Objective(1, "Go to " + Math.floor(randomPos.x) + ", " + Math.floor(randomPos.y));
+        let q = new LocationQuest("Pathfinder", ob, randomPos);
+
+        let d = new DialogueBox("You", "W-001", textureHandler.getPlayer(), w);
+        d.addLine(new VoiceLine("right", "We did it! looks like we even got some teleportation fragments!", core.options['defaultDialogueDelay']));
+        d.addLine(new VoiceLine("right", "You can use these to instantly teleport back to the mothership if you wander off too far.", core.options['defaultDialogueDelay']));
+        d.addLine(new VoiceLine("right", "Open your inventory using the 'i' key.", core.options['defaultDialogueDelay']));
+        q.addDialogue(d);
+
+        q.addOnFinished(() => {
+            //add items
+            itemContainer.createItem("special_home_teleport", "Mothership Warp Crystal");
+            itemContainer.getItem("special_home_teleport").addUse(() => {
+                vessel.pos = player.pos.copy();
+            })
+            let itemStack = new ItemStack(itemContainer.getItem("special_home_teleport"), 10);
+            player.inventory.addItemStack(itemStack);
+        });
+
+        questHandler.addQuest(q);
+    })
 
     questHandler.addQuest(quest);
 
-    //add items
-    itemContainer.createItem("special_home_teleport", "Mothership Warp Crystal");
-    itemContainer.getItem("special_home_teleport").addUse(()=>{
-        vessel.pos = player.pos.copy();
-    })
-    let itemStack = new ItemStack(itemContainer.getItem("special_home_teleport"), 10);
-    player.inventory.addItemStack(itemStack);
+    questHandler.trigger("Introduction");
+
+
 }
 
 function windowResized() {
@@ -137,7 +161,7 @@ let bullets = [];
 
 function draw() {
     cam.update();
-    cam.timer++; 
+    cam.timer++;
 
     if (cam.timer >= core.options['tempDelay']) {
         chunkLoader.unloadAll();
@@ -146,7 +170,7 @@ function draw() {
 
     soundtrack.check();
 
-    
+
 
     frameRate(35); //to limit speed
 
@@ -198,7 +222,7 @@ function draw() {
     // fill(255);
     // line(player.pos.x, player.pos.y, -cam.x+mouseX, -cam.y+mouseY);
 
-    
+
 
 
     radar.generate();
@@ -210,7 +234,7 @@ function draw() {
 
     questHandler.loop();
 
-    
+
 }
 
 function secondaryLoop() {

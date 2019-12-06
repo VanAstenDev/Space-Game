@@ -141,6 +141,15 @@ class ChunkLoader {
         }
     }
 
+    getChunk(r, c) {
+        for (let i = 0; i < this.chunks.length; i++) {
+            if (this.chunks[i].r == r && this.chunks[i].c == c) {
+                // return this.chunks[i];
+                return i;
+            }
+        }
+    }
+
     render() {
         for (let i = 0; i < this.chunks.length; i++) {
             if (this.chunks[i].active) {

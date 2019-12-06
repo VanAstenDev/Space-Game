@@ -35,6 +35,10 @@ class TriggerQuest {
         this.dialogue = d;
     }
 
+    addOnFinished(func) {
+        this.onFinished = func;
+    }
+
     trigger() {
         if (this.active) {
             this.objective.trigger();

@@ -45,6 +45,10 @@ class LocationQuest {
         }
     }
 
+    addOnFinished(func) {
+        this.onFinished = func;
+    }
+
     addDialogue(d) {
         this.dialogue = d;
     }

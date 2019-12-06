@@ -35,15 +35,16 @@ class QuestHandler {
             player.quest = this.quests[i];
 
             if (this.quests[i].complete) {
-                // this.quests.splice(i, 1);
-                let nq = new PlaceHolderQuest("No Quest", "You currently don't have a quest.");
-                player.quest = nq;
-                this.quests[i].active = false;
-
-                //check for specifics here
-                if (this.quests[i].name == "Pathfinder") {
-                    
+                if (this.quests[i].onFinished && this.quests[i].active) {
+                    this.quests[i].onFinished();
+                    this.quests[i].active = false;
+                } else {
+                    // this.quests.splice(i, 1);
+                    let nq = new PlaceHolderQuest("No Quest", "You currently don't have a quest.");
+                    player.quest = nq;
+                    this.quests[i].active = false;
                 }
+
             }
 
             if (this.quests[i].type == "location" && this.quests[i].active) {

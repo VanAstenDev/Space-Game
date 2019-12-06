@@ -5,7 +5,8 @@ class Core {
             "chunks": 100,
             "chunkWidth": 1000,
             "chunkHeight": 1000,
-            "tempDelay": 300
+            "tempDelay": 300,
+            "defaultDialogueDelay": 80
         }
 
         this.buildOptions = {
