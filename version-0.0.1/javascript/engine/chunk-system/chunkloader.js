@@ -57,6 +57,7 @@ class ChunkLoader {
             total++;
         }
 
+        this.activeChunks = count;
         return count + "/" + total;
     }
 

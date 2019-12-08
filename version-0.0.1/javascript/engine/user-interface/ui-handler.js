@@ -33,6 +33,14 @@ class UIHandler {
         }
     }
 
+    disableMainMenu() {
+        for (let i = this.elements.length-1; i >= 0; i--) {
+            if (this.elements[i].type == "mainmenu") {
+                this.elements.splice(i, 1);
+            }
+        }
+    }
+
     getInventory() {
         for (let i = 0; i < this.elements.length; i++) {
             if (this.elements[i].type == "inventory") {
@@ -50,6 +58,7 @@ class UIHandler {
     }
 
     display() {
+        textAlign(CENTER);
         for (let i = this.elements.length - 1; i >= 0; i--) {
             if (this.elements[i].type == "radar") {
                 this.elements[i].display();
@@ -66,7 +75,7 @@ class UIHandler {
                     this.elements[i].update();
                 }
                 if (this.elements[i].lifespan != undefined) {
-                    this.elements[i].lifespan--;
+                    this.elements[i].lifespan-=4;
                     if (this.elements[i].lifespan < 0 || this.elements[i].die) {
                         this.elements.splice(i, 1);
                     }

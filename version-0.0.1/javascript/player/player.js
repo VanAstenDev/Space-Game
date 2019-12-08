@@ -9,7 +9,7 @@ class Player {
 
         this.angle = Math.random() * TWO_PI;
 
-        this.turnSpeed = core.playerOptions['turnSpeed']; 
+        this.turnSpeed = core.playerOptions['turnSpeed'];
 
         this.maxSpeed = core.playerOptions['maxSpeed'];
         this.autoPilotSpeed = 0;
@@ -28,6 +28,12 @@ class Player {
         this.texture = textureHandler.getMother();
 
         this.inventory = new Inventory();
+
+        this.fuel = 1000;
+        this.maxFuel = 1000;
+        this.fuelUsage = 0;
+
+        this.refuelSpeed = 0.1;
 
         this.quest = new PlaceHolderQuest("No quest", new Objective(1, "No quest available."), "No quest available.");
     }
@@ -50,11 +56,18 @@ class Player {
         //movement
         if (!this.isVessel) {
             if (keyIsDown(87)) {
-                let dir = p5.Vector.fromAngle(this.angle);
-                dir.mult(this.maxSpeed);
-                this.applyForce(dir);
+                if (this.fuel > 0) {
+                    let dir = p5.Vector.fromAngle(this.angle);
+                    dir.mult(this.maxSpeed);
+                    this.applyForce(dir);
+                    //take fuel
+                    this.fuel -= this.fuelUsage;
+                } else {
+                    let u = new UIAlert("Out of fuel!", "Refuel at any gas station.");
+                    ui.addElement(u);
+                }
             }
-    
+
             if (keyIsDown(65)) {
                 this.angle -= this.turnSpeed;
                 this.vel.mult(0.95);
@@ -70,7 +83,7 @@ class Player {
             dir.limit(this.autoPilotSpeed);
             this.applyForce(dir);
         }
-        
+
 
         //general physics
         this.vel.add(this.acc);
@@ -105,7 +118,7 @@ class Player {
 
         // vertex(-this.dh/2, -this.dw/2);
         // vertex(-this.dh, 0);
-        
+
         // vertex(-this.dh/2, this.dw/2);
         // vertex(this.dh/2, 0);
 
@@ -113,8 +126,8 @@ class Player {
 
         if (this.isVessel) {
             noStroke();
-            fill(0,255,0,100);
-            ellipse(0,0,this.pickUpDistance*2);
+            fill(0, 255, 0, 100);
+            ellipse(0, 0, this.pickUpDistance * 2);
         }
 
         pop();

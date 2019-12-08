@@ -12,7 +12,13 @@ class Planet {
         this.triggerCD = 200;
         this.cd = 0;
 
+        this.triggerDistance = 100;
+        this.triggered = 1;
+        this.cooldown = 500;
+        this.current = 0;
+
         this.texture = textureHandler.getPlanetTexture();
+        this.type = planetHandler.getType();
     }
 
     loop() {
@@ -22,11 +28,29 @@ class Planet {
 
     update() {
         this.cd--;
+        this.current++;
+        if (this.current >= this.cooldown) {
+            this.current = 0;
+            this.triggered = 0;
+        }
         //check vessel
+        if (player.pos.dist(this.pos) <= this.triggerDistance) {
+            if (this.type == "gas_planet") {
+                player.fuel += 0.01;
+                if (player.fuel >= player.maxFuel) {
+                    player.fuel = player.maxFuel;
+                }
+            }
+            if (this.type == "guild_planet") {
+                if (!this.triggered) {
+                    //TODO: GIVE RANDOMLY GENERATED QUEST 
+                }
+            }
+        }
 
         //check cursor
         if (cursor.check(this.pos, this.r/2)) {
-            let b = new Banner("Planet: "+this.name, 10, true);
+            let b = new Banner("Planet Type: "+this.type, 10, true);
             ui.addElement(b);
         }
     }

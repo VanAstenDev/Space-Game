@@ -5,6 +5,9 @@ class UIAlert {
 
         this.type = "uialert";
 
+        this.color = core.uiOptions['mainColor'];
+        this.accentColor = core.uiOptions['accentColor'];
+
         this.maxLifespan = 50;
         this.lifespan = this.maxLifespan;
         this.alpha = 255;
@@ -17,12 +20,12 @@ class UIAlert {
         noStroke();
         translate(-cam.x + 100, (-cam.y + height) - 300);
         
-        fill(50, this.alpha);
+        fill(this.accentColor.r, this.accentColor.g, this.accentColor.b, this.alpha);
         rect(0, 0, 200, 200);
         fill(255, this.alpha);
         textSize(24);
         textAlign(CENTER, CENTER);
-        fill(30, this.alpha);
+        fill(this.color.r, this.color.g, this.color.b, this.alpha);
         rect(0,0,200,40);
         fill(255, this.alpha);
         text(this.title, 0, 0, 200, 40);

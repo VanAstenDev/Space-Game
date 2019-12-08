@@ -6,12 +6,25 @@ class Core {
             "chunkWidth": 1000,
             "chunkHeight": 1000,
             "tempDelay": 300,
-            "defaultDialogueDelay": 80
+            "defaultDialogueDelay": 100
+        }
+
+        this.uiOptions = {
+            "mainColor": {
+                "r": 15,
+                "g": 20,
+                "b": 30
+            },
+            "accentColor": {
+                "r": 80,
+                "g": 125,
+                "b": 190
+            }
         }
 
         this.buildOptions = {
-            "version": "0.2.1",
-            "important": "Better radar, items, inventory (i)",
+            "version": "0.2.2",
+            "important": "Better UI, Quest Improvements, Ship Fuel",
             "gameName": "Space Exploration Game"
         }
 

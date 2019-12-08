@@ -6,4 +6,8 @@ class PlaceHolderQuest {
 
         this.type = "placeholder";
     }
+
+    update() {
+        
+    }
 }

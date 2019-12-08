@@ -10,6 +10,8 @@ class Button {
         this.width = 120;
         this.height = 30;
 
+        this.color = core.uiOptions['mainColor'];
+
         this.active = false;
     }
 
@@ -27,7 +29,7 @@ class Button {
         push();
         noStroke();
         translate(-cam.x + this.x, -cam.y + this.y);
-        fill(50);
+        fill(this.color.r, this.color.g, this.color.b);
         rect(0,0,120,30);
 
         //text

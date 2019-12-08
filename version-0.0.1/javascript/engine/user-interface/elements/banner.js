@@ -28,7 +28,7 @@ class Banner {
         noStroke();
         translate(-cam.x + (width / 2 - this.width / 2), -cam.y + 50);
         //box
-        fill(30, alpha);
+        fill(core.uiOptions['mainColor'].r,core.uiOptions['mainColor'].g,core.uiOptions['mainColor'].b, alpha);
         rect(0, 0, this.width, this.height);
 
         //text

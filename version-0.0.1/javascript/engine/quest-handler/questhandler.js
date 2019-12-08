@@ -1,6 +1,7 @@
 class QuestHandler {
     constructor() {
-        this.quests = [];
+        let nq = new PlaceHolderQuest("No Quest", "You currently don't have a quest.");
+        this.quest = nq;
     }
 
     loop() {
@@ -10,52 +11,48 @@ class QuestHandler {
 
     trigger(name) {
         //find quest
-        for (let i = 0; i < this.quests.length; i++) {
-            if (this.quests[i].name == name) {
+            if (this.quest.name == name) {
                 //found quest
-                this.quests[i].trigger();
+                this.quest.trigger();
                 return true;
             }
 
             console.error("Couldn't find quest '" + name + "'");
-        }
     }
 
     addQuest(quest) {
-        this.quests.push(quest);
+        this.quest = quest;
     }
 
     update() {
-        for (let i = 0; i < this.quests.length; i++) {
             if (core.options['debug']) {
                 // console.log(this.quests[i]);
             }
 
-            this.quests[i].update();
-            player.quest = this.quests[i];
+            this.quest.update();
+            player.quest = this.quest;
 
-            if (this.quests[i].complete) {
-                if (this.quests[i].onFinished && this.quests[i].active) {
-                    this.quests[i].onFinished();
-                    this.quests[i].active = false;
-                } else {
-                    // this.quests.splice(i, 1);
-                    let nq = new PlaceHolderQuest("No Quest", "You currently don't have a quest.");
-                    player.quest = nq;
-                    this.quests[i].active = false;
-                }
-
+            if (this.quest.complete) {
+                this.quest.active = false;
+                // this.quests.splice(i, 1);
+                let nq = new PlaceHolderQuest("No Quest", "You currently don't have a quest.");
+                player.quest = nq;
+                this.quest.active = false;
             }
 
-            if (this.quests[i].type == "location" && this.quests[i].active) {
-                radar.drawPoint(radar.getVector(this.quests[i].location));
+            if (this.quest.type == "location" && this.quest.active) {
+                radar.drawPoint(radar.getVector(this.quest.location));
                 push();
-                translate(this.quests[i].location.x, this.quests[i].location.y);
+                translate(this.quest.location.x, this.quest.location.y);
                 fill(255, 255, 0);
                 ellipse(0, 0, 50);
                 pop();
             }
-        }
+        
+    }
+
+    generateQuest() {
+        //TODO: generate random quest from guild
     }
 
     renderPos() {

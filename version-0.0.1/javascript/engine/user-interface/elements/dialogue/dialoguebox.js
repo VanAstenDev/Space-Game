@@ -25,6 +25,10 @@ class DialogueBox {
         this.lines.push(voiceline);
     }
 
+    addOnFinished(func) {
+        this.onFinished = func;
+    }
+
     loop() {
         this.update();
         this.display();
@@ -39,6 +43,11 @@ class DialogueBox {
                 this.currentLine++;
                 this.timer = 0;
 
+                if (this.currentLine == this.lines.length) {
+                    if (this.onFinished) {
+                        this.onFinished();
+                    }
+                }
             }
         }
     }

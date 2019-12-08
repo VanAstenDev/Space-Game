@@ -30,6 +30,9 @@ class LocationQuest {
                 //show debug ui
                 // let a = new UIAlert("Quest Done", this.name);
                 // ui.addElement(a);
+                if (this.onFinished) {
+                    this.onFinished();
+                }
            
                 //banner
                 let b = new Banner("Quest Complete!");

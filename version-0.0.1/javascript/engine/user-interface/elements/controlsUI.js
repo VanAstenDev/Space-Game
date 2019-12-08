@@ -5,6 +5,9 @@ class ControlsUI {
 
         this.type = "controls";
 
+        this.color = core.uiOptions['mainColor'];
+        this.accentColor = core.uiOptions['accentColor'];
+
         this.active = false;
     }
 
@@ -12,18 +15,18 @@ class ControlsUI {
         if (this.active) {
             push();
             translate(-cam.x + (width / 2 - this.width / 2), -cam.y + (height / 2 - this.height / 2));
-            fill(50);
+            fill(this.accentColor.r, this.accentColor.g, this.accentColor.b);
             //title
             rect(0, 0, this.width, 50);
             textAlign(CENTER, CENTER);
-            textSize(40);
+            textSize(34);
             fill(255);
-            text("Controls (i)", 0, 0, this.width, 50);
+            text("Controls", 0, 0, this.width, 50);
 
-            fill(255, 200);
+            fill(this.color.r, this.color.g, this.color.b);
             rect(0, 50, this.width, this.height - 50);
-            textSize(32);
-            fill(50);
+            textSize(26);
+            fill(255);
             textAlign(CENTER, TOP);
             text("Accelerate: W\nTurn Left: A\nTurn Right: D\nExit/Enter Mothership: E\nToggle Debug: U\nChange Vessel Texture: V\nChange Mothership Texture: M\nOpen Distance UI: O\nOpen Inventory: I", 0, 50, this.width, this.height - 50);
             pop();

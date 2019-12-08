@@ -5,6 +5,9 @@ class InventoryUI {
 
         this.type = "inventory";
 
+        this.color = core.uiOptions['mainColor'];
+        this.accentColor = core.uiOptions['accentColor'];
+
         this.active = false;
 
         this.selected = [];
@@ -18,7 +21,7 @@ class InventoryUI {
             let ox = -cam.x + (width / 2 - this.width / 2);
             let oy = -cam.y + (height / 2 - this.height / 2);
 
-            fill(50);
+            fill(this.accentColor.r, this.accentColor.g, this.accentColor.b);
             rect(0, 0, this.width, 50);
 
             fill(255);
@@ -26,14 +29,14 @@ class InventoryUI {
             textSize(32);
             text("Inventory", 0, 0, this.width, 50);
 
-            fill(150);
+            fill(this.color.r, this.color.g, this.color.b);
             rect(0, 50, this.width, 100);
-            fill(30);
+            fill(255);
             textAlign(CENTER, CENTER);
-            textSize(30);
+            textSize(24);
             text("Press any number to use that item (if item is usable).", 0, 50, this.width, 100);
 
-            fill(80);
+            fill(this.color.r, this.color.g, this.color.b);
             rect(0, 150, this.width, this.height);
 
             let textY = 130;

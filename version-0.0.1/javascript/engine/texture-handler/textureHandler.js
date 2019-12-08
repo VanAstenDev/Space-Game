@@ -59,32 +59,37 @@ class TextureHandler {
         }
     }
 
-    getAlien() {
-        return this.characters[Math.floor(Math.random()*this.characters.length)];
+    getAlien(n) {
+        if (n != undefined) {
+            return this.characters[n];
+        } else {
+            return this.characters[Math.floor(Math.random() * this.characters.length)];
+        }
     }
 
-    getPlanetTexture() {
-        let t = this.planetTextures[Math.floor((Math.random() * this.planetTextures.length))];
-        if (t != undefined) {
-            return t;
+    getPlanetTexture(n) {
+        if (n != undefined) {
+            return this.planetTextures[n];
+        } else {
+            return this.planetTextures[Math.floor((Math.random() * this.planetTextures.length))];
         }
     }
 
     getVessel() {
         this.vesselIndex++;
-        if (this.vesselIndex > this.vesselTextures.length-1) {
+        if (this.vesselIndex > this.vesselTextures.length - 1) {
             this.vesselIndex = 0;
         }
         return this.vesselTextures[this.vesselIndex];
     }
 
     getEnemy() {
-        return this.enemyTextures[Math.floor(Math.random()*this.enemyTextures.length)];
+        return this.enemyTextures[Math.floor(Math.random() * this.enemyTextures.length)];
     }
 
     getMother() {
         this.motherIndex++;
-        if (this.motherIndex > this.motherTextures.length-1) {
+        if (this.motherIndex > this.motherTextures.length - 1) {
             this.motherIndex = 0;
         }
         return this.motherTextures[this.motherIndex];
