@@ -1,6 +1,6 @@
 class PlanetHandler {
     constructor() {
-        this.types = ["gas_planet", "guild_planet"]
+        this.types = ["gas_planet", "guild_planet"];
     }
 
     getType() {

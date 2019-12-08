@@ -111,7 +111,6 @@ function setup() {
     vessel = new Vessel(player.pos.x, player.pos.y);
 
     //initialize ALL items
-    let coin_item = new Item("item_coin", "Coin");
 
     //add traders guild
     let tg = new Guild("Traders Guild");
@@ -144,8 +143,7 @@ function setup() {
                         let d = new DialogueBox("You", "Trade Master", textureHandler.getPlayer(), textureHandler.getAlien(5));
                         d.addLine(new VoiceLine("right", "Well done, adventurer! Here is your payment.", core.options['defaultDialogueDelay']));
                         d.addOnFinished(()=>{
-                            let itemstack = new ItemStack(coin_item, 10);
-                            player.inventory.addItemStack(itemstack);
+                            player.money += 10;
                         })
                         ui.addElement(d);
                     })

@@ -12,9 +12,9 @@ class Core {
 
         this.uiOptions = {
             "mainColor": {
-                "r": 15,
-                "g": 20,
-                "b": 30
+                "r": 25,
+                "g": 30,
+                "b": 40
             },
             "accentColor": {
                 "r": 80,

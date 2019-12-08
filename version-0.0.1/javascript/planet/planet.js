@@ -57,6 +57,18 @@ class Planet {
                         }
                     }
                 }
+                // if (this.type == "enemy_planet") {
+                //     if (!this.triggered) {
+                //         this.triggered = 1;
+                //         //spawn players
+                //         for (let i = 0; i < 10; i++) {
+                //             let xOffset = (Math.random()*100)-50;
+                //             let yOffset = (Math.random()*100)-50;
+                //             let e = new Enemy(vessel.pos.x + xOffset, vessel.pos.y + yOffset, "normal");
+                //             enemies.push(e);
+                //         }
+                //     }
+                // }
             } else {
                 let u = new UIAlert("Interact", "Press the spacebar to interact with this planet.");
                 ui.addElement(u);

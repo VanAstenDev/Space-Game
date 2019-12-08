@@ -30,6 +30,7 @@ class Player {
         this.texture = textureHandler.getMother();
 
         this.inventory = new Inventory();
+        this.money = 0;
 
         this.fuel = 1000;
         this.maxFuel = 1000;
