@@ -3,6 +3,8 @@ class ChunkLoader {
         this.rows = rows;
         this.columns = cols;
 
+        this.activeChunks = 0;
+
         this.chunkWidth = chunkWidth;
         this.chunkHeight = chunkHeight;
 
@@ -22,6 +24,11 @@ class ChunkLoader {
         this.update();
         this.render();
 
+        if (this.activeChunks >= core.options['maxLoadedChunks']) {
+            // this.tempUpdate();
+            this.unloadAll();
+            // this.assignChunks();
+        }
     }
 
     getChunk(index) {
@@ -32,7 +39,8 @@ class ChunkLoader {
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.columns; c++) {
                 let chunk = new Chunk(r, c, this.chunkWidth, this.chunkHeight);
-                let hasPlanet = Math.round(random());
+                // let hasPlanet = Math.round(random());
+                let hasPlanet = 1;
                 if (hasPlanet) {
                     for (let i = 0; i < chunk.maxPlanets; i++) {
                         let randomPoint = chunk.getRandomPoint();
@@ -96,31 +104,31 @@ class ChunkLoader {
         //get current chunk (vessel AND player)
         for (let i = 0; i < this.chunks.length; i++) {
             // if (!this.chunks[i].active) {
-                if (player.pos.x > this.chunks[i].r * this.chunkWidth && player.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
-                    if (player.pos.y > this.chunks[i].c * this.chunkHeight && player.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
-                        this.chunks[i].active = true;
-                        player.chunk = i;
-                        //set neighbors active
-                        this.chunks[i].setNeighbors(true);
-                    }
+            if (player.pos.x > this.chunks[i].r * this.chunkWidth && player.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
+                if (player.pos.y > this.chunks[i].c * this.chunkHeight && player.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
+                    this.chunks[i].active = true;
+                    player.chunk = i;
+                    //set neighbors active
+                    this.chunks[i].setNeighbors(true);
                 }
+            }
 
-                for (let j = 0; j < enemies.length; j++) {
-                    if (enemies[j].pos.x > this.chunks[i].r * this.chunkWidth && enemies[j].pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
-                        if (enemies[j].pos.y > this.chunks[i].c * this.chunkHeight && enemies[j].pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
-                            enemies[j].chunk = i;
-                        }
+            for (let j = 0; j < enemies.length; j++) {
+                if (enemies[j].pos.x > this.chunks[i].r * this.chunkWidth && enemies[j].pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
+                    if (enemies[j].pos.y > this.chunks[i].c * this.chunkHeight && enemies[j].pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
+                        enemies[j].chunk = i;
                     }
                 }
+            }
 
-                if (vessel.pos.x > this.chunks[i].r * this.chunkWidth && vessel.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
-                    if (vessel.pos.y > this.chunks[i].c * this.chunkHeight && vessel.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
-                        this.chunks[i].active = true;
-                        vessel.chunk = i;
-                        //set neighbors active
-                        this.chunks[i].setNeighbors(true);
-                    }
+            if (vessel.pos.x > this.chunks[i].r * this.chunkWidth && vessel.pos.x < (this.chunks[i].r * this.chunkWidth) + this.chunkWidth) {
+                if (vessel.pos.y > this.chunks[i].c * this.chunkHeight && vessel.pos.y < (this.chunks[i].c * this.chunkHeight) + this.chunkHeight) {
+                    this.chunks[i].active = true;
+                    vessel.chunk = i;
+                    //set neighbors active
+                    this.chunks[i].setNeighbors(true);
                 }
+            }
 
             // } 
 
@@ -131,7 +139,7 @@ class ChunkLoader {
             // }
         }
 
-        
+
     }
 
     update() {
@@ -149,6 +157,12 @@ class ChunkLoader {
                 return i;
             }
         }
+    }
+
+    getPlanet() {
+        let r = this.chunks[Math.floor(Math.random() * this.chunks.length)];
+        let planet = r.planets[Math.floor(Math.random() * r.planets.length)];
+        return planet;
     }
 
     render() {

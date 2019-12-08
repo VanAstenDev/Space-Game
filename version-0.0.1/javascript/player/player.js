@@ -3,6 +3,8 @@ class Player {
         this.isVessel = false;
         this.chunk = 0;
 
+        this.guild = new Guild("No Guild");
+
         this.pos = createVector(x, y);
         this.acc = createVector(0, 0);
         this.vel = createVector(0, 0);

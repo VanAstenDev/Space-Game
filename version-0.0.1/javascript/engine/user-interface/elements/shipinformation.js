@@ -22,16 +22,16 @@ class ShipInformation {
             fill(255);
             textSize(20);
             textAlign(CENTER);
-            text("Test", 0, 0, this.width, 20);
+            text("Ship Information", 0, 0, this.width, 50);
 
             fill(this.color.r, this.color.g, this.color.b);
             rectMode(CENTER);
-            rect(0, 20, this.width, this.height);
+            rect(0, 50, this.width, this.height-50);
 
             textSize(24);
             textAlign(CENTER);
             fill(255);
-            text("Exact Position: "+Math.floor(vessel.pos.x)+", "+Math.floor(vessel.pos.y)+"\n\nVessel Fuel: "+(vessel.fuel).toFixed(2)+"/"+vessel.maxFuel+"\nMothership Fuel: "+(player.fuel).toFixed(2)+"/"+player.maxFuel, 0, 30, this.width, this.height-30);
+            text("Exact Position: "+Math.floor(vessel.pos.x)+", "+Math.floor(vessel.pos.y)+"\nVessel Fuel: "+(vessel.fuel).toFixed(2)+"/"+vessel.maxFuel+"\nMothership Fuel: "+(player.fuel).toFixed(2)+"/"+player.maxFuel, 0, 50, this.width, this.height-50);
 
             pop();
         }

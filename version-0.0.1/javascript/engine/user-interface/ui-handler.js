@@ -57,6 +57,22 @@ class UIHandler {
         }
     }
 
+    getPlayerInfo() {
+        for (let i = 0; i < this.elements.length; i++) {
+            if (this.elements[i].type == "playerinformation") {
+                return this.elements[i];
+            }
+        }
+    }
+
+    getFPS() {
+        for (let i = 0; i < this.elements.length; i++) {
+            if (this.elements[i].type == "fpscounter") {
+                return this.elements[i];
+            }
+        }
+    }
+
     display() {
         textAlign(CENTER);
         for (let i = this.elements.length - 1; i >= 0; i--) {

@@ -6,7 +6,8 @@ class Core {
             "chunkWidth": 1000,
             "chunkHeight": 1000,
             "tempDelay": 300,
-            "defaultDialogueDelay": 100
+            "defaultDialogueDelay": 100,
+            "maxLoadedChunks": 100
         }
 
         this.uiOptions = {
@@ -23,8 +24,8 @@ class Core {
         }
 
         this.buildOptions = {
-            "version": "0.2.2",
-            "important": "Better UI, Quest Improvements, Ship Fuel",
+            "version": "0.3.2",
+            "important": "Guilds, Guild quests, Planet interactions",
             "gameName": "Space Exploration Game"
         }
 

@@ -28,7 +28,7 @@ class ControlsUI {
             textSize(26);
             fill(255);
             textAlign(CENTER, TOP);
-            text("Accelerate: W\nTurn Left: A\nTurn Right: D\nExit/Enter Mothership: E\nToggle Debug: U\nChange Vessel Texture: V\nChange Mothership Texture: M\nOpen Distance UI: O\nOpen Inventory: I", 0, 50, this.width, this.height - 50);
+            text("Accelerate: W\nTurn Left: A\nTurn Right: D\nExit/Enter Mothership: E\nToggle Debug: U\nChange Vessel Texture: V\nChange Mothership Texture: M\nOpen Distance UI: O\nOpen Inventory: I\nPlayer Information: P", 0, 50, this.width, this.height - 50);
             pop();
         }
     }

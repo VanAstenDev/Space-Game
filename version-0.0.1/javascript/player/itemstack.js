@@ -13,9 +13,14 @@ class ItemStack {
 
     use() {
         if (this.timer >= this.cd) {
-            player.inventory.removeFromItemStack(this.item.id, 1);
-            this.item.use();
-            this.timer = 0;
+            if (this.item.useable) {
+                player.inventory.removeFromItemStack(this.item.id, 1);
+                this.item.use();
+                this.timer = 0;
+            } else {
+                this.item.use();
+                this.timer = 0;
+            }
         }
     }
 }

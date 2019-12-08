@@ -51,23 +51,26 @@ class QuestHandler {
         
     }
 
+    setQuest(quest) {
+        this.quest = quest;
+        player.quest = quest;
+    }
+
     generateQuest() {
         //TODO: generate random quest from guild
     }
 
     renderPos() {
         if (core.options['debug']) {
-            for (let i = 0; i < this.quests.length; i++) {
-                if (this.quests[i].triggerPos != undefined) {
-                    for (let j = 0; j < this.quests[i].triggerPos.length; j++) {
+                if (this.quest.triggerPos != undefined) {
+                    for (let j = 0; j < this.quest.triggerPos.length; j++) {
                         push();
-                        translate(this.quests[i].triggerPos[j].x, this.quests[i].triggerPos[j].y);
+                        translate(this.quest.triggerPos[j].x, this.quest.triggerPos[j].y);
                         fill(100, 100, 0, 100);
-                        ellipse(0, 0, this.quests[i].dupeDist * 2);
+                        ellipse(0, 0, this.quest.dupeDist * 2);
                         pop();
                     }
                 }
-            }
         }
     }
 }

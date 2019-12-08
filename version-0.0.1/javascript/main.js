@@ -49,6 +49,9 @@ function loadUI() {
 
     let inventoryui = new InventoryUI();
     ui.addElement(inventoryui);
+
+    let playerInfo = new PlayerInfo();
+    ui.addElement(playerInfo);
 }
 
 function setup() {
@@ -107,6 +110,55 @@ function setup() {
     player = new Player(randomPoint.x, randomPoint.y);
     vessel = new Vessel(player.pos.x, player.pos.y);
 
+    //initialize ALL items
+    let coin_item = new Item("item_coin", "Coin");
+
+    //add traders guild
+    let tg = new Guild("Traders Guild");
+    tg.addQuestGenerator(() => {
+        //intro dialogue
+        let d = new DialogueBox("You", "Trade Master", textureHandler.getPlayer(), textureHandler.getAlien(5));
+        d.addLine(new VoiceLine("right", "You've accepted a trade mission!", core.options['defaultDialogueDelay']));
+        d.addLine(new VoiceLine("right", "You will travel to a planet where you will pickup some materials.", core.options['defaultDialogueDelay']));
+        d.addLine(new VoiceLine("right", "You will then deliver these materials to a different planet", core.options['defaultDialogueDelay']));
+        d.addLine(new VoiceLine("right", "Good luck!", core.options['defaultDialogueDelay']));
+
+        //add quest when dialogue ends
+        d.addOnFinished(() => {
+            let planet1 = chunkLoader.getPlanet();
+            //travel to planet 1
+            let ob = new Objective(1, "Travel to " + planet1.name);
+            let quest = new LocationQuest("Trade Mission: Part One", ob, planet1.pos);
+            quest.addOnFinished(() => {
+                //dialogue
+                let d = new DialogueBox("You", "Trade Master", textureHandler.getPlayer(), textureHandler.getAlien(5));
+                d.addLine(new VoiceLine("right", "Good job, now travel to the delivery planet", core.options['defaultDialogueDelay']));
+
+                d.addOnFinished(() => {
+                    let planet2 = chunkLoader.getPlanet();
+                    //travel to planet 2
+                    let ob = new Objective(1, "Travel to "+planet2.name);
+                    let quest = new LocationQuest("Trade Mission: Part Two", ob, planet2.pos);
+                    quest.addOnFinished(()=>{
+                        //dialoge
+                        let d = new DialogueBox("You", "Trade Master", textureHandler.getPlayer(), textureHandler.getAlien(5));
+                        d.addLine(new VoiceLine("right", "Well done, adventurer! Here is your payment.", core.options['defaultDialogueDelay']));
+                        d.addOnFinished(()=>{
+                            let itemstack = new ItemStack(coin_item, 10);
+                            player.inventory.addItemStack(itemstack);
+                        })
+                        ui.addElement(d);
+                    })
+                    questHandler.setQuest(quest);
+                })
+                ui.addElement(d);
+            })
+            questHandler.setQuest(quest);
+        })
+        ui.addElement(d);
+    })
+    player.guild = tg;
+
     radar = new Radar(0.1); //init class
     radar.active = false;
 
@@ -124,14 +176,14 @@ function draw() {
     cam.update();
     cam.timer++;
 
-    if (cam.timer >= core.options['tempDelay']) {
-        chunkLoader.unloadAll();
-        cam.timer = 0;
-    }
+    // if (cam.timer >= core.options['tempDelay']) {
+    //     chunkLoader.unloadAll();
+    //     cam.timer = 0;
+    // }
 
     soundtrack.check();
 
-    frameRate(35); //to limit speed
+    frameRate(31); //to limit speed
 
     translate(cam.x, cam.y);
     background(0);
@@ -161,11 +213,10 @@ function draw() {
         }
     }
 
-
-
     if (vessel.dead) {
         let b = new Banner("YOU DIED!");
         ui.addElement(b);
+        gameStarted = 0;
     } else {
         if (player.isVessel) {
             player.loop();
@@ -177,23 +228,10 @@ function draw() {
     }
 
     cursor.loop();
-
-    // fill(255);
-    // line(player.pos.x, player.pos.y, -cam.x+mouseX, -cam.y+mouseY);
-
-
-
-
     radar.generate();
-
     radar.display();
-
     ui.display();
-
-
     questHandler.loop();
-
-
 }
 
 function secondaryLoop() {
@@ -247,8 +285,10 @@ function keyPressed() {
     if (keyCode == "85") {
         if (core.options['debug'] == true) {
             core.options['debug'] = false;
+            ui.getFPS().active = false;
         } else {
             core.options['debug'] = true;
+            ui.getFPS().active = true;
         }
 
     }
@@ -273,6 +313,14 @@ function keyPressed() {
             ui.getInventory().active = false;
         } else {
             ui.getInventory().active = true;
+        }
+    }
+
+    if (keyCode == "80") {
+        if (ui.getPlayerInfo().active) {
+            ui.getPlayerInfo().active = false;
+        } else {
+            ui.getPlayerInfo().active = true;
         }
     }
 

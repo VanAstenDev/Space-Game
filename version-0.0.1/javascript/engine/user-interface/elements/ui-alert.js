@@ -8,7 +8,7 @@ class UIAlert {
         this.color = core.uiOptions['mainColor'];
         this.accentColor = core.uiOptions['accentColor'];
 
-        this.maxLifespan = 50;
+        this.maxLifespan = 150;
         this.lifespan = this.maxLifespan;
         this.alpha = 255;
     }

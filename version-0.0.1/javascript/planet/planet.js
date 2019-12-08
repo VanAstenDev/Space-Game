@@ -15,7 +15,7 @@ class Planet {
         this.triggerDistance = 100;
         this.triggered = 1;
         this.cooldown = 500;
-        this.current = 0;
+        this.current = 500;
 
         this.texture = textureHandler.getPlanetTexture();
         this.type = planetHandler.getType();
@@ -35,22 +35,37 @@ class Planet {
         }
         //check vessel
         if (player.pos.dist(this.pos) <= this.triggerDistance) {
-            if (this.type == "gas_planet") {
-                player.fuel += 0.01;
-                if (player.fuel >= player.maxFuel) {
-                    player.fuel = player.maxFuel;
+            if (keyIsDown(32)) {
+                if (this.type == "gas_planet") {
+                    player.fuel += 0.01;
+                    if (player.fuel >= player.maxFuel) {
+                        player.fuel = player.maxFuel;
+                    }
                 }
+            } else {
+                let u = new UIAlert("Interact", "Press the spacebar to interact with this planet.");
+                ui.addElement(u);
             }
-            if (this.type == "guild_planet") {
-                if (!this.triggered) {
-                    //TODO: GIVE RANDOMLY GENERATED QUEST 
+        }
+        if (vessel.pos.dist(this.pos) <= this.triggerDistance) {
+            if (keyIsDown(32)) {
+                if (this.type == "guild_planet") {
+                    if (!this.triggered) {
+                        this.triggered = 1;
+                        if (player.guild.name != "No Guild") {
+                            player.guild.getQuest();
+                        }
+                    }
                 }
+            } else {
+                let u = new UIAlert("Interact", "Press the spacebar to interact with this planet.");
+                ui.addElement(u);
             }
         }
 
         //check cursor
-        if (cursor.check(this.pos, this.r/2)) {
-            let b = new Banner("Planet Type: "+this.type, 10, true);
+        if (cursor.check(this.pos, this.r / 2)) {
+            let b = new Banner("Planet Type: " + this.type, 10, true);
             ui.addElement(b);
         }
     }
