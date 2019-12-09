@@ -25,7 +25,8 @@ class Banner {
         }
 
         push();
-        noStroke();
+        // noStroke();
+        stroke(core.uiOptions['accentColor'].r, core.uiOptions['accentColor'].g, core.uiOptions['accentColor'].b, alpha)
         translate(-cam.x + (width / 2 - this.width / 2), -cam.y + 50);
         //box
         fill(core.uiOptions['mainColor'].r,core.uiOptions['mainColor'].g,core.uiOptions['mainColor'].b, alpha);

@@ -56,10 +56,6 @@ class QuestHandler {
         player.quest = quest;
     }
 
-    generateQuest() {
-        //TODO: generate random quest from guild
-    }
-
     renderPos() {
         if (core.options['debug']) {
                 if (this.quest.triggerPos != undefined) {

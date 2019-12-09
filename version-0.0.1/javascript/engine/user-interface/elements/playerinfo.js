@@ -15,6 +15,7 @@ class PlayerInfo {
         if (this.active) {
             push();
             translate(-cam.x + (width/2) - this.width/2, -cam.y + (height/2) - this.height/2);
+            stroke(core.uiOptions['accentColor'].r, core.uiOptions['accentColor'].g, core.uiOptions['accentColor'].b)
 
             //title
             fill(this.accentColor.r, this.accentColor.g, this.accentColor.b);
@@ -31,7 +32,7 @@ class PlayerInfo {
             fill(255);
             textSize(26);
             textAlign(CENTER, TOP);
-            text("Guild: "+player.guild.name+"\nBalance: "+player.money+" Coins\nQuest: "+player.quest.name+"\nObjective: "+player.quest.objective.task, 0, 50, this.width, this.height - 50);
+            text("Guild: "+player.guild.name+"\nBalance: "+player.money+" "+core.buildOptions['currencyName']+"\nQuest: "+player.quest.name+"\nObjective: "+player.quest.objective.task+"\nQuest Description: "+player.quest.objective.desc, 0, 50, this.width, this.height - 50);
 
             pop();
         }

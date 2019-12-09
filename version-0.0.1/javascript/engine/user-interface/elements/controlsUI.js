@@ -16,6 +16,7 @@ class ControlsUI {
             push();
             translate(-cam.x + (width / 2 - this.width / 2), -cam.y + (height / 2 - this.height / 2));
             fill(this.accentColor.r, this.accentColor.g, this.accentColor.b);
+            stroke(core.uiOptions['accentColor'].r, core.uiOptions['accentColor'].g, core.uiOptions['accentColor'].b);
             //title
             rect(0, 0, this.width, 50);
             textAlign(CENTER, CENTER);

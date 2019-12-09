@@ -40,6 +40,8 @@ class Vessel {
         this.autoPilotSpeed = 1;
 
         this.texture = textureHandler.getVessel();
+
+        // this.particles = [];
     }
 
     loop() {
@@ -61,9 +63,6 @@ class Vessel {
 
     update() {
         this.shootingTimer++;
-
-
-
         //camera zoom
         // this.dw = this.w * cam.zoom;
         // this.dh = this.h * cam.zoom;
@@ -71,9 +70,27 @@ class Vessel {
         //check if bullet hit
         for (let i = 0; i < bullets.length; i++) {
             if (bullets[i].pos.dist(this.pos) < this.hitbox) {
-                this.takeDamage(bullets[i].dmg);
+                if (bullets[i].sender != this) {
+                    this.takeDamage(bullets[i].dmg);
+                }
             }
         }
+
+        //particles
+        //spawn new particle
+        // if (this.particles.length < 300) {
+        //     let p = new SmokeParticle(this.pos.x, this.pos.y, Math.random() * 10);
+        //     this.particles.push(p);
+        // }
+        // //update particles
+        // for (let i = this.particles.length - 1; i >= 0; i--) {
+        //     // this.particles[i].lifespan--;
+        //     if (this.particles[i].lifespan <= 0) {
+        //         this.particles.splice(i, 1);
+        //     }
+
+        //     // this.particles[i].pos.add(createVector(-1, 0));
+        // }
 
         //movement
         if (player.isVessel) {
@@ -145,10 +162,13 @@ class Vessel {
     shoot() {
         if (this.shootingTimer > this.shootingCooldown) {
             let curPos = createVector(this.pos.x, this.pos.y);
-            let dir = p5.Vector.fromAngle(this.angle);
-            dir.mult(30);
+            // let dir = p5.Vector.fromAngle(this.angle);
+            let correctedPos = createVector(this.pos.x + cam.x, this.pos.y + cam.y);
+            let a = core.getAngleBetweenVectors(cursor.pos, correctedPos);
+            let dir = p5.Vector.fromAngle(a);
+            dir.mult(50);
             curPos.add(dir);
-            let b = new Bullet(curPos.x, curPos.y, this.angle);
+            let b = new Bullet(curPos.x, curPos.y, a);
             bullets.push(b);
             this.shootingTimer = 0;
         }
@@ -160,6 +180,14 @@ class Vessel {
         rotate(this.angle);
         imageMode(CENTER);
         image(this.texture, 0, 0, (this.w * (2)), (this.h * (1)));
+        
+        //turret
+        // let correctedPos = createVector(this.pos.x + cam.x, this.pos.y + cam.y);
+        // let a = core.getAngleBetweenVectors(cursor.pos, correctedPos);
+        // rotate(a+(HALF_PI));
+        // fill(255);
+        // rect(0,0,100,10);
+
         // image(this.texture, 0, 0);
         // noStroke();
         // fill(255, 150);
@@ -171,6 +199,11 @@ class Vessel {
         // vertex(this.dh/2, 0);
 
         // endShape(CLOSE);
+
+        //draw particles
+        // for (let i = 0; i < this.particles.length; i++) {
+        //     this.particles[i].display();
+        // }
 
         if (core.options['debug']) {
             fill(255, 0, 0, 50);

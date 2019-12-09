@@ -110,10 +110,20 @@ function setup() {
     player = new Player(randomPoint.x, randomPoint.y);
     vessel = new Vessel(player.pos.x, player.pos.y);
 
+    // add enemy
+    // let ePos = chunkLoader.chunks[randomChunk].getRandomPoint();
+    // let e = new Enemy(ePos.x, ePos.y);
+    // e.addOnDead(()=>{
+    //     let d = new DialogueBox("You", "WKY", textureHandler.getPlayer(), textureHandler.getAlien());
+    //     d.addLine(new VoiceLine("right", "You got him good, captain!", core.options['defaultDialogueDelay']));
+    //     ui.addElement(d);
+    // })
+    // enemies.push(e);
+
     //initialize ALL items
 
     //add traders guild
-    let tg = new Guild("Traders Guild");
+    let tg = new Guild("Traders Union");
     tg.addQuestGenerator(() => {
         //intro dialogue
         let d = new DialogueBox("You", "Trade Master", textureHandler.getPlayer(), textureHandler.getAlien(5));
@@ -127,6 +137,7 @@ function setup() {
             let planet1 = chunkLoader.getPlanet();
             //travel to planet 1
             let ob = new Objective(1, "Travel to " + planet1.name);
+            ob.addDesc("Pick up the resources from the first planet.");
             let quest = new LocationQuest("Trade Mission: Part One", ob, planet1.pos);
             quest.addOnFinished(() => {
                 //dialogue
@@ -136,14 +147,17 @@ function setup() {
                 d.addOnFinished(() => {
                     let planet2 = chunkLoader.getPlanet();
                     //travel to planet 2
-                    let ob = new Objective(1, "Travel to "+planet2.name);
+                    let ob = new Objective(1, "Travel to " + planet2.name);
+                    ob.addDesc("Deliver the resources to the second planet.");
                     let quest = new LocationQuest("Trade Mission: Part Two", ob, planet2.pos);
-                    quest.addOnFinished(()=>{
+                    quest.addOnFinished(() => {
                         //dialoge
                         let d = new DialogueBox("You", "Trade Master", textureHandler.getPlayer(), textureHandler.getAlien(5));
                         d.addLine(new VoiceLine("right", "Well done, adventurer! Here is your payment.", core.options['defaultDialogueDelay']));
-                        d.addOnFinished(()=>{
-                            player.money += 10;
+                        d.addOnFinished(() => {
+                            player.money += 100;
+                            let u = new UIAlert("Money Received", "You've received 100 "+core.buildOptions['currencyName']);
+                            ui.addElement(u);
                         })
                         ui.addElement(d);
                     })
@@ -156,6 +170,22 @@ function setup() {
         ui.addElement(d);
     })
     player.guild = tg;
+
+    //test item voor marcus
+
+    // let item = new Item("mothership_teleport", "Mothership Teleport");
+    // item.addUse(()=>{
+    //     vessel.pos = player.pos.copy();
+    //     let u = new Banner("Teleported to mothership!");
+    //     ui.addElement(u);
+    // })
+    // itemContainer.addItem(item);
+
+    // let itemstack = new ItemStack(item, 5);
+
+    // player.inventory.addItemStack(itemstack);
+
+    //einde test item
 
     radar = new Radar(0.1); //init class
     radar.active = false;
@@ -192,10 +222,11 @@ function draw() {
         enemies[i].loop();
     }
 
-    for (let i = enemies.length - 1; i > 0; i--) {
+    for (let i = enemies.length - 1; i >= 0; i--) {
         if (enemies[i].dead) {
+            enemies[i].onDead();
             enemies.splice(i, 1);
-            questHandler.trigger("Genocide");
+            // questHandler.trigger("Genocide");
         }
     }
 
@@ -245,6 +276,10 @@ function mousePressed() {
         loadUI();
         gameStarted = 1;
     }
+
+    if (core.playerOptions['shootingAllowed'] && player.isVessel) {
+        vessel.shoot();
+    }
 }
 
 function keyPressed() {
@@ -274,9 +309,37 @@ function keyPressed() {
         }
     }
 
-    if (core.playerOptions['shootingAllowed'] && player.isVessel) {
-        if (keyCode == ENTER) {
-            vessel.shoot();
+    // if (core.playerOptions['shootingAllowed'] && player.isVessel) {
+    //     if (keyCode == ENTER) {
+    //         vessel.shoot();
+    //     }
+    // }
+
+    if (keyCode == "16") { //shift
+        //check if player is mothership
+        if (!player.isVessel) {
+            //toggle boosting
+            if (player.boosting) {
+                let u = new Banner("Disengaging Engine Boost");
+                u.lifespan = 200;
+                ui.addElement(u);
+                player.boosting = false;
+                player.fuelUsage = core.playerOptions['fuelUsage'];
+            } else {
+                let u = new Banner("Engaging Engine Boost");
+                u.lifespan = 200;
+                ui.addElement(u);
+                player.boosting = true;
+                player.fuelUsage = core.playerOptions['boostingFuelUsage'];
+            }
+        }
+    }
+
+    if (keyCode == "82") {
+        if (radar.active) {
+            radar.active = 0;
+        } else {
+            radar.active = 1;
         }
     }
 

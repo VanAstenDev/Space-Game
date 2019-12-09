@@ -10,6 +10,10 @@ class Core {
             "maxLoadedChunks": 100
         }
 
+        this.gameOptions = {
+            'fuelCost': 0.1
+        }
+
         this.uiOptions = {
             "mainColor": {
                 "r": 25,
@@ -26,7 +30,8 @@ class Core {
         this.buildOptions = {
             "version": "0.3.2",
             "important": "Guilds, Guild quests, Planet interactions",
-            "gameName": "Space Exploration Game"
+            "gameName": "Space Exploration Game",
+            "currencyName": "Federation Gold"
         }
 
         this.chunkOptions = {
@@ -35,9 +40,13 @@ class Core {
         }
 
         this.playerOptions = {
-            "maxSpeed": 15,
-            "turnSpeed": 0.035, 
-            "shootingAllowed": true
+            "maxSpeed": 7.5,
+            "boostSpeed": 60,
+            "turnSpeed": 0.035,
+            "shootingAllowed": true,
+            'fuelUsage': 0.01,
+            'boostingFuelUsage': 0.1,
+            'refuelSpeed': 1
         }
 
         this.vesselOptions = {

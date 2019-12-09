@@ -37,9 +37,14 @@ class Planet {
         if (player.pos.dist(this.pos) <= this.triggerDistance) {
             if (keyIsDown(32)) {
                 if (this.type == "gas_planet") {
-                    player.fuel += 0.01;
-                    if (player.fuel >= player.maxFuel) {
-                        player.fuel = player.maxFuel;
+                    //check for money
+                    if (player.money >= core.gameOptions['fuelCost'] && player.fuel < player.maxFuel) {
+                        player.fuel += player.refuelSpeed;
+                        player.money -= core.gameOptions['fuelCost'];
+                    } else {
+                        let u = new Banner("Not enough money.");
+                        u.lifespan = 250;
+                        ui.addElement(u);
                     }
                 }
             } else {

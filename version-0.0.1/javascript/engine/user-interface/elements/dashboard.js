@@ -8,7 +8,7 @@ class Dashboard {
 
     display() {
         push();
-        noStroke();
+        stroke(core.uiOptions['accentColor'].r, core.uiOptions['accentColor'].g, core.uiOptions['accentColor'].b)
         
         translate(-cam.x + (width - 320), -cam.y-40);
 

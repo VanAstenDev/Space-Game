@@ -3,8 +3,14 @@ class Objective {
         this.count = count;
         this.task = task;
 
+        this.desc = "-";
+
         this.current = 0;
         this.complete = false;
+    }
+
+    addDesc(str) {
+        this.desc = str;
     }
 
     trigger() {

@@ -31,7 +31,7 @@ class ChunkLoader {
         }
     }
 
-    getChunk(index) {
+    getSingleChunk(index) {
         return this.chunks[index].active;
     }
 

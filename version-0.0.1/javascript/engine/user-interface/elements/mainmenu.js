@@ -6,6 +6,7 @@ class MainMenu {
     display() {
         push();
         translate(-cam.x, -cam.y);
+        stroke(core.uiOptions['accentColor'].r, core.uiOptions['accentColor'].g, core.uiOptions['accentColor'].b)
 
         //main window
         fill(30);

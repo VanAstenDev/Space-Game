@@ -1,12 +1,14 @@
 class Bullet {
-    constructor(x, y, angle) {
+    constructor(x, y, angle, sender) {
         this.pos = createVector(x, y);
         this.vel = createVector(0, 0);
         this.acc = createVector(0, 0);
 
+        this.sender = sender;
+
         this.angle = angle;
 
-        this.dmg = Math.floor(Math.random() * 50);
+        this.dmg = 10;
 
         this.w = 1;
         this.h = 1;

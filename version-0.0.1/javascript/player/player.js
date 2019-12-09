@@ -17,6 +17,9 @@ class Player {
         this.autoPilotSpeed = 0;
         this.friction = 0.95;
 
+        this.boostSpeed = core.playerOptions['boostSpeed'];
+        this.boosting = false;
+
         this.w = 65;
         this.h = 100;
 
@@ -34,9 +37,9 @@ class Player {
 
         this.fuel = 1000;
         this.maxFuel = 1000;
-        this.fuelUsage = 0;
+        this.fuelUsage = core.playerOptions['fuelUsage'];
 
-        this.refuelSpeed = 0.1;
+        this.refuelSpeed = core.playerOptions['refuelSpeed'];
 
         this.quest = new PlaceHolderQuest("No quest", new Objective(1, "No quest available."), "No quest available.");
     }
@@ -61,7 +64,7 @@ class Player {
             if (keyIsDown(87)) {
                 if (this.fuel > 0) {
                     let dir = p5.Vector.fromAngle(this.angle);
-                    dir.mult(this.maxSpeed);
+                    dir.mult(this.boostSpeed);
                     this.applyForce(dir);
                     //take fuel
                     this.fuel -= this.fuelUsage;
@@ -73,11 +76,11 @@ class Player {
 
             if (keyIsDown(65)) {
                 this.angle -= this.turnSpeed;
-                this.vel.mult(0.95);
+                this.vel.mult(0.98);
             }
             if (keyIsDown(68)) {
                 this.angle += this.turnSpeed;
-                this.vel.mult(0.95);
+                this.vel.mult(0.98);
             }
         } else {
             //autopilot
@@ -90,7 +93,11 @@ class Player {
 
         //general physics
         this.vel.add(this.acc);
-        this.vel.limit(this.maxSpeed);
+        if (this.boosting) {
+            this.vel.limit(this.boostSpeed);
+        } else {
+            this.vel.limit(this.maxSpeed);
+        }
         this.pos.add(this.vel);
         this.acc.mult(0);
         this.vel.mult(this.friction);

@@ -14,12 +14,12 @@ class Enemy {
         this.turnSteps = 50;
         this.accuracy = 0.25;
 
-        this.turnSpeed = 0.05;
-        this.maxSpeed = 15;
+        this.turnSpeed = 0.25;
+        this.maxSpeed = 45;
         this.friction = 0.95;
-        this.w = 20;
-        this.h = 40;
-        this.mass = 50;
+        this.w = 80;
+        this.h = 160;
+        this.mass = 200;
 
         this.pnOffset = Math.random();
 
@@ -27,6 +27,8 @@ class Enemy {
 
         this.dmgCD = 5;
         this.timer = 0;
+
+        this.dead = 0;
 
         this.shootingCooldown = 40;
         this.shootingTimer = this.shootingCooldown;
@@ -72,11 +74,28 @@ class Enemy {
     }
 
     orderAngle(angle) {
+        this.angle = 0;
         this.orderedAngle = angle;
         this.angleStepSize = (this.angle - this.orderedAngle) / this.turnSteps;
     }
 
+    addOnDead(func) {
+        this.onDead = func;
+    }
+
+    onDead() {
+        let u = new UIAlert("Enemy Died", "You killed an enemy!");
+        ui.addElement(u);
+        this.dead = 1;
+    }
+
     update() {
+        if (this.health <= 0) {
+            if (this.onDead != undefined) {
+                this.onDead();
+                this.dead = 1;
+            }
+        }
         this.timer++;
         this.shootingTimer++;
 
@@ -86,14 +105,13 @@ class Enemy {
         if (this.angle < 0) {
             this.angle = TWO_PI;
         }
-
-        if (chunkLoader.getChunk(this.chunk)) {
-
+        // if (chunkLoader.getSingleChunk(this.chunk)) {
             this.alpha = map(this.health, 0, 200, 150, 255);
 
             //angle to player
-            // this.angle = Math.atan2(vessel.pos.y - this.pos.y, vessel.pos.x - this.pos.x);
-            this.angle += this.angleStepSize;
+
+            this.angle = Math.atan2(vessel.pos.y - this.pos.y, vessel.pos.x - this.pos.x);
+            // this.angle += this.angleStepSize;
 
             if (this.angle > this.orderedAngle - (this.orderedAngle*this.accuracy) && this.angle < this.orderedAngle + (this.orderedAngle * this.accuracy)) {
                 this.angleStepSize = 0;
@@ -107,12 +125,12 @@ class Enemy {
                 this.applyForce(dir);
             }
 
-            //shoot
-            // if (this.pos.dist(vessel.pos) < 600) {
-            //     this.shoot();
-            // }
+            // shoot
+            if (this.pos.dist(vessel.pos) < 600) {
+                this.shoot();
+            }
 
-            //random movement
+            // random movement
             // this.pnOffset += 0.01;
             // let r = noise(this.pnOffset);
 
@@ -148,7 +166,7 @@ class Enemy {
             this.pos.x = constrain(this.pos.x, chunkLoader.x, chunkLoader.totalWidth);
             this.pos.y = constrain(this.pos.y, chunkLoader.y, chunkLoader.totalHeight);
 
-        }
+        // }
     }
 
     display() {
@@ -176,6 +194,16 @@ class Enemy {
             fill(255, 0, 0, 50);
             ellipse(0, 0, this.hitbox * 2);
         }
+
+        //display health bar
+        fill(30);
+        rotate(-this.angle);
+        translate(50, -50);
+        rect(0, 0, 100, 30);
+        //actual health
+        fill(0,255,0);
+        let scaledHealth = map(this.health, 0, 100, 0, 100);
+        rect(0, 0, scaledHealth, 30);
 
         pop();
 
