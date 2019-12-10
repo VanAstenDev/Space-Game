@@ -64,7 +64,7 @@ class Planet {
         }
         if (vessel.pos.dist(this.pos) <= this.triggerDistance) {
             if (keyIsDown(32)) {
-                if (this.type == "guild_planet") {
+                if (this.type == "guild_planet" && player.guild != undefined) {
                     if (!this.triggered) {
                         this.triggered = 1;
                         if (player.guild.name != "No Guild") {
