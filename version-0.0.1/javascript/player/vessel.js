@@ -35,7 +35,7 @@ class Vessel {
         this.maxFuel = 100;
         this.fuel = 100;
         this.fuelUsage = 0.01;
-        //TODO: automatically move back to mothership when fuel is gone
+        this.refuelSpeed = 0.1;
 
         this.autoPilotSpeed = 1;
 
@@ -126,8 +126,8 @@ class Vessel {
 
             //refuel
             if (this.fuel < this.maxFuel) {
-                this.fuel += player.refuelSpeed;
-                player.fuel -= player.refuelSpeed;
+                this.fuel += this.refuelSpeed;
+                player.fuel -= this.refuelSpeed;
                 if (this.fuel > this.maxFuel) {
                     this.fuel = this.maxFuel;
                 }

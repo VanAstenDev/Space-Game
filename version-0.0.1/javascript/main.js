@@ -192,6 +192,36 @@ function setup() {
 
     let alphaNotification = new PText(core.buildOptions['gameName'] + " | Build " + core.buildOptions['version'] + " (" + core.buildOptions['important'] + ") Controls: C", 0, 0);
     ui.addElement(alphaNotification);
+
+    //TUTORIAL QUEST
+    let name = "The Instructor";
+    let d = new DialogueBox(player.name, name, textureHandler.getPlayer(), textureHandler.getAlien(5));
+    //movement
+    d.addLine(new VoiceLine("right", "Welcome to Space Exploration Game! I am "+name+" and I am here to teach you the basics of space exploration.", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "Let's start with basic movement, press W to accelerate, A to turn left and D to turn your ship right", core.options['defaultDialogueDelay']*2));
+    //detaching
+    d.addLine(new VoiceLine("right", "Every mothership contains a smaller ship called the exploration vessel, you can enter your vessel by pressing E", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "To get back in your mothership just enter the green circle and press E again.", core.options['defaultDialogueDelay']*2));
+    //fuel
+    d.addLine(new VoiceLine("right", "Your ships lose fuel when you move, try opening the ship information panel by pressing O", core.options['defaultDialogueDelay']*2));
+    d.addLine(new VoiceLine("right", "Your exploration vessel refuels automatically when attached to the mothership.", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "To refuel your mothership you will have to interact with a gas planet, hover over planets to see their type.", core.options['defaultDialogueDelay']*2));
+    d.addLine(new VoiceLine("right", "Refueling costs "+core.gameOptions['fuelCost']+" per unit of fuel.", core.options['defaultDialogueDelay']));
+    //money
+    d.addLine(new VoiceLine("right", "To earn money you can complete quests.", core.options['defaultDialogueDelay']));
+    //quest
+    d.addLine(new VoiceLine("right", "Currently you can only accept guild quests, these are quests that are randomly generated based on your guild.", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "To get a guild quest, go to any guild planet and interact with it.", core.options['defaultDialogueDelay']));
+    //guilds
+    d.addLine(new VoiceLine("right", "Currently you are in the traders guild because that is the only guild that has been implemented so far.", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "Have fun playing our game!", core.options['defaultDialogeDelay']));
+
+    d.addOnFinished(()=>{
+        player.inTutorial = false;
+    })
+
+    ui.addElement(d);
+
 }
 
 function windowResized() {

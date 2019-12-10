@@ -41,6 +41,8 @@ class Player {
 
         this.refuelSpeed = core.playerOptions['refuelSpeed'];
 
+        this.inTutorial = true;
+
         this.quest = new PlaceHolderQuest("No quest", new Objective(1, "No quest available."), "No quest available.");
     }
 

@@ -7,6 +7,7 @@ class TextureHandler {
         this.enemyTextures = [];
         this.backdrops = [];
         this.characters = [];
+        this.team = [];
 
         this.motherIndex = -1;
         this.vesselIndex = -1;
@@ -36,6 +37,9 @@ class TextureHandler {
         }
         if (type == "player") {
             this.player = texture;
+        }
+        if (type == "team") {
+            this.team.push(texture);
         }
     }
 

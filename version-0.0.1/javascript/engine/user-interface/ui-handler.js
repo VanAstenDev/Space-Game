@@ -34,7 +34,7 @@ class UIHandler {
     }
 
     disableMainMenu() {
-        for (let i = this.elements.length-1; i >= 0; i--) {
+        for (let i = this.elements.length - 1; i >= 0; i--) {
             if (this.elements[i].type == "mainmenu") {
                 this.elements.splice(i, 1);
             }
@@ -74,31 +74,48 @@ class UIHandler {
     }
 
     display() {
-        textAlign(CENTER);
-        for (let i = this.elements.length - 1; i >= 0; i--) {
-            if (this.elements[i].type == "radar") {
-                this.elements[i].display();
-                this.elements[i].upgrade();
-            }
-        }
-
-        for (let i = this.elements.length - 1; i >= 0; i--) {
-            // if (this.elements[i].type != "banner") {
-            //add other elements to leftovers
-            if (this.elements[i].type != "radar") {
-                this.elements[i].display();
-                if (this.elements[i].update != undefined) {
-                    this.elements[i].update();
+        if (gameStarted) {
+            textAlign(CENTER);
+            for (let i = this.elements.length - 1; i >= 0; i--) {
+                if (this.elements[i].type == "radar") {
+                    this.elements[i].display();
+                    this.elements[i].upgrade();
                 }
-                if (this.elements[i].lifespan != undefined) {
-                    this.elements[i].lifespan-=4;
-                    if (this.elements[i].lifespan < 0 || this.elements[i].die) {
-                        this.elements.splice(i, 1);
+            }
+
+            for (let i = this.elements.length - 1; i >= 0; i--) {
+                // if (this.elements[i].type != "banner") {
+                //add other elements to leftovers
+                if (this.elements[i].type != "radar") {
+                    this.elements[i].display();
+                    if (this.elements[i].update != undefined) {
+                        this.elements[i].update();
+                    }
+                    if (this.elements[i].lifespan != undefined) {
+                        this.elements[i].lifespan -= 4;
+                        if (this.elements[i].lifespan < 0 || this.elements[i].die) {
+                            this.elements.splice(i, 1);
+                        }
+                    }
+                }
+
+                // }
+            }
+        } else {
+            for (let i = this.elements.length - 1; i >= 0; i--) {
+                if (this.elements[i].type == "mainmenu") {
+                    this.elements[i].display();
+                    if (this.elements[i].update != undefined) {
+                        this.elements[i].update();
+                    }
+                    if (this.elements[i].lifespan != undefined) {
+                        this.elements[i].lifespan -= 4;
+                        if (this.elements[i].lifespan < 0 || this.elements[i].die) {
+                            this.elements.splice(i, 1);
+                        }
                     }
                 }
             }
-
-            // }
         }
     }
 }
