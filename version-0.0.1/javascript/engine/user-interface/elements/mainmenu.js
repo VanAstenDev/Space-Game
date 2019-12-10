@@ -17,7 +17,7 @@ class MainMenu {
         noStroke();
         textSize(84);
         textAlign(CENTER, CENTER);
-        text("Space Exploration Game", 0, 0, innerWidth, 200);
+        text(core.buildOptions['gameName'], 0, 0, innerWidth, 200);
 
         //subtitle
         textSize(40);

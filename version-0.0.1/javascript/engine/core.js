@@ -6,7 +6,7 @@ class Core {
             "chunkWidth": 1000,
             "chunkHeight": 1000,
             "tempDelay": 300,
-            "defaultDialogueDelay": 100,
+            "defaultDialogueDelay": 20,
             "maxLoadedChunks": 100
         }
 
@@ -28,9 +28,9 @@ class Core {
         }
 
         this.buildOptions = {
-            "version": "0.3.2",
-            "important": "Guilds, Guild quests, Planet interactions",
-            "gameName": "Space Exploration Game",
+            "version": "0.3.4",
+            "important": "Red Moon Guild, Game name (finally)",
+            "gameName": "2112",
             "currencyName": "Federation Gold"
         }
 

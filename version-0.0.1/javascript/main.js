@@ -122,7 +122,7 @@ function setup() {
 
     //initialize ALL items
 
-    //add traders guild
+    //add traders guild (MAX)
     let tg = new Guild("Traders Union");
     tg.addQuestGenerator(() => {
         //intro dialogue
@@ -156,7 +156,7 @@ function setup() {
                         d.addLine(new VoiceLine("right", "Well done, adventurer! Here is your payment.", core.options['defaultDialogueDelay']));
                         d.addOnFinished(() => {
                             player.money += 100;
-                            let u = new UIAlert("Money Received", "You've received 100 "+core.buildOptions['currencyName']);
+                            let u = new UIAlert("Money Received", "You've received 100 " + core.buildOptions['currencyName']);
                             ui.addElement(u);
                         })
                         ui.addElement(d);
@@ -169,9 +169,53 @@ function setup() {
         })
         ui.addElement(d);
     })
-    player.guild = tg;
+    // player.guild = tg;
 
-    //test item voor marcus
+    //Red moon's guild (TIMO)
+    let rmg = new Guild("Red Moon");
+    rmg.addQuestGenerator(() => {
+        let d = new DialogueBox(player.name, "the Count", textureHandler.getPlayer(), textureHandler.getAlien(6));
+        d.addLine(new VoiceLine("right", "Greetings, traveller. Are you looking for a job?, there is a relic you can retrieve for us.", core.options['defaultDialogueDelay']));
+        d.addLine(new VoiceLine("left", "Yes.", core.options['defaultDialogueDelay']))
+        let names = ["First Moon Amulet Shard"]; //TODO: COOLE NAAMEN
+        let name = names[Math.floor(Math.random() * names.length)];
+        d.addLine(new VoiceLine("right", "There is an ancient relic, the " + name + ", We have located it.", core.options['defaultDialogueDelay']));
+        d.addLine(new VoiceLine("right", "Would you retrieve it for us? We will reward you handsomely.", core.options['defaultDialogueDelay']));
+
+        //set player quest data
+        player.questData['relic_name'] = name;
+
+        d.addOnFinished(() => {
+            // let planet1 = player.questData['planet'];
+            let planet1 = chunkLoader.getPlanet();
+
+            let ob = new Objective(1, "Travel to " + planet1.name + " to retrieve the " + player.questData['relic_name']);
+            ob.addDesc("Travel to " + planet1.name + " and retrieve the " + player.questData['relic_name'] + " for the Count.");
+            let quest = new LocationQuest("Retrieval for the Count", ob, planet1.pos);
+            quest.addOnFinished(() => {
+                let ob = new Objective(1, "Bring the " + player.questData['relic_name'] + " back to the Count.");
+                ob.addDesc("Bring the " + player.questData['relic_name'] + " back to the Count and his followers.");
+                let quest = new LocationQuest("Turn in the " + player.questData['relic_name'], ob, player.questData['planet'].pos);
+                quest.addOnFinished(() => {
+                    let d = new DialogueBox(player.name, "the Count", textureHandler.getPlayer(), textureHandler.getAlien(6));
+                    d.addLine(new VoiceLine("right", "Thank you, traveller! Now that the " + player.questData['relic_name'] + " is back in our power,", core.options['defaultDialogueDelay']));
+                    d.addLine(new VoiceLine("right", "we are one step closer to completing the Amulet. This will not be forgotten.", core.options['defaultDialogueDelay']));
+                    d.addOnFinished(() => {
+                        player.money += 100;
+                        let u = new UIAlert("Money Received", "You've received 100 " + core.buildOptions['currencyName']);
+                        ui.addElement(u);
+                    })
+                    ui.addElement(d);
+                })
+                questHandler.setQuest(quest);
+            })
+            questHandler.setQuest(quest);
+        })
+        ui.addElement(d);
+    });
+    player.guild = rmg;
+
+    //test item voor iedereen
 
     // let item = new Item("mothership_teleport", "Mothership Teleport");
     // item.addUse(()=>{
@@ -197,30 +241,30 @@ function setup() {
     let name = "The Instructor";
     let d = new DialogueBox(player.name, name, textureHandler.getPlayer(), textureHandler.getAlien(5));
     //movement
-    d.addLine(new VoiceLine("right", "Welcome to Space Exploration Game! I am "+name+" and I am here to teach you the basics of space exploration.", core.options['defaultDialogueDelay']));
-    d.addLine(new VoiceLine("right", "Let's start with basic movement, press W to accelerate, A to turn left and D to turn your ship right", core.options['defaultDialogueDelay']*2));
+    d.addLine(new VoiceLine("right", "Welcome to Space Exploration Game! I am " + name + " and I am here to teach you the basics of space exploration.", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "Let's start with basic movement, press W to accelerate, A to turn left and D to turn your ship right", core.options['defaultDialogueDelay'] * 2));
     //detaching
     d.addLine(new VoiceLine("right", "Every mothership contains a smaller ship called the exploration vessel, you can enter your vessel by pressing E", core.options['defaultDialogueDelay']));
-    d.addLine(new VoiceLine("right", "To get back in your mothership just enter the green circle and press E again.", core.options['defaultDialogueDelay']*2));
+    d.addLine(new VoiceLine("right", "To get back in your mothership just enter the green circle and press E again.", core.options['defaultDialogueDelay'] * 2));
     //fuel
-    d.addLine(new VoiceLine("right", "Your ships lose fuel when you move, try opening the ship information panel by pressing O", core.options['defaultDialogueDelay']*2));
+    d.addLine(new VoiceLine("right", "Your ships lose fuel when you move, try opening the ship information panel by pressing O", core.options['defaultDialogueDelay'] * 2));
     d.addLine(new VoiceLine("right", "Your exploration vessel refuels automatically when attached to the mothership.", core.options['defaultDialogueDelay']));
-    d.addLine(new VoiceLine("right", "To refuel your mothership you will have to interact with a gas planet, hover over planets to see their type.", core.options['defaultDialogueDelay']*2));
-    d.addLine(new VoiceLine("right", "Refueling costs "+core.gameOptions['fuelCost']+" per unit of fuel.", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "To refuel your mothership you will have to interact with a gas planet, hover over planets to see their type.", core.options['defaultDialogueDelay'] * 2));
+    d.addLine(new VoiceLine("right", "Refueling costs " + core.gameOptions['fuelCost'] + " per unit of fuel.", core.options['defaultDialogueDelay']));
     //money
     d.addLine(new VoiceLine("right", "To earn money you can complete quests.", core.options['defaultDialogueDelay']));
     //quest
     d.addLine(new VoiceLine("right", "Currently you can only accept guild quests, these are quests that are randomly generated based on your guild.", core.options['defaultDialogueDelay']));
     d.addLine(new VoiceLine("right", "To get a guild quest, go to any guild planet and interact with it.", core.options['defaultDialogueDelay']));
     //guilds
-    d.addLine(new VoiceLine("right", "Currently you are in the traders guild because that is the only guild that has been implemented so far.", core.options['defaultDialogueDelay']));
+    d.addLine(new VoiceLine("right", "Currently you are in the red moon guild because that is the guild that is currently being implemented so far.", core.options['defaultDialogueDelay']));
     d.addLine(new VoiceLine("right", "Have fun playing our game!", core.options['defaultDialogeDelay']));
 
-    d.addOnFinished(()=>{
+    d.addOnFinished(() => {
         player.inTutorial = false;
     })
 
-    ui.addElement(d);
+    // ui.addElement(d);
 
 }
 

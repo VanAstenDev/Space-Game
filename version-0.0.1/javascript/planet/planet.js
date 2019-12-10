@@ -38,9 +38,19 @@ class Planet {
             if (keyIsDown(32)) {
                 if (this.type == "gas_planet") {
                     //check for money
-                    if (player.money >= core.gameOptions['fuelCost'] && player.fuel < player.maxFuel) {
-                        player.fuel += player.refuelSpeed;
-                        player.money -= core.gameOptions['fuelCost'];
+                    if (player.money >= core.gameOptions['fuelCost']) {
+                        //check for full tank
+                        if (player.fuel < player.maxFuel) {
+                            player.fuel += player.refuelSpeed;
+                            if (player.maxFuel - player.fuel < player.refuelSpeed) {
+                                player.fuel = player.maxFuel; //IF REFUEL 0.5 fuel 999,7 fuel = 1000 != 1000,3
+                            }
+                            player.money -= core.gameOptions['fuelCost'];
+                        } else {
+                            let u = new Banner("Fuel tank full.");
+                            u.lifespan = 250;
+                            ui.addElement(u);
+                        }
                     } else {
                         let u = new Banner("Not enough money.");
                         u.lifespan = 250;
@@ -59,6 +69,7 @@ class Planet {
                         this.triggered = 1;
                         if (player.guild.name != "No Guild") {
                             player.guild.getQuest();
+                            player.questData['planet'] = this;
                         }
                     }
                 }

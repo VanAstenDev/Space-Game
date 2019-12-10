@@ -3,6 +3,8 @@ class Player {
         this.isVessel = false;
         this.chunk = 0;
 
+        this.name = "Player";
+
         this.guild = new Guild("No Guild");
 
         this.pos = createVector(x, y);
@@ -20,8 +22,10 @@ class Player {
         this.boostSpeed = core.playerOptions['boostSpeed'];
         this.boosting = false;
 
-        this.w = 65;
-        this.h = 100;
+        this.ratio = 1.54;
+        this.scale = 1;
+        this.w = 65*this.scale;
+        this.h = this.w * this.ratio;
 
         this.dw = this.w;
         this.dh = this.h;
@@ -33,7 +37,7 @@ class Player {
         this.texture = textureHandler.getMother();
 
         this.inventory = new Inventory();
-        this.money = 0;
+        this.money = 25;
 
         this.fuel = 1000;
         this.maxFuel = 1000;
@@ -44,6 +48,9 @@ class Player {
         this.inTutorial = true;
 
         this.quest = new PlaceHolderQuest("No quest", new Objective(1, "No quest available."), "No quest available.");
+        this.questData = {
+
+        }
     }
 
     loop() {

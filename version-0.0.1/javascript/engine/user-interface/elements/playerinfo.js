@@ -32,7 +32,7 @@ class PlayerInfo {
             fill(255);
             textSize(26);
             textAlign(CENTER, TOP);
-            text("Guild: "+player.guild.name+"\nBalance: "+player.money+" "+core.buildOptions['currencyName']+"\nQuest: "+player.quest.name+"\nObjective: "+player.quest.objective.task+"\nQuest Description: "+player.quest.objective.desc, 0, 50, this.width, this.height - 50);
+            text("Guild: "+player.guild.name+"\nBalance: "+(player.money).toFixed(2)+" "+core.buildOptions['currencyName']+"\nQuest: "+player.quest.name+"\nObjective: "+player.quest.objective.task+"\nQuest Description: "+player.quest.objective.desc, 0, 50, this.width, this.height - 50);
 
             pop();
         }
