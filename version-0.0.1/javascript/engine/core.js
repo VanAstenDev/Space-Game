@@ -6,7 +6,7 @@ class Core {
             "chunkWidth": 1000,
             "chunkHeight": 1000,
             "tempDelay": 300,
-            "defaultDialogueDelay": 20,
+            "defaultDialogueDelay": 90,
             "maxLoadedChunks": 100
         }
 
